@@ -1,12 +1,16 @@
 var RENDERER = (function(){
 
-  var camera = {x:0};
+    /*****************************
+        PRIVATE
+    *****************************/
+
+  var camera;
   var scene, renderer;
   var mesh;
 
-  var my = {};
 
-  var createPath = (path) => {
+  var createPath = (path, data) => {
+    /*
       var curve = new THREE.CubicBezierCurve3(
       	new THREE.Vector3( -1, 0, 1 ),
       	new THREE.Vector3( -5, 1, 1 ),
@@ -23,12 +27,55 @@ var RENDERER = (function(){
       var curveObject = new THREE.Line( geometry, material );
 
       scene.add(curveObject);
-      console.log(scene);
+    */
+
+    var y = 0.04;
+
+    var x0 = 10 * path.relativeStartRS1 - 5;
+    var x1 = 10 * path.relativeEndRS1 - 5;
+
+    var z0 = 10 * -path.relativeStartRS2 + 5;
+    var z1 = 10 * -path.relativeEndRS2 + 5;
+
+      my.createLine(x0, y, z0, x1, y, z1);
   }
 
 
-  my.drawUniversePlane = function(y){
-    var size = 10, step = 1;
+  var createText = (text, font, x, y, z) => {
+
+        var textGeometry = new THREE.TextGeometry( text, {
+            font: font,
+              size: 1,
+              height: 0,
+              curveSegments: 12,
+              bevelEnabled: false,
+              bevelThickness: 1,
+              bevelSize: 8,
+              bevelSegments: 5
+        });
+
+        var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+        var textMesh = new THREE.Mesh( textGeometry, material );
+        textMesh.position.x = x;
+        textMesh.position.y = y;
+        textMesh.position.z = z;
+
+        textMesh.rotation.x = 1.5 * Math.PI;
+        scene.add(textMesh);
+    }
+
+
+    /*****************************
+        PUBLIC
+    *****************************/
+
+
+  var my = {};
+
+
+
+  my.drawUniversePlane = function(y, data){
+    var size = 5, step = 1;
 
     var geometry = new THREE.Geometry();
     var material = new THREE.LineBasicMaterial({color: 0x333333});
@@ -39,32 +86,19 @@ var RENDERER = (function(){
 
        geometry.vertices.push(new THREE.Vector3( i, y, - size ));
        geometry.vertices.push(new THREE.Vector3( i, y, size ));
-
     }
 
     var line = new THREE.Line( geometry, material, THREE.LinePieces);
     scene.add(line);
 
+
     var loader = new THREE.FontLoader();
-
     loader.load( 'assets/helvetiker_regular.typeface.json', function ( font ) {
+        data.earliestDateOfRef2 && createText(data.earliestDateOfRef2.years, font, 5, 0, 5);
+        data.latestDateOfRef2 && createText(data.latestDateOfRef2.years, font, 5, 0, -5);
 
-      var textGeometry = new THREE.TextGeometry( "Hello", {
-        font: font,
-    		size: 1,
-    		height: 0,
-    		curveSegments: 12,
-    		bevelEnabled: false,
-    		bevelThickness: 1,
-    		bevelSize: 8,
-    		bevelSegments: 5
-      });
-
-      var material = new THREE.MeshBasicMaterial({color: 0xffffff});
-      var textMesh = new THREE.Mesh( textGeometry, material );
-      textMesh.position.y = 1;
-      scene.add(textMesh);
-
+        createText("0", font, -5, 0, 7);
+        createText(data.RS1duration, font, 4, 0, 7);
     });
 
   }
@@ -77,65 +111,61 @@ var RENDERER = (function(){
 
   	camera = new THREE.PerspectiveCamera( 70, width / height, 0.01, 1000 );
     my.camera = camera;
-    camera.position.x = 1;
+    camera.position.x = 0;
     camera.position.y = 3;
-    camera.position.z = 12;
+    camera.position.z = 14;
 
-
-    camera.rotation.x = -0.1;
-    console.log(camera)
+    camera.rotation.x = -30 * 2 * Math.PI / 360;
 
   	scene = new THREE.Scene();
 
   	renderer = new THREE.WebGLRenderer( { antialias: true } );
-  	//renderer.setSize( window.innerWidth,  );
     renderer.setSize(width, height);
   	parentElement.appendChild( renderer.domElement );
 
-    var axisHelper = new THREE.AxisHelper( 10 );
-    scene.add( axisHelper );
-
     my.animate();
-    my.createTestLine();
-    my.createTestObject();
-    my.drawUniversePlane(0.04);
+    //my.createTestObject();
 
   }
 
 
   my.createTestObject = () => {
-    var geometry = new THREE.BoxGeometry( 0.1, 0.1, 0.2 );
+    var geometry = new THREE.BoxGeometry( 1, 1, 1 );
   	var material = new THREE.MeshNormalMaterial();
 
   	mesh = new THREE.Mesh( geometry, material );
   	scene.add( mesh );
     my.cube = mesh;
-    mesh.position.x = 1;
+    mesh.position.z = 2;
   }
 
 
-  my.createTestLine = () => {
+  my.createLine = (x0, y0, z0, x1, y1, z1) => {
     var material = new THREE.LineBasicMaterial({ color: 0x00ffff });
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3(1, 1, 1));
-    geometry.vertices.push(new THREE.Vector3(1, 2, 2));
-    geometry.vertices.push(new THREE.Vector3(1, 3, 3));
-
+    geometry.vertices.push(new THREE.Vector3(x0, y0, z0));
+    geometry.vertices.push(new THREE.Vector3(x1, y1, z1));
     var line = new THREE.Line(geometry, material);
-
     scene.add(line);
   }
 
 
   my.animate = () => {
   	requestAnimationFrame( my.animate );
+    //camera.rotation.z += 0.2;
   	renderer.render( scene, camera );
   }
 
 
   my.refresh = (data) => {
-    console.log(data)
-    data.paths.forEach(createPath);
+    while(scene.children.length > 0){
+        scene.remove(scene.children[0]);
+    }
+    var axisHelper = new THREE.AxisHelper( 5 );
+    scene.add( axisHelper );
+    console.log(data);
+    my.drawUniversePlane(0.04, data);
+    data.paths.forEach(p => createPath(p, data));
   }
 
   return my;

@@ -30,9 +30,19 @@ const setPathEndTime = (path_id, endTime) => {
 	}
 }
 
+
+const setTimeDilationFactor = (path_id, factor) => {
+	return {
+		type: "SET_TIME_DILATION_FACTOR",
+		path_id,
+		factor
+	}
+}
+
 module.exports = {
 	addPath,
 	deletePath,
 	setPathStartTime,
-	setPathEndTime
+	setPathEndTime,
+	setTimeDilationFactor
 }

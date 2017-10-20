@@ -20,7 +20,7 @@ class Page extends Component {
 			<div style={{
 				"display": "grid",
 				"gridTemplateColumns": "600px auto",
-  			"gridTemplateRows": "50px auto"
+  				"gridTemplateRows": "50px auto"
 			}}>
 				<Header/>
 				<Editor/>
