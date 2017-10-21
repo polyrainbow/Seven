@@ -72,6 +72,13 @@ export default function reducer(state=initialState, action){
 		return newState;
 	}
 
+	if (action.type == "SET_UNIVERSE_NAME"){
+		var newState = {...state};
+		var universe = newState.universes.find(u => u.id === action.universe_id);
+		universe.name = action.name;
+		return newState;
+	}
+
 	else {
 		return state;
 	}

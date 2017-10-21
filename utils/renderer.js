@@ -75,6 +75,26 @@ var RENDERER = (function(){
 
 
   my.drawUniversePlane = function(y, data){
+
+    // instantiate a loader
+    var loader = new THREE.TextureLoader();
+
+    // load a resource
+    loader.load(
+    	// resource URL
+    	'assets/HubbleUltraDeepField_1024.jpg',
+    	// Function when resource is loaded
+    	function ( texture ) {
+              var material = new THREE.MeshBasicMaterial({map: texture});
+              var geometry = new THREE.PlaneGeometry( 10, 10, 10 );
+             var mesh = new THREE.Mesh(geometry, material);
+                mesh.rotation.x = 1.5 * Math.PI;
+            scene.add(mesh);
+    	},
+    );
+
+
+
     var size = 5, step = 1;
 
     var geometry = new THREE.Geometry();
@@ -107,7 +127,7 @@ var RENDERER = (function(){
   my.init = (parentElement) => {
 
     var width = parentElement.getBoundingClientRect().width;
-    var height = window.innerHeight;
+    var height = parentElement.getBoundingClientRect().height;
 
   	camera = new THREE.PerspectiveCamera( 70, width / height, 0.01, 1000 );
     my.camera = camera;
@@ -126,6 +146,11 @@ var RENDERER = (function(){
     my.animate();
     //my.createTestObject();
 
+/*
+    var plc = new THREE.PointerLockControls(camera)
+    plc.enabled = true;
+    scene.add( plc.getObject() );
+*/
   }
 
 
@@ -141,7 +166,7 @@ var RENDERER = (function(){
 
 
   my.createLine = (x0, y0, z0, x1, y1, z1) => {
-    var material = new THREE.LineBasicMaterial({ color: 0x00ffff });
+    var material = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 3 });
     var geometry = new THREE.Geometry();
     geometry.vertices.push(new THREE.Vector3(x0, y0, z0));
     geometry.vertices.push(new THREE.Vector3(x1, y1, z1));
@@ -163,7 +188,7 @@ var RENDERER = (function(){
     }
     var axisHelper = new THREE.AxisHelper( 5 );
     scene.add( axisHelper );
-    console.log(data);
+    console.log(data); /////////////////////////////////////////////////
     my.drawUniversePlane(0.04, data);
     data.paths.forEach(p => createPath(p, data));
   }

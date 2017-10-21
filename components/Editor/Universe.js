@@ -6,10 +6,8 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import {
-	setUniverseStartTime,
-	setUniverseEndTime,
-	deleteUniverse,
-	setTimeDilationFactor
+	setUniverseName,
+	deleteUniverse
 } from '../../actions/index.js';
 
 class Universe extends Component {
@@ -26,10 +24,11 @@ class Universe extends Component {
 		return (
 			<div style={{
 				"border": "2px solid grey",
-				"margin": "10px",
-				"padding": "10px"
+				"margin": "10px 0px",
+				"padding": "10px",
+				"background": "url(assets/HubbleUltraDeepField_fade.jpg)"
 			}}>
-				<h3>Universe</h3>
+				<h4>Universe</h4>
 				<label htmlFor={universe.id + "_name_input"} >Name: </label>
 				<input id={universe.id + "_name_input"} type="text" onChange={(e) => {
 					this.props.setUniverseName(universe.id, e.target.value);
@@ -51,10 +50,8 @@ function mapStateToProps(state){
 
 function matchDispatchToProps(dispatch){
 	return bindActionCreators({
-		setUniverseStartTime,
-		setUniverseEndTime,
-		deleteUniverse,
-		setTimeDilationFactor
+		setUniverseName,
+		deleteUniverse
 	}, dispatch);
 }
 

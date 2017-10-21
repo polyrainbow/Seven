@@ -20,11 +20,9 @@ class Path extends Component {
 
 
 	getUniverseOptions(data){
-console.log(data)
 		return data.universes.map(u => {
 			return <option>{u.name}</option>;
-		})
-
+		});
 	}
 
 	render() {
@@ -34,10 +32,10 @@ console.log(data)
 		return (
 			<div style={{
 				"border": "2px solid grey",
-				"margin": "10px",
+				"margin": "10px 0px",
 				"padding": "10px"
 			}}>
-				<h3>Path</h3>
+				<h4>Path</h4>
 				<label htmlFor={path.id + "_start_time_input"} >Start Time in Reference Timeline 2: </label>
 				<input id={path.id + "_start_time_input"} type="datetime-local" onChange={(e) => {
 					var object = moment(e.target.value).toObject();

@@ -57,7 +57,8 @@ const deleteUniverse = (universe_id) => {
 const setUniverseName = (universe_id, name) => {
 	return {
 		type: "SET_UNIVERSE_NAME",
-		universe_id
+		universe_id,
+		name
 	}
 }
 
