@@ -39,10 +39,35 @@ const setTimeDilationFactor = (path_id, factor) => {
 	}
 }
 
+
+const addUniverse = (insertIndex) => {
+	return {
+		type: "ADD_UNIVERSE",
+		insertIndex
+	}
+}
+
+const deleteUniverse = (universe_id) => {
+	return {
+		type: "DELETE_UNIVERSE",
+		path_id
+	}
+}
+
+const setUniverseName = (universe_id, name) => {
+	return {
+		type: "SET_UNIVERSE_NAME",
+		universe_id
+	}
+}
+
 module.exports = {
 	addPath,
 	deletePath,
 	setPathStartTime,
 	setPathEndTime,
-	setTimeDilationFactor
+	setTimeDilationFactor,
+	addUniverse,
+	deleteUniverse,
+	setUniverseName
 }

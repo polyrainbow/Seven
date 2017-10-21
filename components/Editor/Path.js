@@ -19,6 +19,14 @@ class Path extends Component {
 	}
 
 
+	getUniverseOptions(data){
+console.log(data)
+		return data.universes.map(u => {
+			return <option>{u.name}</option>;
+		})
+
+	}
+
 	render() {
 
 		var path = this.props.path;
@@ -54,8 +62,10 @@ class Path extends Component {
 					onChange={(e) => this.props.setTimeDilationFactor(path.id, e.target.value)}
 				/>
 				<br/>
-				<label htmlFor={path.id + "_universe_input"}>Universe: </label>
-				<input id={path.id + "_universe_input"} type="number" defaultValue={path.universe_index}/>
+				<label htmlFor={path.id + "_universe_select"}>Universe: </label>
+				<select id={path.id + "_universe_select"} defaultValue={path.universe_index}>
+					{this.getUniverseOptions(this.props.data)}
+				</select>
 				<br/>
 				<label htmlFor={path.id + "_inactive_input"}>Inactive Period: </label>
 				<input id={path.id + "_inactive_input"} type="checkbox" defaultValue={path.inactive}/>
@@ -68,6 +78,7 @@ class Path extends Component {
 
 function mapStateToProps(state){
 	return {
+		data: state.data
 	}
 }
 

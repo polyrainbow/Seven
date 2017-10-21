@@ -88,7 +88,7 @@ var RENDERER = (function(){
        geometry.vertices.push(new THREE.Vector3( i, y, size ));
     }
 
-    var line = new THREE.Line( geometry, material, THREE.LinePieces);
+    var line = new THREE.LineSegments( geometry, material);
     scene.add(line);
 
 

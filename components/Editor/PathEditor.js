@@ -20,12 +20,18 @@ class PathEditor extends Component {
 
 		paths.forEach((p, i, a) => {
 			markup.push(
-				<Path path={p}/>
+				<button onClick={() => this.props.addPath(i)}>Add path here</button>
 			);
 
 			markup.push(
-				<button onClick={() => this.props.addPath(i)}>Add path here</button>
+				<Path path={p}/>
 			);
+
+			if (i === a.length - 1){
+				markup.push(
+					<button onClick={() => this.props.addPath(i + 1)}>Add path here</button>
+				);
+			}
 
 		});
 

@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import PathEditor from './PathEditor';
+import UniverseEditor from './UniverseEditor';
 
 class Editor extends Component {
 
@@ -17,12 +18,12 @@ class Editor extends Component {
 		return (
 			<div className="editor" style={{
 				"gridArea": "2 / 1 / 3 / 2",
-				"padding": "10px"
+				"padding": "10px",
+				"overflow": "auto"
 			}}>
-				<label htmlFor="number_of_universes_input" >Number of universes </label>
-				<input id="number_of_universes_input" type="number" defaultValue="1"/>
+				<UniverseEditor />
 				<br/>
-				<PathEditor paths={[{id: "1"}]}/>
+				<PathEditor />
 			</div>
 		);
   }
