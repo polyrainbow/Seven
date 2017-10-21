@@ -11,7 +11,8 @@ import {
 	deletePath,
 	setTimeDilationFactor,
 	setPathDescription,
-	setUniverse
+	setUniverse,
+	setPathActivity
 } from '../../actions/index.js';
 
 class Path extends Component {
@@ -32,13 +33,19 @@ class Path extends Component {
 		var path = this.props.path;
 
 		return (
-			<div style={{
+			<div className="path" style={{
 				"border": "2px solid grey",
 				"margin": "10px 0px",
 				"padding": "10px",
 				"background": "radial-gradient(circle at 50% 10%, rgba(247, 221, 189, 0.79) -10%, transparent 90%), linear-gradient(140deg, rgba(255, 87, 87, 0.48) -20%, transparent 90%), linear-gradient(-150deg, #6BCCE6 -10%, transparent 60%), radial-gradient(40% 50% at 50% 120%, rgba(30, 12, 76, 0.25), transparent), linear-gradient(to right, rgba(245, 34, 116, 0.63), rgba(39, 97, 249, 0.65), white)"
 			}}>
-				<h4>📍 Path</h4>
+				<div style={{
+					"display": "flex",
+					"justifyContent": "space-between"
+				}}>
+					<h4>📍 Path</h4>
+					<button onClick={() => this.props.deletePath(path.id)}>Delete</button>
+				</div>
 				<label htmlFor={path.id + "_start_time_input"} >Start Time in Reference Timeline 2: </label>
 				<input id={path.id + "_start_time_input"} type="datetime-local" onChange={(e) => {
 					var object = moment(e.target.value).toObject();
@@ -60,7 +67,7 @@ class Path extends Component {
 					id={path.id + "_time_dilation_factor_input"}
 					type="number"
 					defaultValue={path.dilationFactor}
-					onChange={(e) => this.props.setTimeDilationFactor(path.id, e.target.value)}
+					onChange={(e) => this.props.setTimeDilationFactor(path.id, parseFloat(e.target.value))}
 					title="The higher this factor, the faster you travel through the time of reference system 2"
 				/>
 				<br/>
@@ -74,12 +81,15 @@ class Path extends Component {
 				</select>
 				<br/>
 				<label htmlFor={path.id + "_inactive_input"}>Inactive Period: </label>
-				<input id={path.id + "_inactive_input"} type="checkbox" defaultValue={path.inactive}/>
+				<input
+					id={path.id + "_inactive_input"}
+					type="checkbox"
+					defaultValue={path.isInactive}
+					onChange={(e) => this.props.setPathActivity(path.id, e.target.checked)}
+				/>
 				<br/>
 				<label htmlFor={path.id + "_description_input"}>Description: </label>
 				<textarea id={path.id + "_description_input"} defaultValue={path.description}/>
-				<br/>
-				<button onClick={() => this.props.deletePath(path.id)}>Delete Path</button>
 			</div>
 		);
   }
@@ -98,7 +108,8 @@ function matchDispatchToProps(dispatch){
 		deletePath,
 		setTimeDilationFactor,
 		setPathDescription,
-		setUniverse
+		setUniverse,
+		setPathActivity
 	}, dispatch);
 }
 

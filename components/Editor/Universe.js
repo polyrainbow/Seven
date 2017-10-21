@@ -28,15 +28,19 @@ class Universe extends Component {
 				"padding": "10px",
 				"background": "url(assets/HubbleUltraDeepField_fade.jpg)"
 			}}>
-				<h4>🌌 Universe</h4>
+				<div style={{
+					"display": "flex",
+					"justifyContent": "space-between"
+				}}>
+					<h4>🌌 Universe</h4>
+					<button onClick={() => this.props.deleteUniverse(universe.id)}>Delete</button>
+				</div>
 				<label htmlFor={universe.id + "_name_input"} >Name: </label>
 				<input id={universe.id + "_name_input"} type="text" onChange={(e) => {
 					this.props.setUniverseName(universe.id, e.target.value);
 				}}
 					defaultValue={universe.name}
 				/>
-				<br/>
-				<button onClick={() => this.props.deleteUniverse(universe.id)}>Delete Universe</button>
 			</div>
 		);
   }

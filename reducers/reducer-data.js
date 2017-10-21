@@ -32,7 +32,8 @@ export default function reducer(state=initialState, action){
 			dilationFactor: 1,
 			universe_index: 0,
 			durationInRS1: 0,
-			description: ""
+			description: "",
+			isInactive: false
 		};
 		console.log(action.insertIndex)
 
@@ -61,6 +62,15 @@ export default function reducer(state=initialState, action){
 		computeStateVariables(path, newState);
 		return newState;
 	}
+
+
+	if (action.type == "SET_PATH_ACTIVITY"){
+		var newState = {...state};
+		var path = newState.paths.find(p => p.id === action.path_id);
+		path.isInactive = action.isInactive;
+		return newState;
+	}
+
 
 	if (action.type == "SET_TIME_DILATION_FACTOR"){
 		var newState = {...state};
@@ -120,6 +130,11 @@ export default function reducer(state=initialState, action){
 		var path = newState.paths.find(p => p.id === action.path_id);
 		path.universe_index = action.universe_index;
 		return newState;
+	}
+
+
+	if (action.type == "LOAD_STATE"){
+		return action.state.data;
 	}
 
 

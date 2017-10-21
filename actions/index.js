@@ -71,11 +71,29 @@ const setUniverseName = (universe_id, name) => {
 	}
 }
 
+
 const setUniverse = (path_id, universe_index) => {
 	return {
 		type: "SET_UNIVERSE",
 		path_id,
 		universe_index
+	}
+}
+
+
+const setPathActivity = (path_id, isInactive) => {
+	return {
+		type: "SET_PATH_ACTIVITY",
+		path_id,
+		isInactive
+	}
+}
+
+
+const loadState = (state) => {
+	return {
+		type: "LOAD_STATE",
+		state
 	}
 }
 
@@ -90,5 +108,7 @@ module.exports = {
 	deleteUniverse,
 	setUniverseName,
 	setUniverse,
-	setPathDescription
+	setPathDescription,
+	setPathActivity,
+	loadState
 }

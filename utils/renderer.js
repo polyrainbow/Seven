@@ -7,6 +7,8 @@
     var scene;
     var renderer;
     var mesh;
+    var font;
+    var universeTexture;
 
 
     var createPath = (path, data) => {
@@ -29,6 +31,12 @@
         scene.add(curveObject);
         */
 
+    if (path.isInactive === true){
+        return;
+    }
+
+    var color = (path.dilationFactor === 1) ? 0x00ffff : 0xff2222;
+
     var y = universe_y_positions[path.universe_index] + 0.04;
 
     var x0 = 10 * path.relativeStartRS1 - 5;
@@ -42,18 +50,18 @@
     );
 
     if (length < 0.5){
-        createPoint((x0 + x1) / 2, y + 0.02, (z0 + z1) / 2);
+        createPoint((x0 + x1) / 2, y + 0.02, (z0 + z1) / 2, color);
     } else {
-        createPoint(x0, y + 0.02, z0);
-        createLine(x0, y, z0, x1, y, z1);
-        createPoint(x1, y + 0.02, z1);
+        createPoint(x0, y + 0.02, z0, color);
+        createLine(x0, y, z0, x1, y, z1, color);
+        createPoint(x1, y + 0.02, z1, color);
     }
 }
 
 
-var createPoint = (x, y, z) => {
+var createPoint = (x, y, z, color) => {
     var pointGeometry = new THREE.CircleGeometry( 0.15, 16 );
-    var pointMaterial = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
+    var pointMaterial = new THREE.MeshBasicMaterial( { color: color } );
     var pointMesh = new THREE.Mesh( pointGeometry, pointMaterial );
     pointMesh.position.x = x;
     pointMesh.position.y = y;
@@ -94,23 +102,13 @@ var drawUniverses = (data) => {
 
 var drawUniversePlane = function(y, data){
 
-    // instantiate a loader
-    var loader = new THREE.TextureLoader();
+    var material = new THREE.MeshBasicMaterial({map: universeTexture});
+    var geometry = new THREE.PlaneGeometry( 10, 10, 10 );
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.rotation.x = 1.5 * Math.PI;
+    mesh.position.y = y;
+    scene.add(mesh);
 
-    // load a resource
-    loader.load(
-        // resource URL
-        'assets/HubbleUltraDeepField_1024.jpg',
-        // Function when resource is loaded
-        function ( texture ) {
-            var material = new THREE.MeshBasicMaterial({map: texture});
-            var geometry = new THREE.PlaneGeometry( 10, 10, 10 );
-            var mesh = new THREE.Mesh(geometry, material);
-            mesh.rotation.x = 1.5 * Math.PI;
-            mesh.position.y = y;
-            scene.add(mesh);
-        },
-    );
 
     var size = 5, step = 1;
     var geometry = new THREE.Geometry();
@@ -151,8 +149,8 @@ var drawUniversePlane = function(y, data){
 }
 
 
-var createLine = (x0, y0, z0, x1, y1, z1) => {
-    var material = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 3 });
+var createLine = (x0, y0, z0, x1, y1, z1, color) => {
+    var material = new THREE.LineBasicMaterial({ color: color, linewidth: 3 });
     var geometry = new THREE.Geometry();
     geometry.vertices.push(new THREE.Vector3(x0, y0, z0));
     geometry.vertices.push(new THREE.Vector3(x1, y1, z1));
@@ -193,8 +191,17 @@ var init = (parentElement) => {
     renderer.setSize(width, height);
     parentElement.appendChild( renderer.domElement );
 
+    var fontLoader = new THREE.FontLoader();
+    fontLoader.load( 'assets/helvetiker_regular.typeface.json', (loadedFont) => {
+        font = loadedFont;
+    });
+
+    var textureLoader = new THREE.TextureLoader();
+    textureLoader.load('assets/HubbleUltraDeepField_1024.jpg', (texture) => {
+        universeTexture = texture;
+    });
+
     animate();
-    //createTestObject();
 
     /*
     var plc = new THREE.PointerLockControls(camera)
