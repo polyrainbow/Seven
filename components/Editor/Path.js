@@ -9,7 +9,9 @@ import {
 	setPathStartTime,
 	setPathEndTime,
 	deletePath,
-	setTimeDilationFactor
+	setTimeDilationFactor,
+	setPathDescription,
+	setUniverse
 } from '../../actions/index.js';
 
 class Path extends Component {
@@ -63,7 +65,11 @@ class Path extends Component {
 				/>
 				<br/>
 				<label htmlFor={path.id + "_universe_select"}>Universe: </label>
-				<select id={path.id + "_universe_select"} defaultValue={path.universe_index}>
+				<select
+					id={path.id + "_universe_select"}
+					defaultValue={path.universe_index}
+					onChange={(e) => this.props.setUniverse(path.id, e.target.selectedIndex)}
+				>
 					{this.getUniverseOptions(this.props.data)}
 				</select>
 				<br/>
@@ -90,7 +96,9 @@ function matchDispatchToProps(dispatch){
 		setPathStartTime,
 		setPathEndTime,
 		deletePath,
-		setTimeDilationFactor
+		setTimeDilationFactor,
+		setPathDescription,
+		setUniverse
 	}, dispatch);
 }
 

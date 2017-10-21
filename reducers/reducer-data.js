@@ -31,7 +31,8 @@ export default function reducer(state=initialState, action){
 			endTime: 0,
 			dilationFactor: 1,
 			universe_index: 0,
-			durationInRS1: 0
+			durationInRS1: 0,
+			description: ""
 		};
 		console.log(action.insertIndex)
 
@@ -69,6 +70,15 @@ export default function reducer(state=initialState, action){
 		return newState;
 	}
 
+
+	if (action.type == "SET_PATH_DESCRIPTION"){
+		var newState = {...state};
+		var path = newState.paths.find(p => p.id === action.path_id);
+		path.description = action.description;
+		return newState;
+	}
+
+
 	if (action.type == "SET_UNIVERSE_NAME"){
 		var newState = {...state};
 		var universe = newState.universes.find(u => u.id === action.universe_id);
@@ -101,6 +111,14 @@ export default function reducer(state=initialState, action){
 	if (action.type == "DELETE_UNIVERSE"){
 		var newState = {...state}; console.log(action.universe_id)
 		newState.universes = newState.universes.filter(u => u.id !== action.universe_id);
+		return newState;
+	}
+
+
+	if (action.type == "SET_UNIVERSE"){
+		var newState = {...state};
+		var path = newState.paths.find(p => p.id === action.path_id);
+		path.universe_index = action.universe_index;
 		return newState;
 	}
 
