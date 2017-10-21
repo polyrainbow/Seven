@@ -68,6 +68,9 @@ class Path extends Component {
 				<label htmlFor={path.id + "_inactive_input"}>Inactive Period: </label>
 				<input id={path.id + "_inactive_input"} type="checkbox" defaultValue={path.inactive}/>
 				<br/>
+				<label htmlFor={path.id + "_description_input"}>Description: </label>
+				<textarea id={path.id + "_description_input"} defaultValue={path.description}/>
+				<br/>
 				<button onClick={() => this.props.deletePath(path.id)}>Delete Path</button>
 			</div>
 		);

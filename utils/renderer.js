@@ -37,7 +37,22 @@ var RENDERER = (function(){
     var z0 = 10 * -path.relativeStartRS2 + 5;
     var z1 = 10 * -path.relativeEndRS2 + 5;
 
+    var length = Math.sqrt(
+      Math.pow(Math.abs(x1 - x0), 2) + Math.pow(Math.abs(z1 - z0), 2)
+    );
+
+    if (length < 1){
+        var pointGeometry = new THREE.CircleGeometry( 0.15, 16 );
+        var pointMaterial = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
+        var pointMesh = new THREE.Mesh( pointGeometry, pointMaterial );
+        pointMesh.position.x = (x0 + x1) / 2;
+        pointMesh.position.y = y + 0.02;
+        pointMesh.position.z = (z0 + z1) / 2;
+        pointMesh.rotation.x = 1.5 * Math.PI;
+        scene.add( pointMesh );
+    } else {
       my.createLine(x0, y, z0, x1, y, z1);
+    }
   }
 
 
@@ -117,8 +132,20 @@ var RENDERER = (function(){
         data.earliestDateOfRef2 && createText(data.earliestDateOfRef2.years, font, 5, 0, 5);
         data.latestDateOfRef2 && createText(data.latestDateOfRef2.years, font, 5, 0, -5);
 
+        if (data.RS1duration > 31536000000){
+          var x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60 / 24 / 365) + " years";
+        } else if (data.RS1duration > 86400000){
+          x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60 / 24) + " days";
+        } else if (data.RS1duration > 3600000){
+          x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60) + " hours";
+        } else {
+          x_end_value = Math.round(data.RS1duration / 1000) + " seconds";
+        }
+
+
+
         createText("0", font, -5, 0, 7);
-        createText(data.RS1duration, font, 4, 0, 7);
+        createText(x_end_value, font, 3, 0, 7);
     });
 
   }
