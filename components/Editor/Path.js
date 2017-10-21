@@ -35,7 +35,7 @@ class Path extends Component {
 				"margin": "10px 0px",
 				"padding": "10px"
 			}}>
-				<h4>Path</h4>
+				<h4>📍 Path</h4>
 				<label htmlFor={path.id + "_start_time_input"} >Start Time in Reference Timeline 2: </label>
 				<input id={path.id + "_start_time_input"} type="datetime-local" onChange={(e) => {
 					var object = moment(e.target.value).toObject();
@@ -58,6 +58,7 @@ class Path extends Component {
 					type="number"
 					defaultValue={path.dilationFactor}
 					onChange={(e) => this.props.setTimeDilationFactor(path.id, e.target.value)}
+					title="The higher this factor, the faster you travel through the time of reference system 2"
 				/>
 				<br/>
 				<label htmlFor={path.id + "_universe_select"}>Universe: </label>

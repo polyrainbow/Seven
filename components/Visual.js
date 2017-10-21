@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
+var renderer = require("../utils/renderer.js");
+
 class Visual extends Component {
 
 	constructor(props, context) {
@@ -11,12 +13,13 @@ class Visual extends Component {
 	}
 
 	componentDidMount(){
-		RENDERER.init(this.refs.visualWrapper);
+		renderer.init(this.refs.visualWrapper);
+		renderer.refresh(this.props.data);
 	}
 
 
 	componentWillReceiveProps(newProps){
-		RENDERER.refresh(newProps.data)
+		renderer.refresh(newProps.data);
 	}
 
 	render() {

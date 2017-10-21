@@ -24,7 +24,7 @@ class PathEditor extends Component {
 			);
 
 			markup.push(
-				<Path path={p}/>
+				<Path path={p} key={p.id}/>
 			);
 
 			if (i === a.length - 1){

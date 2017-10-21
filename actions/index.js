@@ -50,7 +50,7 @@ const addUniverse = (insertIndex) => {
 const deleteUniverse = (universe_id) => {
 	return {
 		type: "DELETE_UNIVERSE",
-		path_id
+		universe_id
 	}
 }
 

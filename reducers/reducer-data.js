@@ -9,10 +9,7 @@ const initialState = {
 	latestDateOfRef2: null,
 	RS1duration: 0,
 	RS2duration: 0,
-	universes: [{
-		id: "main_universe",
-		name: "Main Universe"
-	}]
+	universes: []
 };
 
 
@@ -78,6 +75,35 @@ export default function reducer(state=initialState, action){
 		universe.name = action.name;
 		return newState;
 	}
+
+
+	if (action.type == "ADD_UNIVERSE"){
+		var newState = {...state};
+		newState.id_counter++;
+
+		var newUniverse = {
+			id: newState.id_counter,
+			name: "",
+			description: ""
+		};
+
+		if (action.insertIndex === newState.universes.length){
+			newState.universes.push(newUniverse);
+		} else if (action.insertIndex < newState.universes.length){
+			newState.universes = immutableSplice(newState.universes, action.insertIndex, 0, newUniverse);
+		} else {
+			console.log("Strange insert index: " + action.insertIndex);
+		}
+		return newState;
+	}
+
+
+	if (action.type == "DELETE_UNIVERSE"){
+		var newState = {...state}; console.log(action.universe_id)
+		newState.universes = newState.universes.filter(u => u.id !== action.universe_id);
+		return newState;
+	}
+
 
 	else {
 		return state;

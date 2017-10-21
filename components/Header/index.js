@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import AppTitle from './AppTitle';
+import PresetMenu from './PresetMenu';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -19,9 +20,11 @@ class Header extends Component {
 				"gridArea": "1 / 1 / 2 / 3",
 				"padding": "10px",
 				"display": "flex",
-				"alignItems": "center"
+				"alignItems": "center",
+				"justifyContent": "space-between"
 			}}>
 				<AppTitle/>
+				<PresetMenu/>
 			</div>
 		);
 	}

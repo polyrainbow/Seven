@@ -24,7 +24,7 @@ class UniverseEditor extends Component {
 			);
 
 			markup.push(
-				<Universe universe={u}/>
+				<Universe universe={u} key={u.id}/>
 			);
 
 			if (i === a.length - 1){
