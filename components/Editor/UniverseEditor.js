@@ -37,7 +37,7 @@ class UniverseEditor extends Component {
 
 		if (universes.length === 0){
 			markup.push(
-				<button onClick={() => this.props.addUniverse(0)}>Add universe here</button>
+				<button onClick={() => this.props.addUniverse(0)}>Add universe</button>
 			);
 		}
 

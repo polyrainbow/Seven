@@ -33,7 +33,8 @@ class Path extends Component {
 			<div style={{
 				"border": "2px solid grey",
 				"margin": "10px 0px",
-				"padding": "10px"
+				"padding": "10px",
+				"background": "radial-gradient(circle at 50% 10%, rgba(247, 221, 189, 0.79) -10%, transparent 90%), linear-gradient(140deg, rgba(255, 87, 87, 0.48) -20%, transparent 90%), linear-gradient(-150deg, #6BCCE6 -10%, transparent 60%), radial-gradient(40% 50% at 50% 120%, rgba(30, 12, 76, 0.25), transparent), linear-gradient(to right, rgba(245, 34, 116, 0.63), rgba(39, 97, 249, 0.65), white)"
 			}}>
 				<h4>📍 Path</h4>
 				<label htmlFor={path.id + "_start_time_input"} >Start Time in Reference Timeline 2: </label>

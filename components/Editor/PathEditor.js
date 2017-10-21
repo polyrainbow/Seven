@@ -37,7 +37,7 @@ class PathEditor extends Component {
 
 		if (paths.length === 0){
 			markup.push(
-				<button onClick={() => this.props.addPath(0)}>Add path here</button>
+				<button onClick={() => this.props.addPath(0)}>Add path</button>
 			);
 		}
 

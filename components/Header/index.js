@@ -13,6 +13,12 @@ class Header extends Component {
 		super(props);
 	}
 
+	downloadState(){
+		var json = JSON.stringify(this.props.appState, null, "\t");
+		var blob = new Blob([json], {type: "application/json;charset=utf-8"});
+		saveAs(blob, "events.seven.json");
+	}
+
 	render() {
 		return (
 			<div className="header" style={{
@@ -24,7 +30,14 @@ class Header extends Component {
 				"justifyContent": "space-between"
 			}}>
 				<AppTitle/>
-				<PresetMenu/>
+				<div style={{
+				  	"padding": "10px",
+					"display": "flex",
+					"alignItems": "baseline",
+				}}>
+					<PresetMenu/>
+					<button onClick={() => this.downloadState()}>Download</button>
+				</div>
 			</div>
 		);
 	}
@@ -33,6 +46,7 @@ class Header extends Component {
 
 function mapStateToProps(state){
 	return {
+		appState: state
 	}
 }
 
