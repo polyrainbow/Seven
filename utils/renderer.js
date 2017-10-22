@@ -9,6 +9,8 @@
     var mesh;
     var font;
     var universeTexture;
+    var active_universe_index = 0;
+    var camera_y_offset = 6;
 
 
     var createPath = (path, data) => {
@@ -125,26 +127,22 @@ var drawUniversePlane = function(y, data){
     var line = new THREE.LineSegments( geometry, material);
     scene.add(line);
 
+    data.earliestDateOfRef2 && createText(data.earliestDateOfRef2.years, font, 5, y, 5);
+    data.latestDateOfRef2 && createText(data.latestDateOfRef2.years, font, 5, y, -5);
 
-    var loader = new THREE.FontLoader();
-    loader.load( 'assets/helvetiker_regular.typeface.json', function ( font ) {
-        data.earliestDateOfRef2 && createText(data.earliestDateOfRef2.years, font, 5, y, 5);
-        data.latestDateOfRef2 && createText(data.latestDateOfRef2.years, font, 5, y, -5);
-
-        if (data.RS1duration > 31536000000){
-            var x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60 / 24 / 365) + " years";
-        } else if (data.RS1duration > 86400000){
-            x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60 / 24) + " days";
-        } else if (data.RS1duration > 3600000){
-            x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60) + " hours";
-        } else {
-            x_end_value = Math.round(data.RS1duration / 1000) + " seconds";
-        }
+    if (data.RS1duration > 31536000000){
+        var x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60 / 24 / 365) + " years";
+    } else if (data.RS1duration > 86400000){
+        x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60 / 24) + " days";
+    } else if (data.RS1duration > 3600000){
+        x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60) + " hours";
+    } else {
+        x_end_value = Math.round(data.RS1duration / 1000) + " seconds";
+    }
 
 
-        createText("0", font, -5, y, 6);
-        createText(x_end_value, font, 3, y, 6);
-    });
+    createText("0", font, -5, y, 6);
+    createText(x_end_value, font, 3, y, 6);
 
 }
 
@@ -161,7 +159,14 @@ var createLine = (x0, y0, z0, x1, y1, z1, color) => {
 
 var animate = () => {
     requestAnimationFrame( animate );
-    //camera.rotation.z += 0.2;
+
+    var camera_position_y_target = universe_y_positions[active_universe_index] + camera_y_offset;
+    if (camera.position.y < camera_position_y_target){
+        camera.position.y += 0.05;
+    }
+    if (camera.position.y > camera_position_y_target){
+        camera.position.y -= 0.05;
+    }
     renderer.render( scene, camera );
 }
 
@@ -177,10 +182,9 @@ var init = (parentElement) => {
     var height = parentElement.getBoundingClientRect().height;
 
     camera = new THREE.PerspectiveCamera( 70, width / height, 0.01, 1000 );
-    camera = camera;
+    window.camera = camera;
     camera.position.x = 1;
-    camera.position.y = 5;
-    camera.position.z = 12;
+    camera.position.z = 11;
 
     camera.rotation.x = -30 * 2 * Math.PI / 360;
     camera.rotation.y = 3 * 2 * Math.PI / 360;
@@ -215,10 +219,12 @@ var refresh = (data) => {
     while(scene.children.length > 0){
         scene.remove(scene.children[0]);
     }
-    var axisHelper = new THREE.AxisHelper( 5 );
-    scene.add( axisHelper );
+    //var axisHelper = new THREE.AxisHelper( 5 );
+    //scene.add( axisHelper );
     console.log(data); /////////////////////////////////////////////////
     drawUniverses(data);
+    active_universe_index = data.active_universe_index;
+    //camera.position.y = universe_y_positions[active_universe_index] + camera_y_offset;
 }
 
 

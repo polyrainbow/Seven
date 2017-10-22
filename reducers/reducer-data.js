@@ -9,7 +9,8 @@ const initialState = {
 	latestDateOfRef2: null,
 	RS1duration: 0,
 	RS2duration: 0,
-	universes: []
+	universes: [],
+	active_universe_index: 0
 };
 
 
@@ -85,6 +86,7 @@ export default function reducer(state=initialState, action){
 		var newState = {...state};
 		var path = newState.paths.find(p => p.id === action.path_id);
 		path.description = action.description;
+		newState.active_universe_index = newState.universes.findIndex(u => u.id === path.universe_id);
 		return newState;
 	}
 
@@ -93,6 +95,7 @@ export default function reducer(state=initialState, action){
 		var newState = {...state};
 		var universe = newState.universes.find(u => u.id === action.universe_id);
 		universe.name = action.name;
+		newState.active_universe_index = newState.universes.findIndex(u => u.id === action.universe_id);
 		return newState;
 	}
 
@@ -114,6 +117,9 @@ export default function reducer(state=initialState, action){
 		} else {
 			console.log("Strange insert index: " + action.insertIndex);
 		}
+
+		newState.active_universe_index = action.insertIndex;
+
 		return newState;
 	}
 
