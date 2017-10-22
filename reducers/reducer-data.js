@@ -127,6 +127,9 @@ export default function reducer(state=initialState, action){
 	if (action.type == "DELETE_UNIVERSE"){
 		var newState = {...state}; console.log(action.universe_id)
 		newState.universes = newState.universes.filter(u => u.id !== action.universe_id);
+		if (newState.active_universe_index >= newState.universes.length){
+			newState.active_universe_index = 0;
+		}
 		return newState;
 	}
 
