@@ -28,8 +28,8 @@ export default function reducer(state=initialState, action){
 
 		var newPath = {
 			id: newState.id_counter,
-			startTime: 0,
-			endTime: 0,
+			startTime: null,
+			endTime: null,
 			dilationFactor: 1,
 			universe_index: 0,
 			durationInRS1: 0,

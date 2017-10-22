@@ -162,10 +162,10 @@ var animate = () => {
 
     var camera_position_y_target = universe_y_positions[active_universe_index] + camera_y_offset;
     if (camera.position.y < camera_position_y_target){
-        camera.position.y += 0.05;
+        camera.position.y += 0.1;
     }
     if (camera.position.y > camera_position_y_target){
-        camera.position.y -= 0.05;
+        camera.position.y -= 0.1;
     }
     renderer.render( scene, camera );
 }
