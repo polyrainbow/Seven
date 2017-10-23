@@ -97,8 +97,11 @@ var createText = (text, font, x, y, z) => {
 var drawUniverses = (data) => {
     data.universes.forEach((u, i) => {
         drawUniversePlane(universe_y_positions[i], data);
+        data.paths
+        .filter(p => p.universe_index === i)
+        .forEach(p => createPath(p, data));
     });
-    data.paths.forEach(p => createPath(p, data));
+
 }
 
 
