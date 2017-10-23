@@ -72,11 +72,10 @@ const setUniverseName = (universe_id, name) => {
 }
 
 
-const setUniverse = (path_id, universe_index) => {
+const setUniverse = (universe_id) => {
 	return {
 		type: "SET_UNIVERSE",
-		path_id,
-		universe_index
+		universe_id
 	}
 }
 

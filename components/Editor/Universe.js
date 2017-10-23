@@ -7,7 +7,8 @@ import {connect} from 'react-redux';
 
 import {
 	setUniverseName,
-	deleteUniverse
+	deleteUniverse,
+	setUniverse
 } from '../../actions/index.js';
 
 class Universe extends Component {
@@ -32,13 +33,16 @@ class Universe extends Component {
 					"display": "flex",
 					"justifyContent": "space-between"
 				}}>
-					<h4>🌌 Universe</h4>
+					<h4 onClick={() => this.props.setUniverse(universe.id)}>🌌 Universe</h4>
 					<button onClick={() => this.props.deleteUniverse(universe.id)}>Delete</button>
 				</div>
 				<label htmlFor={universe.id + "_name_input"} >Name: </label>
-				<input id={universe.id + "_name_input"} type="text" onChange={(e) => {
-					this.props.setUniverseName(universe.id, e.target.value);
-				}}
+				<input
+					id={universe.id + "_name_input"}
+					type="text"
+					onChange={(e) => {
+						this.props.setUniverseName(universe.id, e.target.value);
+					}}
 					defaultValue={universe.name}
 				/>
 			</div>
@@ -55,7 +59,8 @@ function mapStateToProps(state){
 function matchDispatchToProps(dispatch){
 	return bindActionCreators({
 		setUniverseName,
-		deleteUniverse
+		deleteUniverse,
+		setUniverse
 	}, dispatch);
 }
 

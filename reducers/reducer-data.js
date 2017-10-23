@@ -137,8 +137,8 @@ export default function reducer(state=initialState, action){
 
 	if (action.type == "SET_UNIVERSE"){
 		var newState = {...state};
-		var path = newState.paths.find(p => p.id === action.path_id);
-		path.universe_index = action.universe_index;
+		var universe_index = newState.universes.findIndex(u => u.id === action.universe_id);
+		newState.active_universe_index = universe_index;
 		return newState;
 	}
 
