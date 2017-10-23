@@ -92,14 +92,21 @@ class Path extends Component {
 				<br/>
 				<label htmlFor={path.id + "_inactive_input"}>Inactive Period: </label>
 				<input
+					style={{
+						"transform": "scale(2)"
+					}}
 					id={path.id + "_inactive_input"}
 					type="checkbox"
-					defaultValue={path.isInactive}
+					defaultChecked={path.isInactive}
 					onChange={(e) => this.props.setPathActivity(path.id, e.target.checked)}
 				/>
 				<br/>
 				<label htmlFor={path.id + "_description_input"}>Description: </label>
-				<textarea id={path.id + "_description_input"} defaultValue={path.description}/>
+				<textarea
+					id={path.id + "_description_input"}
+					defaultValue={path.description}
+					onChange={(e) => this.props.setPathDescription(path.id, e.target.value)}
+				/>
 			</div>
 		);
   }

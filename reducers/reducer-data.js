@@ -2,10 +2,11 @@ var constants = require('../constants.js');
 var moment = require("moment");
 var computeStateVariables = require("./computeStateVariables.js")
 var presets = require("./presets.js");
+var uuidv4 = require("uuid/v4");
+var updateLegacyState = require("./updateLegacyState.js");
 
 const initialState = {
 	paths: [],
-	id_counter: 0,
 	earliestDateOfRef2: null,
 	latestDateOfRef2: null,
 	RS1duration: 0,
@@ -25,10 +26,9 @@ export default function reducer(state=initialState, action){
 
 	if (action.type == "ADD_PATH"){
 		var newState = {...state};
-		newState.id_counter++;
 
 		var newPath = {
-			id: newState.id_counter,
+			id: uuidv4(),
 			startTime: null,
 			endTime: null,
 			dilationFactor: 1,
@@ -106,7 +106,7 @@ export default function reducer(state=initialState, action){
 		newState.id_counter++;
 
 		var newUniverse = {
-			id: newState.id_counter,
+			id: uuidv4(),
 			name: "",
 			description: ""
 		};
@@ -144,7 +144,9 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type == "LOAD_STATE"){
-		return action.state.data;
+		var data = action.state.data;
+		var data = updateLegacyState(data);
+		return data;
 	}
 
 
