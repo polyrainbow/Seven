@@ -15,7 +15,7 @@ var spock = {
                 "startTime": {
                     "years": 2230,
                     "months": 0,
-                    "date": 1,
+                    "date": 6,
                     "hours": 0,
                     "minutes": 0,
                     "seconds": 0,
@@ -294,7 +294,7 @@ var spock = {
                 "endTime": {
                     "years": 2263,
                     "months": 0,
-                    "date": 1,
+                    "date": 2,
                     "hours": 0,
                     "minutes": 0,
                     "seconds": 0,
