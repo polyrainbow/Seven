@@ -52,6 +52,7 @@ class Header extends Component {
 							"marginLeft": "5px"
 						}}
 						onClick={() => this.downloadState()}
+						disabled={this.props.appState.data.universes.length === 0 && this.props.appState.data.paths.length === 0}
 					>
 						Download
 					</button>
