@@ -98,6 +98,14 @@ const loadState = (state) => {
 }
 
 
+const setPreset = (preset_index) => {
+	return {
+		type: "SET_PRESET",
+		preset_index
+	}
+}
+
+
 module.exports = {
 	addPath,
 	deletePath,
@@ -110,5 +118,6 @@ module.exports = {
 	setUniverse,
 	setPathDescription,
 	setPathActivity,
-	loadState
+	loadState,
+	setPreset
 }

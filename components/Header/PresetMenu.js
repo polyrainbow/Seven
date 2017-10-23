@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-export default class PresetMenu extends Component {
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+
+var presets = require("../../reducers/presets.js");
+console.log(presets)
+
+import {
+	setPreset
+} from '../../actions/index.js';
+
+class PresetMenu extends Component {
 
 	constructor(props) {
 		super(props);
@@ -11,13 +21,24 @@ export default class PresetMenu extends Component {
 		return (
 			<div>
 				<label>Presets</label>
-				<select>
-					<option></option>
-					<option>Marty McFly</option>
-					<option>Spock</option>
-					<option>Cooper</option>
+				<select onChange={(e) => this.props.setPreset(e.target.selectedIndex)}>
+					{presets.map(p => <option>{p.name}</option>)}
 				</select>
 			</div>
 		);
 	}
 }
+
+function mapStateToProps(state){
+	return {
+		data: state.data
+	}
+}
+
+function matchDispatchToProps(dispatch){
+	return bindActionCreators({
+		setPreset
+	}, dispatch);
+}
+
+export default connect(mapStateToProps, matchDispatchToProps)(PresetMenu);

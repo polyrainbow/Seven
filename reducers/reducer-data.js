@@ -1,6 +1,7 @@
 var constants = require('../constants.js');
 var moment = require("moment");
 var computeStateVariables = require("./computeStateVariables.js")
+var presets = require("./presets.js");
 
 const initialState = {
 	paths: [],
@@ -144,6 +145,11 @@ export default function reducer(state=initialState, action){
 
 	if (action.type == "LOAD_STATE"){
 		return action.state.data;
+	}
+
+
+	if (action.type == "SET_PRESET"){
+		return presets[action.preset_index].data;
 	}
 
 
