@@ -374,7 +374,7 @@ var marty = {
                 "dilationFactor": 1,
                 "universe_index": 0,
                 "durationInRS1": 345600000,
-                "description": "",
+                "description": "Marty lived in the year 1985 before he commited his first time travel.",
                 "isInactive": false,
                 "relativeStartRS1": 0,
                 "relativeEndRS1": 0.32653061224489793,
