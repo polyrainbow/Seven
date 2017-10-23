@@ -5,7 +5,6 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 var presets = require("../../reducers/presets.js");
-console.log(presets)
 
 import {
 	setPreset

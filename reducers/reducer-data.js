@@ -37,7 +37,6 @@ export default function reducer(state=initialState, action){
 			description: "",
 			isInactive: false
 		};
-		console.log(action.insertIndex)
 
 		if (action.insertIndex === newState.paths.length){
 			newState.paths.push(newPath);
@@ -126,7 +125,7 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type == "DELETE_UNIVERSE"){
-		var newState = {...state}; console.log(action.universe_id)
+		var newState = {...state};
 		newState.universes = newState.universes.filter(u => u.id !== action.universe_id);
 		if (newState.active_universe_index >= newState.universes.length){
 			newState.active_universe_index = 0;
