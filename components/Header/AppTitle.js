@@ -9,15 +9,30 @@ export default class AppTitle extends Component {
 
 	render() {
 		return (
-			<div>
-				<h1 style={{
-					"margin": "0px",
-					"fontSize": "20px"
-				}}>SEven</h1>
-				<p style={{
-					"margin": "0px",
-					"fontSize": "12px"
-				}}>Science Fiction Event Graph Generator</p>
+			<div style={{
+				"display": "flex",
+				"alignItems": "center"
+			}}>
+				<div>
+					<img src="assets/seven_logo.svg" style={{
+						"height": "30px",
+						"marginRight": "10px"
+					}} />
+				</div>
+				<div>
+					<h1 style={{
+						"margin": "0px",
+						"fontSize": "20px"
+					}}>
+						SEven
+					</h1>
+					<p style={{
+						"margin": "0px",
+						"fontSize": "12px"
+					}}>
+						Science Fiction Event Graph Generator
+					</p>
+				</div>
 			</div>
 		);
 	}

@@ -27,7 +27,7 @@ class Header extends Component {
 	handleFileInputChange(file){
 		readFileAsJSON(file, (newState) => {
 			this.props.loadState(newState);
-		}, (e) => console.log(e));		
+		}, (e) => console.log(e));
 	}
 
 	render() {
