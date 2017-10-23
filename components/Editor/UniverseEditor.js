@@ -8,6 +8,8 @@ import {addUniverse} from '../../actions/index.js';
 
 import Universe from './Universe';
 
+const uuidv4 = require('uuid/v4');
+
 class UniverseEditor extends Component {
 
 	constructor(props, context) {
@@ -24,7 +26,8 @@ class UniverseEditor extends Component {
 			);
 
 			markup.push(
-				<Universe universe={u} key={u.id}/>
+				//keys must be truly unique, so that there will be no mixing up in input fields
+				<Universe universe={u} key={uuidv4()}/>
 			);
 
 			if (i === a.length - 1){

@@ -8,6 +8,8 @@ import {addPath} from '../../actions/index.js';
 
 import Path from './Path';
 
+const uuidv4 = require('uuid/v4');
+
 class PathEditor extends Component {
 
 	constructor(props, context) {
@@ -24,7 +26,8 @@ class PathEditor extends Component {
 			);
 
 			markup.push(
-				<Path path={p} key={p.id}/>
+				//keys of paths must be truly unique, so that there will be no mixing up in input fields
+				<Path path={p} key={uuidv4()}/>
 			);
 
 			if (i === a.length - 1){
