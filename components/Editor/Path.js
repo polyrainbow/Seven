@@ -103,6 +103,10 @@ class Path extends Component {
 				<br/>
 				<label htmlFor={path.id + "_description_input"}>Description: </label>
 				<textarea
+					style={{
+						"width": "100%",
+    					"height": "90px"
+					}}
 					id={path.id + "_description_input"}
 					defaultValue={path.description}
 					onChange={(e) => this.props.setPathDescription(path.id, e.target.value)}
