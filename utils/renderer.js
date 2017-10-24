@@ -13,6 +13,24 @@
     var camera_y_offset = 6;
 
 
+    var createInterUniverseConnection = (path1, path2) =>{
+
+        var color = 0x00ff00;
+
+        var x0 = 10 * path1.relativeEndRS1 - 5;
+        var x1 = 10 * path2.relativeStartRS1 - 5;
+
+        var y0 = universe_y_positions[path1.universe_index] + 0.04;
+        var y1 = universe_y_positions[path2.universe_index] + 0.04;
+
+        var z0 = 10 * -path1.relativeEndRS2 + 5;
+        var z1 = 10 * -path2.relativeStartRS2 + 5;
+
+        createLine(x0, y0, z0, x1, y1, z1, color);
+
+    }
+
+
     var createPath = (path, data) => {
         /*
         var curve = new THREE.CubicBezierCurve3(
@@ -51,7 +69,7 @@
         Math.pow(Math.abs(x1 - x0), 2) + Math.pow(Math.abs(z1 - z0), 2)
     );
 
-    if (length < 0.5){
+    if (length < 0.25){
         createPoint((x0 + x1) / 2, y + 0.02, (z0 + z1) / 2, color);
     } else {
         createPoint(x0, y + 0.02, z0, color);
@@ -97,9 +115,19 @@ var createText = (text, font, x, y, z) => {
 var drawUniverses = (data) => {
     data.universes.forEach((u, i) => {
         drawUniversePlane(universe_y_positions[i], data);
-        data.paths
-        .filter(p => p.universe_index === i)
-        .forEach(p => createPath(p, data));
+    });
+
+    data.paths
+    .forEach((p, i, a) => {
+        if (data.universes[p.universe_index]){
+            createPath(p, data);
+            if (a[i+1] && a[i+1].universe_index !== p.universe_index){
+                //draw universe link only if both universes exist
+                if (data.universes[a[i+1].universe_index]){
+                    createInterUniverseConnection(p, a[i+1])
+                }
+            }
+        }
     });
 
 }
