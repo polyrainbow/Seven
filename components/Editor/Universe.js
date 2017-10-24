@@ -33,8 +33,18 @@ class Universe extends Component {
 					"display": "flex",
 					"justifyContent": "space-between"
 				}}>
-					<h4 onClick={() => this.props.setUniverse(universe.id)}>🌌 Universe</h4>
-					<button onClick={() => this.props.deleteUniverse(universe.id)}>Delete</button>
+					<h4>🌌 Universe</h4>
+					<div>
+						<button
+							onClick={() => this.props.setUniverse(universe.id)}
+							style={{
+								"margin": "0px 5px"
+							}}
+						>
+							Focus
+						</button>
+						<button onClick={() => this.props.deleteUniverse(universe.id)}>Delete</button>
+					</div>
 				</div>
 				<label htmlFor={universe.id + "_name_input"} >Name: </label>
 				<input
