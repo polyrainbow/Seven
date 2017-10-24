@@ -102,7 +102,6 @@ export default function reducer(state=initialState, action){
 
 	if (action.type == "ADD_UNIVERSE"){
 		var newState = {...state};
-		newState.id_counter++;
 
 		var newUniverse = {
 			id: uuidv4(),
