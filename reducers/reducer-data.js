@@ -7,10 +7,7 @@ var updateLegacyState = require("./updateLegacyState.js");
 
 const initialState = {
 	paths: [],
-	earliestDateOfRef2: null,
-	latestDateOfRef2: null,
 	RS1duration: 0,
-	RS2duration: 0,
 	universes: [],
 	active_universe_index: 0
 };
@@ -52,7 +49,7 @@ export default function reducer(state=initialState, action){
 		var newState = {...state};
 		var path = newState.paths.find(p => p.id === action.path_id);
 		path.startTime = action.startTime;
-		computeStateVariables(path, newState);
+		computeStateVariables(newState);
 		return newState;
 	}
 
@@ -60,7 +57,7 @@ export default function reducer(state=initialState, action){
 		var newState = {...state};
 		var path = newState.paths.find(p => p.id === action.path_id);
 		path.endTime = action.endTime;
-		computeStateVariables(path, newState);
+		computeStateVariables(newState);
 		return newState;
 	}
 
@@ -77,7 +74,7 @@ export default function reducer(state=initialState, action){
 		var newState = {...state};
 		var path = newState.paths.find(p => p.id === action.path_id);
 		path.dilationFactor = action.factor;
-		computeStateVariables(path, newState);
+		computeStateVariables(newState);
 		return newState;
 	}
 
@@ -106,7 +103,10 @@ export default function reducer(state=initialState, action){
 		var newUniverse = {
 			id: uuidv4(),
 			name: "",
-			description: ""
+			description: "",
+			earliestDateOfRef2: null,
+			latestDateOfRef2: null,
+			RS2duration: 0,
 		};
 
 		if (action.insertIndex === newState.universes.length){
@@ -144,12 +144,15 @@ export default function reducer(state=initialState, action){
 	if (action.type == "LOAD_STATE"){
 		var data = action.state.data;
 		var data = updateLegacyState(data);
+		computeStateVariables(newState);
 		return data;
 	}
 
 
 	if (action.type == "SET_PRESET"){
-		return presets[action.preset_index].data;
+		var newState = presets[action.preset_index].data;
+		computeStateVariables(newState);
+		return newState;
 	}
 
 

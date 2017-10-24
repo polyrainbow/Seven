@@ -80,7 +80,7 @@
 
 
 var createPoint = (x, y, z, color) => {
-    var pointGeometry = new THREE.CircleGeometry( 0.15, 16 );
+    var pointGeometry = new THREE.CircleGeometry( 0.2, 16 );
     var pointMaterial = new THREE.MeshBasicMaterial( { color: color } );
     var pointMesh = new THREE.Mesh( pointGeometry, pointMaterial );
     pointMesh.position.x = x;
@@ -114,7 +114,7 @@ var createText = (text, font, x, y, z) => {
 
 var drawUniverses = (data) => {
     data.universes.forEach((u, i) => {
-        drawUniversePlane(universe_y_positions[i], data);
+        drawUniversePlane(u, i, data);
     });
 
     data.paths
@@ -133,7 +133,9 @@ var drawUniverses = (data) => {
 }
 
 
-var drawUniversePlane = function(y, data){
+var drawUniversePlane = function(u, i, data){
+
+    var y = universe_y_positions[i];
 
     var material = new THREE.MeshBasicMaterial({map: universeTexture});
     var geometry = new THREE.PlaneGeometry( 10, 10, 10 );
@@ -158,8 +160,8 @@ var drawUniversePlane = function(y, data){
     var line = new THREE.LineSegments( geometry, material);
     scene.add(line);
 
-    data.earliestDateOfRef2 && createText(data.earliestDateOfRef2.years, font, 5, y, 5);
-    data.latestDateOfRef2 && createText(data.latestDateOfRef2.years, font, 5, y, -5);
+    u.earliestDateOfRef2 && createText(u.earliestDateOfRef2.years, font, 5, y, 5);
+    u.latestDateOfRef2 && createText(u.latestDateOfRef2.years, font, 5, y, -5);
 
     if (data.RS1duration > 31536000000){
         var x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60 / 24 / 365) + " years";
