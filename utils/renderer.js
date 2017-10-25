@@ -2,7 +2,7 @@
     PRIVATE
 *****************************/
 
-    var universe_y_positions = [0, -5, -10];
+    var distance_between_universes = 5;
     var camera;
     var scene;
     var renderer;
@@ -11,6 +11,11 @@
     var universeTexture;
     var active_universe_index = 0;
     var camera_y_offset = 6;
+    const debug_mode = true;
+
+    var getUniverseYPosition = (universe_index) => {
+        return -distance_between_universes * universe_index;
+    }
 
 
     var createInterUniverseConnection = (path1, path2) =>{
@@ -20,8 +25,8 @@
         var x0 = 10 * path1.relativeEndRS1 - 5;
         var x1 = 10 * path2.relativeStartRS1 - 5;
 
-        var y0 = universe_y_positions[path1.universe_index] + 0.04;
-        var y1 = universe_y_positions[path2.universe_index] + 0.04;
+        var y0 = getUniverseYPosition(path1.universe_index) + 0.04;
+        var y1 = getUniverseYPosition(path2.universe_index) + 0.04;
 
         var z0 = 10 * -path1.relativeEndRS2 + 5;
         var z1 = 10 * -path2.relativeStartRS2 + 5;
@@ -57,7 +62,7 @@
 
     var color = (path.dilationFactor === 1) ? 0x00ffff : 0xff2222;
 
-    var y = universe_y_positions[path.universe_index] + 0.04;
+    var y = getUniverseYPosition(path.universe_index) + 0.04;
 
     var x0 = 10 * path.relativeStartRS1 - 5;
     var x1 = 10 * path.relativeEndRS1 - 5;
@@ -135,7 +140,7 @@ var drawUniverses = (data) => {
 
 var drawUniversePlane = function(u, i, data){
 
-    var y = universe_y_positions[i];
+    var y = getUniverseYPosition(i);
 
     var material = new THREE.MeshBasicMaterial({map: universeTexture});
     var geometry = new THREE.PlaneGeometry( 10, 10, 10 );
@@ -193,14 +198,18 @@ var createLine = (x0, y0, z0, x1, y1, z1, color) => {
 var animate = () => {
     requestAnimationFrame( animate );
 
-    var camera_position_y_target = universe_y_positions[active_universe_index] + camera_y_offset;
-    if (camera.position.y < camera_position_y_target){
-        camera.position.y += 0.1;
+    if (!debug_mode){
+        var camera_position_y_target = getUniverseYPosition(active_universe_index) + camera_y_offset;
+        if (camera.position.y < camera_position_y_target){
+            camera.position.y += 0.1;
+        }
+        if (camera.position.y > camera_position_y_target){
+            camera.position.y -= 0.1;
+        }
     }
-    if (camera.position.y > camera_position_y_target){
-        camera.position.y -= 0.1;
-    }
+
     renderer.render( scene, camera );
+    
 }
 
 
@@ -257,7 +266,6 @@ var refresh = (data) => {
     console.log(data); /////////////////////////////////////////////////
     drawUniverses(data);
     active_universe_index = data.active_universe_index;
-    //camera.position.y = universe_y_positions[active_universe_index] + camera_y_offset;
 }
 
 
