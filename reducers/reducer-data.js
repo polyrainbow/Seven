@@ -133,10 +133,18 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "SET_UNIVERSE"){
+	if (action.type == "SET_ACTIVE_UNIVERSE"){
 		var newState = {...state};
 		var universe_index = newState.universes.findIndex(u => u.id === action.universe_id);
 		newState.active_universe_index = universe_index;
+		return newState;
+	}
+
+
+	if (action.type == "SET_UNIVERSE_FOR_PATH"){
+		var newState = {...state};
+		var path = newState.paths.find(p => p.id === action.path_id);
+		path.universe_index = action.universe_index;
 		return newState;
 	}
 
@@ -145,6 +153,7 @@ export default function reducer(state=initialState, action){
 		var data = action.state.data;
 		var data = updateLegacyState(data);
 		computeStateVariables(newState);
+		newState.active_universe_index = 0;
 		return data;
 	}
 
@@ -152,6 +161,7 @@ export default function reducer(state=initialState, action){
 	if (action.type == "SET_PRESET"){
 		var newState = presets[action.preset_index].data;
 		computeStateVariables(newState);
+		newState.active_universe_index = 0;
 		return newState;
 	}
 

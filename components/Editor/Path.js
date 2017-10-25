@@ -11,7 +11,7 @@ import {
 	deletePath,
 	setTimeDilationFactor,
 	setPathDescription,
-	setUniverse,
+	setUniverseForPath,
 	setPathActivity
 } from '../../actions/index.js';
 
@@ -85,7 +85,7 @@ class Path extends Component {
 				<select
 					id={path.id + "_universe_select"}
 					defaultValue={path.universe_index}
-					onChange={(e) => this.props.setUniverse(path.id, e.target.selectedIndex)}
+					onChange={(e) => this.props.setUniverseForPath(path.id, e.target.selectedIndex)}
 				>
 					{this.getUniverseOptions(this.props.data)}
 				</select>
@@ -129,7 +129,7 @@ function matchDispatchToProps(dispatch){
 		deletePath,
 		setTimeDilationFactor,
 		setPathDescription,
-		setUniverse,
+		setUniverseForPath,
 		setPathActivity
 	}, dispatch);
 }

@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import {
 	setUniverseName,
 	deleteUniverse,
-	setUniverse
+	setActiveUniverse
 } from '../../actions/index.js';
 
 class Universe extends Component {
@@ -36,7 +36,7 @@ class Universe extends Component {
 					<h4>🌌 Universe</h4>
 					<div>
 						<button
-							onClick={() => this.props.setUniverse(universe.id)}
+							onClick={() => this.props.setActiveUniverse(universe.id)}
 							style={{
 								"margin": "0px 5px"
 							}}
@@ -70,7 +70,7 @@ function matchDispatchToProps(dispatch){
 	return bindActionCreators({
 		setUniverseName,
 		deleteUniverse,
-		setUniverse
+		setActiveUniverse
 	}, dispatch);
 }
 

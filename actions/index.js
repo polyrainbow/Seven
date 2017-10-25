@@ -72,10 +72,19 @@ const setUniverseName = (universe_id, name) => {
 }
 
 
-const setUniverse = (universe_id) => {
+const setActiveUniverse = (universe_id) => {
 	return {
-		type: "SET_UNIVERSE",
+		type: "SET_ACTIVE_UNIVERSE",
 		universe_id
+	}
+}
+
+
+const setUniverseForPath = (path_id, universe_index) => {
+	return {
+		type: "SET_UNIVERSE_FOR_PATH",
+		path_id,
+		universe_index
 	}
 }
 
@@ -114,9 +123,10 @@ module.exports = {
 	addUniverse,
 	deleteUniverse,
 	setUniverseName,
-	setUniverse,
+	setActiveUniverse,
 	setPathDescription,
 	setPathActivity,
 	loadState,
-	setPreset
+	setPreset,
+	setUniverseForPath
 }

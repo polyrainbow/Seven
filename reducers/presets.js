@@ -2,12 +2,7 @@ var empty_preset = {
     "name": "",
     "data": {
         "paths": [],
-        "universes": [],
-        "RS1duration": 0,
-        "RS2duration": 0,
-        "active_universe_index": 0,
-        "earliestDateOfRef2": null,
-        "latestDateOfRef2": null
+        "universes": []
     }
 };
 
