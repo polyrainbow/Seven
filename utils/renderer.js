@@ -93,6 +93,7 @@ var createPoint = (x, y, z, color) => {
     pointMesh.position.z = z;
     pointMesh.rotation.x = 1.5 * Math.PI;
     scene.add( pointMesh );
+    return pointMesh;
 }
 
 
@@ -192,6 +193,7 @@ var createLine = (x0, y0, z0, x1, y1, z1, color) => {
     geometry.vertices.push(new THREE.Vector3(x1, y1, z1));
     var line = new THREE.Line(geometry, material);
     scene.add(line);
+    return line;
 }
 
 
