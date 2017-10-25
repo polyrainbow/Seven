@@ -20,7 +20,7 @@ class Toolbar extends Component {
 	downloadState(){
 		var json = JSON.stringify(this.props.appState, null, "\t");
 		var blob = new Blob([json], {type: "application/json;charset=utf-8"});
-		saveAs(blob, "events.seven.json");
+		saveAs(blob, "my-timeline.seven.json");
 	}
 
 	handleFileInputChange(file){
