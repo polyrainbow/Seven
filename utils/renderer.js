@@ -249,11 +249,6 @@ var init = (parentElement) => {
 
     animate();
 
-    /*
-    var plc = new THREE.PointerLockControls(camera)
-    plc.enabled = true;
-    scene.add( plc.getObject() );
-    */
 }
 
 
