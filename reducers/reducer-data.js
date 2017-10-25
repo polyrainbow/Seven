@@ -118,7 +118,7 @@ export default function reducer(state=initialState, action){
 		}
 
 		newState.active_universe_index = action.insertIndex;
-
+		computeStateVariables(newState);
 		return newState;
 	}
 
