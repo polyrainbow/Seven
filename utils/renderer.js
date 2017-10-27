@@ -27,6 +27,7 @@
     var active_universe_index = 0;
     var camera_y_offset = 6;
     const debug_mode = false;
+    var textGeometries = [];
 
     var getUniverseYPosition = (universe_index) => {
         return -distance_between_universes * universe_index;
@@ -112,15 +113,20 @@ var createPoint = (x, y, z, color) => {
 }
 
 
-var createText = (text, font, x, y, z, rotation_z, color) => {
+var createText = (text, x, y, z, rotation_z, color) => {
 
-    var textGeometry = new THREE.TextGeometry( text, {
-        font: font,
-        size: 0.5,
-        height: 0,
-        curveSegments: 12,
-        bevelEnabled: false
-    });
+    if(textGeometries[text]) {
+        textGeometry = textGeometries[text];
+    } else {
+        var textGeometry = new THREE.TextGeometry( text, {
+            font: font,
+            size: 0.5,
+            height: 0,
+            curveSegments: 12,
+            bevelEnabled: false
+        });
+        textGeometries[text] = textGeometry;
+    }
 
     var material = new THREE.MeshBasicMaterial({color: color || 0xffffff});
     var textMesh = new THREE.Mesh( textGeometry, material );
@@ -128,10 +134,12 @@ var createText = (text, font, x, y, z, rotation_z, color) => {
     textMesh.position.y = y;
     textMesh.position.z = z;
 
+    textMesh.rotation.x = 1.5 * Math.PI;
     textMesh.rotation.z = rotation_z || 0;
 
-    textMesh.rotation.x = 1.5 * Math.PI;
     scene.add(textMesh);
+
+    return textMesh;
 }
 
 
@@ -184,20 +192,20 @@ var drawUniversePlane = function(u, i, data){
     scene.add(line);
 
     if (u.RS2duration > 31536000000){
-        u.earliestDateOfRef2 && createText(u.earliestDateOfRef2.years, font, 5, y, 5);
-        u.latestDateOfRef2 && createText(u.latestDateOfRef2.years, font, 5, y, -5);
+        u.earliestDateOfRef2 && createText(u.earliestDateOfRef2.years, 5, y, 5);
+        u.latestDateOfRef2 && createText(u.latestDateOfRef2.years, 5, y, -5);
     } else if (u.RS2duration > 2628000000){
         u.earliestDateOfRef2 && createText(
             month_names[parseInt(u.earliestDateOfRef2.months)]
             + " "
             + u.earliestDateOfRef2.years,
-            font, 5, y, 5
+            5, y, 5
         );
         u.latestDateOfRef2 && createText(
             month_names[parseInt(u.latestDateOfRef2.months)]
             + " "
             + u.latestDateOfRef2.years,
-            font, 5, y, -5
+            5, y, -5
         );
     } else {
         u.earliestDateOfRef2 && createText(
@@ -206,7 +214,7 @@ var drawUniversePlane = function(u, i, data){
             + month_names[parseInt(u.earliestDateOfRef2.months)]
             + " "
             + u.earliestDateOfRef2.years,
-            font, 5, y, 5
+            5, y, 5
         );
         u.latestDateOfRef2 && createText(
             u.latestDateOfRef2.date
@@ -214,7 +222,7 @@ var drawUniversePlane = function(u, i, data){
             + month_names[parseInt(u.latestDateOfRef2.months)]
             + " "
             + u.latestDateOfRef2.years,
-            font, 5, y, -5
+            5, y, -5
         );
     }
 
@@ -237,10 +245,10 @@ var drawUniversePlane = function(u, i, data){
     }
 
 
-    createText(x_start_value, font, -5, y, 6);
-    createText(x_end_value, font, 3, y, 6);
+    createText(x_start_value, -5, y, 6);
+    createText(x_end_value, 3, y, 6);
 
-    createText(u.name, font, -5.5, y, 5, 90 * 2 * Math.PI / 360, 0xffff00);
+    createText(u.name, -5.5, y, 5, 90 * 2 * Math.PI / 360, 0xffff00);
 
 }
 
