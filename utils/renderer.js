@@ -112,7 +112,7 @@ var createPoint = (x, y, z, color) => {
 }
 
 
-var createText = (text, font, x, y, z, rotation_z) => {
+var createText = (text, font, x, y, z, rotation_z, color) => {
 
     var textGeometry = new THREE.TextGeometry( text, {
         font: font,
@@ -122,7 +122,7 @@ var createText = (text, font, x, y, z, rotation_z) => {
         bevelEnabled: false
     });
 
-    var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+    var material = new THREE.MeshBasicMaterial({color: color || 0xffffff});
     var textMesh = new THREE.Mesh( textGeometry, material );
     textMesh.position.x = x;
     textMesh.position.y = y;
@@ -240,8 +240,7 @@ var drawUniversePlane = function(u, i, data){
     createText(x_start_value, font, -5, y, 6);
     createText(x_end_value, font, 3, y, 6);
 
-
-    createText(u.name, font, -5.5, y, 5, 90 * 2 * Math.PI / 360);
+    createText(u.name, font, -5.5, y, 5, 90 * 2 * Math.PI / 360, 0xffff00);
 
 }
 
@@ -257,17 +256,83 @@ var createLine = (x0, y0, z0, x1, y1, z1, color) => {
 }
 
 
+var moveCamera = (
+    camera_position_x_target,
+    camera_position_y_target,
+    camera_position_z_target,
+    camera_rotation_x_target,
+    camera_rotation_y_target,
+    camera_rotation_z_target
+) => {
+    if (camera.position.x < camera_position_x_target){
+        camera.position.x += 0.1;
+    }
+    if (camera.position.x > camera_position_x_target){
+        camera.position.x -= 0.1;
+    }
+
+    if (camera.position.y < camera_position_y_target){
+        camera.position.y += 0.1;
+    }
+    if (camera.position.y > camera_position_y_target){
+        camera.position.y -= 0.1;
+    }
+
+    if (camera.position.z < camera_position_z_target){
+        camera.position.z += 0.1;
+    }
+    if (camera.position.z > camera_position_z_target){
+        camera.position.z -= 0.1;
+    }
+
+    //Rotation
+
+    if (camera.rotation.x < camera_rotation_x_target){
+        camera.rotation.x += 0.1;
+    }
+    if (camera.rotation.x > camera_rotation_x_target){
+        camera.rotation.x -= 0.1;
+    }
+
+    if (camera.rotation.y < camera_rotation_y_target){
+        camera.rotation.y += 0.1;
+    }
+    if (camera.rotation.y > camera_rotation_y_target){
+        camera.rotation.y -= 0.1;
+    }
+
+    if (camera.rotation.z < camera_rotation_z_target){
+        camera.rotation.z += 0.1;
+    }
+    if (camera.rotation.z > camera_rotation_z_target){
+        camera.rotation.z -= 0.1;
+    }
+
+};
+
+
 var animate = () => {
     requestAnimationFrame( animate );
 
     if (!debug_mode){
+
+        var camera_position_x_target = 1;
         var camera_position_y_target = getUniverseYPosition(active_universe_index) + camera_y_offset;
-        if (camera.position.y < camera_position_y_target){
-            camera.position.y += 0.1;
-        }
-        if (camera.position.y > camera_position_y_target){
-            camera.position.y -= 0.1;
-        }
+        var camera_position_z_target = 11;
+
+        var camera_rotation_x_target = -30 * 2 * Math.PI / 360;
+        var camera_rotation_y_target = 3 * 2 * Math.PI / 360;
+        var camera_rotation_z_target = 0;
+
+        moveCamera(
+            camera_position_x_target,
+            camera_position_y_target,
+            camera_position_z_target,
+            camera_rotation_x_target,
+            camera_rotation_y_target,
+            camera_rotation_z_target
+        );
+
     }
 
     renderer.render( scene, camera );
