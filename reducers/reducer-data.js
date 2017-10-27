@@ -150,11 +150,11 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type == "LOAD_STATE"){
-		var data = action.state.data;
-		var data = updateLegacyState(data);
+		var newState = action.state.data;
+		newState = updateLegacyState(newState);
 		computeStateVariables(newState);
 		newState.active_universe_index = 0;
-		return data;
+		return newState;
 	}
 
 
