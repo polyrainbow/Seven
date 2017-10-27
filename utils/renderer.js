@@ -2,6 +2,21 @@
     PRIVATE
 *****************************/
 
+    var month_names = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+    ]
+
     var distance_between_universes = 5;
     var camera;
     var scene;
@@ -11,7 +26,7 @@
     var universeTexture;
     var active_universe_index = 0;
     var camera_y_offset = 6;
-    const debug_mode = true;
+    const debug_mode = false;
 
     var getUniverseYPosition = (universe_index) => {
         return -distance_between_universes * universe_index;
@@ -166,8 +181,40 @@ var drawUniversePlane = function(u, i, data){
     var line = new THREE.LineSegments( geometry, material);
     scene.add(line);
 
-    u.earliestDateOfRef2 && createText(u.earliestDateOfRef2.years, font, 5, y, 5);
-    u.latestDateOfRef2 && createText(u.latestDateOfRef2.years, font, 5, y, -5);
+    if (u.RS2duration > 31536000000){
+        u.earliestDateOfRef2 && createText(u.earliestDateOfRef2.years, font, 5, y, 5);
+        u.latestDateOfRef2 && createText(u.latestDateOfRef2.years, font, 5, y, -5);
+    } else if (u.RS2duration > 2628000000){
+        u.earliestDateOfRef2 && createText(
+            month_names[parseInt(u.earliestDateOfRef2.months)]
+            + " "
+            + u.earliestDateOfRef2.years,
+            font, 5, y, 5
+        );
+        u.latestDateOfRef2 && createText(
+            month_names[parseInt(u.latestDateOfRef2.months)]
+            + " "
+            + u.latestDateOfRef2.years,
+            font, 5, y, -5
+        );
+    } else {
+        u.earliestDateOfRef2 && createText(
+            u.earliestDateOfRef2.date
+            + " "
+            + month_names[parseInt(u.earliestDateOfRef2.months)]
+            + " "
+            + u.earliestDateOfRef2.years,
+            font, 5, y, 5
+        );
+        u.latestDateOfRef2 && createText(
+            u.latestDateOfRef2.date
+            + " "
+            + month_names[parseInt(u.latestDateOfRef2.months)]
+            + " "
+            + u.latestDateOfRef2.years,
+            font, 5, y, -5
+        );
+    }
 
     if (data.RS1duration > 31536000000){
         var x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60 / 24 / 365) + " years";
@@ -211,7 +258,7 @@ var animate = () => {
     }
 
     renderer.render( scene, camera );
-    
+
 }
 
 
