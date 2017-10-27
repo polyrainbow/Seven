@@ -11,6 +11,9 @@ class Editor extends Component {
 
 	constructor(props, context) {
 		super(props, context);
+		this.state = {
+			"active_tab": "universes"
+		}
 	}
 
 
@@ -18,12 +21,26 @@ class Editor extends Component {
 		return (
 			<div className="editor" style={{
 				"gridArea": "2 / 1 / 3 / 2",
-				"padding": "10px",
 				"overflow": "auto"
 			}}>
-				<UniverseEditor />
-				<br/>
-				<PathEditor />
+				<ul className="nav nav-tabs">
+					<li className="nav-item" onClick={() => this.setState({"active_tab": "universes"})}>
+						<a className={"nav-link" + (this.state.active_tab === "universes" ? " active" : "")} href="#">
+							Universes
+						</a>
+					</li>
+					<li className="nav-item" onClick={() => this.setState({"active_tab": "paths"})}>
+						<a className={"nav-link" + (this.state.active_tab === "paths" ? " active" : "")} href="#">
+							Paths
+						</a>
+					</li>
+				</ul>
+				<div style={{
+					"padding": "10px"
+				}}
+				>
+					{this.state.active_tab === "universes" ? <UniverseEditor /> : <PathEditor />}
+				</div>
 			</div>
 		);
   }
