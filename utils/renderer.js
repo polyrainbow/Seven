@@ -112,7 +112,7 @@ var createPoint = (x, y, z, color) => {
 }
 
 
-var createText = (text, font, x, y, z) => {
+var createText = (text, font, x, y, z, rotation_z) => {
 
     var textGeometry = new THREE.TextGeometry( text, {
         font: font,
@@ -127,6 +127,8 @@ var createText = (text, font, x, y, z) => {
     textMesh.position.x = x;
     textMesh.position.y = y;
     textMesh.position.z = z;
+
+    textMesh.rotation.z = rotation_z || 0;
 
     textMesh.rotation.x = 1.5 * Math.PI;
     scene.add(textMesh);
@@ -217,18 +219,29 @@ var drawUniversePlane = function(u, i, data){
     }
 
     if (data.RS1duration > 31536000000){
-        var x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60 / 24 / 365) + " years";
+        var unit = "years";
+        var x_start_value = "0 " + unit;
+        var x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60 / 24 / 365) + " " + unit;
     } else if (data.RS1duration > 86400000){
-        x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60 / 24) + " days";
+        unit = "days";
+        x_start_value = "0 " + unit;
+        x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60 / 24) + " " + unit;
     } else if (data.RS1duration > 3600000){
-        x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60) + " hours";
+        unit = "hours";
+        x_start_value = "0 " + unit;
+        x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60) + " " + unit;
     } else {
-        x_end_value = Math.round(data.RS1duration / 1000) + " seconds";
+        unit = "seconds";
+        x_start_value = "0 " + unit;
+        x_end_value = Math.round(data.RS1duration / 1000) + " " + unit;
     }
 
 
-    createText("0", font, -5, y, 6);
+    createText(x_start_value, font, -5, y, 6);
     createText(x_end_value, font, 3, y, 6);
+
+
+    createText(u.name, font, -5.5, y, 5, 90 * 2 * Math.PI / 360);
 
 }
 
