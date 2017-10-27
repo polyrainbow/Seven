@@ -27,6 +27,9 @@
     var active_universe_index = 0;
     var camera_y_offset = 6;
     const debug_mode = false;
+    var universe_plane_material;
+    var universe_plane_geometry;
+    var pointGeometry = new THREE.CircleGeometry( 0.2, 16 );
     var textGeometries = [];
 
     var getUniverseYPosition = (universe_index) => {
@@ -101,7 +104,6 @@
 
 
 var createPoint = (x, y, z, color) => {
-    var pointGeometry = new THREE.CircleGeometry( 0.2, 16 );
     var pointMaterial = new THREE.MeshBasicMaterial( { color: color } );
     var pointMesh = new THREE.Mesh( pointGeometry, pointMaterial );
     pointMesh.position.x = x;
@@ -112,19 +114,23 @@ var createPoint = (x, y, z, color) => {
     return pointMesh;
 }
 
+var createTextGeometry = (text) => {
+    return new THREE.TextGeometry( text, {
+        font: font,
+        size: 0.5,
+        height: 0,
+        curveSegments: 12,
+        bevelEnabled: false
+    });
+}
+
 
 var createText = (text, x, y, z, rotation_z, color) => {
 
     if(textGeometries[text]) {
         textGeometry = textGeometries[text];
     } else {
-        var textGeometry = new THREE.TextGeometry( text, {
-            font: font,
-            size: 0.5,
-            height: 0,
-            curveSegments: 12,
-            bevelEnabled: false
-        });
+        var textGeometry = createTextGeometry(text);
         textGeometries[text] = textGeometry;
     }
 
@@ -168,9 +174,7 @@ var drawUniversePlane = function(u, i, data){
 
     var y = getUniverseYPosition(i);
 
-    var material = new THREE.MeshBasicMaterial({map: universeTexture});
-    var geometry = new THREE.PlaneGeometry( 10, 10, 10 );
-    var mesh = new THREE.Mesh(geometry, material);
+    var mesh = new THREE.Mesh(universe_plane_geometry, universe_plane_material);
     mesh.rotation.x = 1.5 * Math.PI;
     mesh.position.y = y;
     scene.add(mesh);
@@ -380,6 +384,8 @@ var init = (parentElement) => {
     var textureLoader = new THREE.TextureLoader();
     textureLoader.load('assets/HubbleUltraDeepField_1024.jpg', (texture) => {
         universeTexture = texture;
+        universe_plane_material = new THREE.MeshBasicMaterial({map: universeTexture});
+        universe_plane_geometry = new THREE.PlaneGeometry( 10, 10, 10 );
     });
 
     animate();
