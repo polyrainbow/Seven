@@ -166,7 +166,7 @@ export default function reducer(state=initialState, action){
 			earliestDateOfRef2: null,
 			latestDateOfRef2: null,
 			RS2duration: 0,
-			isCreatedAtFirstEntering: true
+			isCreatedAtFirstEntering: newState.universes.length > 0
 		};
 
 		if (action.insertIndex === newState.universes.length){
