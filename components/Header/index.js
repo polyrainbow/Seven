@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 
 import {
 	loadState
-} from '../../actions/index.js';
+} from '../../actions/system.js';
 
 class Header extends Component {
 

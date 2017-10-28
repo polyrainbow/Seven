@@ -14,12 +14,12 @@ const store = createStore(
 
 const app = document.getElementById("app");
 
-/*
+
 const unsubscribe = store.subscribe(() => {
 	console.log(store.getState());
     return;
 })
-*/
+
 
 ReactDOM.render(
 	<Provider {... { store }}>

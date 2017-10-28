@@ -37,25 +37,25 @@
     }
 
 
-    var createInterUniverseConnection = (path1, path2) =>{
+    var createInterUniverseConnection = (span1, span2) =>{
 
         var color = 0x00ff00;
 
-        var x0 = 10 * path1.relativeEndRS1 - 5;
-        var x1 = 10 * path2.relativeStartRS1 - 5;
+        var x0 = 10 * span1.relativeEndRS1 - 5;
+        var x1 = 10 * span2.relativeStartRS1 - 5;
 
-        var y0 = getUniverseYPosition(path1.universe_index) + 0.04;
-        var y1 = getUniverseYPosition(path2.universe_index) + 0.04;
+        var y0 = getUniverseYPosition(span1.universe_index) + 0.04;
+        var y1 = getUniverseYPosition(span2.universe_index) + 0.04;
 
-        var z0 = 10 * -path1.relativeEndRS2 + 5;
-        var z1 = 10 * -path2.relativeStartRS2 + 5;
+        var z0 = 10 * -span1.relativeEndRS2 + 5;
+        var z1 = 10 * -span2.relativeStartRS2 + 5;
 
         createLine(x0, y0, z0, x1, y1, z1, color);
 
     }
 
 
-    var createPath = (path, data) => {
+    var createSpan = (span, data) => {
         /*
         var curve = new THREE.CubicBezierCurve3(
             new THREE.Vector3( -1, 0, 1 ),
@@ -75,19 +75,19 @@
         scene.add(curveObject);
         */
 
-    if (path.isInactive === true){
+    if (span.isInactive === true){
         return;
     }
 
-    var color = (path.dilationFactor === 1) ? 0x00ffff : 0xff2222;
+    var color = (span.dilationFactor === 1) ? 0x00ffff : 0xff2222;
 
-    var y = getUniverseYPosition(path.universe_index) + 0.04;
+    var y = getUniverseYPosition(span.universe_index) + 0.04;
 
-    var x0 = 10 * path.relativeStartRS1 - 5;
-    var x1 = 10 * path.relativeEndRS1 - 5;
+    var x0 = 10 * span.relativeStartRS1 - 5;
+    var x1 = 10 * span.relativeEndRS1 - 5;
 
-    var z0 = 10 * -path.relativeStartRS2 + 5;
-    var z1 = 10 * -path.relativeEndRS2 + 5;
+    var z0 = 10 * -span.relativeStartRS2 + 5;
+    var z1 = 10 * -span.relativeEndRS2 + 5;
 
     var length = Math.sqrt(
         Math.pow(Math.abs(x1 - x0), 2) + Math.pow(Math.abs(z1 - z0), 2)
@@ -154,10 +154,10 @@ var drawUniverses = (data) => {
         drawUniversePlane(u, i, data);
     });
 
-    data.paths
+    data.spans
     .forEach((p, i, a) => {
         if (data.universes[p.universe_index]){
-            createPath(p, data);
+            createSpan(p, data);
             if (a[i+1] && a[i+1].universe_index !== p.universe_index){
                 //draw universe link only if both universes exist
                 if (data.universes[a[i+1].universe_index]){

@@ -1,18 +1,18 @@
 var moment = require("moment");
 
-var getEarliestDateOfRefSys2 = (paths, universe_index) => {
+var getEarliestDateOfRefSys2 = (spans, universe_index) => {
 
-	var paths_of_universe = paths.filter(p => p.universe_index === universe_index);
+	var spans_of_universe = spans.filter(p => p.universe_index === universe_index);
 
-	if (paths_of_universe.length === 0) return moment().toObject();
+	if (spans_of_universe.length === 0) return moment().toObject();
 
-	if (!objectIsUnixStartTime(moment(paths_of_universe[0].startTime).toObject())){
-		var earliest_date = moment(paths_of_universe[0].startTime);
+	if (!objectIsUnixStartTime(moment(spans_of_universe[0].startTime).toObject())){
+		var earliest_date = moment(spans_of_universe[0].startTime);
 	} else {
 		earliest_date = moment();
 	}
 
-	paths_of_universe.forEach(p => {
+	spans_of_universe.forEach(p => {
 		if (
 			(!objectIsUnixStartTime(moment(p.startTime).toObject()))
 			&& moment(p.startTime).isBefore(earliest_date)
@@ -32,19 +32,19 @@ var getEarliestDateOfRefSys2 = (paths, universe_index) => {
 
 }
 
-var getLatestDateOfRefSys2 = (paths, universe_index) => {
+var getLatestDateOfRefSys2 = (spans, universe_index) => {
 
-	var paths_of_universe = paths.filter(p => p.universe_index === universe_index);
+	var spans_of_universe = spans.filter(p => p.universe_index === universe_index);
 
-	if (paths_of_universe.length === 0) return moment().toObject();
+	if (spans_of_universe.length === 0) return moment().toObject();
 
-	if (!objectIsUnixStartTime(moment(paths_of_universe[0].startTime).toObject())){
-		var latest_date = moment(paths_of_universe[0].startTime);
+	if (!objectIsUnixStartTime(moment(spans_of_universe[0].startTime).toObject())){
+		var latest_date = moment(spans_of_universe[0].startTime);
 	}	else {
 		latest_date = moment();
 	}
 
-	paths_of_universe.forEach(p => {
+	spans_of_universe.forEach(p => {
 		if (
 			(!objectIsUnixStartTime(moment(p.startTime).toObject()))
 			&& moment(p.startTime).isAfter(latest_date)
@@ -65,21 +65,21 @@ var getLatestDateOfRefSys2 = (paths, universe_index) => {
 }
 
 
-var getDurationOfRS1 = (paths) => {
+var getDurationOfRS1 = (spans) => {
 	var RS1duration = 0;
-	paths.forEach(path => {
-		RS1duration += path.durationInRS1;
+	spans.forEach(span => {
+		RS1duration += span.durationInRS1;
 	});
 	return RS1duration;
 }
 
-var getRelativeStartOfPathInRS1 = (path_id, state) => {
-	var p_index = state.paths.findIndex(p => p.id === path_id);
+var getRelativeStartOfSpanInRS1 = (span_id, state) => {
+	var p_index = state.spans.findIndex(p => p.id === span_id);
 
 	var start_in_ms = 0;
 
 	for (var i = 0; i < p_index; i++){
-		start_in_ms += state.paths[i].durationInRS1;
+		start_in_ms += state.spans[i].durationInRS1;
 	}
 
 	return start_in_ms / state.RS1duration;
@@ -87,13 +87,13 @@ var getRelativeStartOfPathInRS1 = (path_id, state) => {
 }
 
 
-var getRelativeEndOfPathInRS1 = (path_id, state) => {
-	var p_index = state.paths.findIndex(p => p.id === path_id);
+var getRelativeEndOfSpanInRS1 = (span_id, state) => {
+	var p_index = state.spans.findIndex(p => p.id === span_id);
 
 	var end_in_ms = 0;
 
 	for (var i = 0; i <= p_index; i++){
-		end_in_ms += state.paths[i].durationInRS1;
+		end_in_ms += state.spans[i].durationInRS1;
 	}
 
 	return end_in_ms / state.RS1duration;
@@ -102,29 +102,37 @@ var getRelativeEndOfPathInRS1 = (path_id, state) => {
 
 
 var computeStateVariables = (state) => {
-	//currentPath.startTime && currentPath.endTime && currentPath.dilationFactor are already defined here
+	//currentSpan.startTime && currentSpan.endTime && currentSpan.dilationFactor are already defined here
 
-	state.paths.forEach(p => {
-		p.durationInRS1 = Math.abs(moment(p.startTime).diff(p.endTime)) / p.dilationFactor;
+	state.paths.forEach(path => {
+		path.spans.forEach(span => {
+			span.durationInRS1 = Math.abs(moment(span.startTime).diff(span.endTime)) / span.dilationFactor;
+		});
 	});
 
+	//TODO: shall we compute earliest/latest date for a single path for each universe
+	//or for all paths together for each universe? or both?
 	state.universes.forEach((u, i) => {
-		u.earliestDateOfRef2 = getEarliestDateOfRefSys2(state.paths, i);
-		u.latestDateOfRef2 = getLatestDateOfRefSys2(state.paths, i);
+		u.earliestDateOfRef2 = getEarliestDateOfRefSys2(state.spans, i);
+		u.latestDateOfRef2 = getLatestDateOfRefSys2(state.spans, i);
 		u.RS2duration = Math.abs(moment(u.earliestDateOfRef2).diff(u.latestDateOfRef2));
 	});
 
-	//Here, we rely on path.durationInRS1
-	state.RS1duration = getDurationOfRS1(state.paths);
+	//Here, we rely on span.durationInRS1
+	state.paths.forEach(path =>
+		path.RS1duration = getDurationOfRS1(path.spans)
+	);
 
 	state.paths.forEach(path => {
-		var u = state.universes[path.universe_index];
+		path.spans.forEach(span => {
+			var u = state.universes[span.universe_index];
 
-		path.relativeStartRS1 = getRelativeStartOfPathInRS1(path.id, state);
-		path.relativeEndRS1 = getRelativeEndOfPathInRS1(path.id, state);
+			span.relativeStartRS1 = getRelativeStartOfSpanInRS1(span.id, state);
+			span.relativeEndRS1 = getRelativeEndOfSpanInRS1(span.id, state);
 
-		path.relativeStartRS2 = moment(path.startTime).diff(u.earliestDateOfRef2) / u.RS2duration;
-		path.relativeEndRS2 = Math.abs(moment(path.endTime).diff(u.earliestDateOfRef2)) / u.RS2duration;
+			span.relativeStartRS2 = moment(span.startTime).diff(u.earliestDateOfRef2) / u.RS2duration;
+			span.relativeEndRS2 = Math.abs(moment(span.endTime).diff(u.earliestDateOfRef2)) / u.RS2duration;
+		});
 	});
 
 };

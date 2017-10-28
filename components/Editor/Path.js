@@ -6,14 +6,11 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import {
-	setPathStartTime,
-	setPathEndTime,
+	setPathName,
 	deletePath,
-	setTimeDilationFactor,
 	setPathDescription,
-	setUniverseForPath,
-	setPathActivity
-} from '../../actions/index.js';
+	setActivePath
+} from '../../actions/paths.js';
 
 class Path extends Component {
 
@@ -43,62 +40,25 @@ class Path extends Component {
 					"display": "flex",
 					"justifyContent": "space-between"
 				}}>
-					<h4>📍 Path</h4>
-					<button onClick={() => this.props.deletePath(path.id)}>Delete</button>
+					<h4>📈 Path</h4>
+					<div>
+						<button
+							onClick={() => this.props.setActiveUniverse(universe.id)}
+							style={{
+								"margin": "0px 5px"
+							}}
+						>
+							Display
+						</button>
+						<button onClick={() => this.props.deletePath(path.id)}>Delete</button>
+					</div>
 				</div>
-				<label htmlFor={path.id + "_start_time_input"} >Start Time in Reference Timeline 2: </label>
+				<label htmlFor={path.id + "_name"} >Name: </label>
 				<input
-					id={path.id + "_start_time_input"}
-					type="datetime-local"
-					onChange={(e) => {console.log(e.target.value)
-						var object = moment(e.target.value).toObject();
-						if (!objectIsUnixStartTime(object)){
-							this.props.setPathStartTime(path.id, object);
-						}
-					}}
-					defaultValue={moment(path.startTime).format('YYYY-MM-DDTHH:mm')}
-				/>
-				<br/>
-				<label htmlFor={path.id + "_end_time_input"} >End Time in Reference Timeline 2: </label>
-				<input
-					id={path.id + "_end_time_input"}
-					type="datetime-local"
-					onChange={(e) => {
-						var object = moment(e.target.value).toObject();
-						if (!objectIsUnixStartTime(object)){
-							this.props.setPathEndTime(path.id, object)
-						}
-					}}
-					defaultValue={moment(path.endTime).format('YYYY-MM-DDTHH:mm')}
-				/>
-				<br/>
-				<label htmlFor={path.id + "_time_dilation_factor_input"}>Time Dilation Factor: </label>
-				<input
-					id={path.id + "_time_dilation_factor_input"}
-					type="number"
-					defaultValue={path.dilationFactor}
-					onChange={(e) => this.props.setTimeDilationFactor(path.id, parseFloat(e.target.value))}
-					title="The higher this factor, the faster you travel through the time of reference system 2"
-				/>
-				<br/>
-				<label htmlFor={path.id + "_universe_select"}>Universe: </label>
-				<select
-					id={path.id + "_universe_select"}
-					defaultValue={path.universe_index}
-					onChange={(e) => this.props.setUniverseForPath(path.id, e.target.selectedIndex)}
-				>
-					{this.getUniverseOptions(this.props.data)}
-				</select>
-				<br/>
-				<label htmlFor={path.id + "_inactive_input"}>Inactive Period: </label>
-				<input
-					style={{
-						"transform": "scale(2)"
-					}}
-					id={path.id + "_inactive_input"}
-					type="checkbox"
-					defaultChecked={path.isInactive}
-					onChange={(e) => this.props.setPathActivity(path.id, e.target.checked)}
+					id={path.id + "_name"}
+					type="text"
+					onChange={(e) => {this.props.setPathName(path.id, e.target.value)}}
+					defaultValue={path.name}
 				/>
 				<br/>
 				<label htmlFor={path.id + "_description_input"}>Description: </label>
@@ -124,13 +84,10 @@ function mapStateToProps(state){
 
 function matchDispatchToProps(dispatch){
 	return bindActionCreators({
-		setPathStartTime,
-		setPathEndTime,
+		setPathName,
 		deletePath,
-		setTimeDilationFactor,
 		setPathDescription,
-		setUniverseForPath,
-		setPathActivity
+		setActivePath
 	}, dispatch);
 }
 

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {addPath} from '../../actions/index.js';
+import {addPath} from '../../actions/paths.js';
 
 import Path from './Path';
 

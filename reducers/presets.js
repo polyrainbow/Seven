@@ -1,7 +1,7 @@
 var empty_preset = {
     "name": "",
     "data": {
-        "paths": [],
+        "spans": [],
         "universes": []
     }
 };
@@ -9,7 +9,7 @@ var empty_preset = {
 var spock = {
     "name": "Spock",
     "data": {
-        "paths": [
+        "spans": [
             {
                 "id": "03e2700d-9cf3-4559-9e29-a6c3486c9fac",
                 "startTime": {
@@ -350,7 +350,7 @@ var spock = {
 var marty = {
     "name": "Marty McFly",
     "data": {
-        "paths": [
+        "spans": [
             {
                 "id": "c80d34bc-06ec-4a11-b0f7-5b5d961e313a",
                 "startTime": {
@@ -657,7 +657,7 @@ var marty = {
 var cooper = {
     "name": "Cooper",
 	"data": {
-		"paths": [
+		"spans": [
 			{
 				"id": "c343ea92-3316-4ae7-8fc1-45f0a3a2a3f9",
 				"startTime": {
@@ -785,7 +785,7 @@ var cooper = {
 var groundhog_day = {
     "name": "Groundhog Day",
 	"data": {
-		"paths": [
+		"spans": [
 			{
 				"id": "6fbdd911-a7db-4ccd-966e-597f8898b178",
 				"startTime": {

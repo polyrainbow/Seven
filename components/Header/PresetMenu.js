@@ -8,7 +8,7 @@ var presets = require("../../reducers/presets.js");
 
 import {
 	setPreset
-} from '../../actions/index.js';
+} from '../../actions/system.js';
 
 class PresetMenu extends Component {
 

@@ -3,17 +3,36 @@ var moment = require("moment");
 var computeStateVariables = require("./computeStateVariables.js")
 var presets = require("./presets.js");
 var uuidv4 = require("uuid/v4");
-var updateLegacyState = require("./updateLegacyState.js");
+
+var getSpan = (state, span_id) => {
+	for (var p = 0; p < state.paths.length; p++){
+		var path = state.paths[p];
+		for (var s = 0; s < path.spans.length; s++){
+			var span = paths.spans[s];
+			if (span.id === span_id){
+				return span;
+			}
+		}
+	}
+}
 
 const initialState = {
 	paths: [],
-	RS1duration: 0,
 	universes: [],
-	active_universe_index: 0
+	active_universe_index: 0,
+	active_path_id: null
 };
 
 
 export default function reducer(state=initialState, action){
+
+	if (action.type == "DELETE_SPAN"){
+		var newState = {...state};
+		newState.paths.forEach(p => {
+			p.spans = p.spans.filter(s => s.id !== action.span_id);
+		});
+		return newState;
+	}
 
 	if (action.type == "DELETE_PATH"){
 		var newState = {...state};
@@ -26,6 +45,42 @@ export default function reducer(state=initialState, action){
 
 		var newPath = {
 			id: uuidv4(),
+			name: "",
+			description: "",
+			RS1duration: 0,
+			spans: []
+		};
+
+
+		if (action.insertIndex === newState.paths.length){
+			newState.paths.push(newPath);
+		} else if (action.insertIndex < newState.paths.length){
+			newState.paths = immutableSplice(newState.paths, action.insertIndex, 0, newPath);
+		} else {
+			console.log("Strange insert index: " + action.insertIndex)
+		}
+
+		newState.active_path_id = newPath.id;
+
+		return newState;
+
+	}
+
+
+	if (action.type == "SET_PATH_NAME"){
+		var newState = {...state};
+		var path = newState.paths.find(p => p.id === action.path_id);
+		path.name = action.name;
+		newState.active_path_id = path.id;
+		return newState;
+	}
+
+
+	if (action.type == "ADD_SPAN"){
+		var newState = {...state};
+
+		var newSpan = {
+			id: uuidv4(),
 			startTime: null,
 			endTime: null,
 			dilationFactor: 1,
@@ -35,55 +90,59 @@ export default function reducer(state=initialState, action){
 			isInactive: false
 		};
 
-		if (action.insertIndex === newState.paths.length){
-			newState.paths.push(newPath);
-		} else if (action.insertIndex < newState.paths.length){
-			newState.paths = immutableSplice(newState.paths, action.insertIndex, 0, newPath);
+		var path = newState.paths.find(p => p.id === action.path_id);
+
+		if (action.insertIndex === path.spans.length){
+			path.spans.push(newSpan);
+		} else if (action.insertIndex < path.spans.length){
+			path.spans = immutableSplice(path.spans, action.insertIndex, 0, newSpan);
 		} else {
 			console.log("Strange insert index: " + action.insertIndex)
 		}
 		return newState;
 	}
 
-	if (action.type == "SET_PATH_START_TIME"){
-		var newState = {...state};
-		var path = newState.paths.find(p => p.id === action.path_id);
-		path.startTime = action.startTime;
-		computeStateVariables(newState);
-		return newState;
-	}
 
-	if (action.type == "SET_PATH_END_TIME"){
+	if (action.type == "SET_SPAN_START_TIME"){
 		var newState = {...state};
-		var path = newState.paths.find(p => p.id === action.path_id);
-		path.endTime = action.endTime;
+		var span = getSpan(newState, action.span_id);
+		span.startTime = action.startTime;
 		computeStateVariables(newState);
 		return newState;
 	}
 
 
-	if (action.type == "SET_PATH_ACTIVITY"){
+	if (action.type == "SET_SPAN_END_TIME"){
 		var newState = {...state};
-		var path = newState.paths.find(p => p.id === action.path_id);
-		path.isInactive = action.isInactive;
+		var span = getSpan(newState, action.span_id);
+		span.endTime = action.endTime;
+		computeStateVariables(newState);
+		return newState;
+	}
+
+
+	if (action.type == "SET_SPAN_ACTIVITY"){
+		var newState = {...state};
+		var span = getSpan(newState, action.span_id);
+		span.isInactive = action.isInactive;
 		return newState;
 	}
 
 
 	if (action.type == "SET_TIME_DILATION_FACTOR"){
 		var newState = {...state};
-		var path = newState.paths.find(p => p.id === action.path_id);
-		path.dilationFactor = action.factor;
+		var span = getSpan(newState, action.span_id);
+		span.dilationFactor = action.factor;
 		computeStateVariables(newState);
 		return newState;
 	}
 
 
-	if (action.type == "SET_PATH_DESCRIPTION"){
+	if (action.type == "SET_SPAN_DESCRIPTION"){
 		var newState = {...state};
-		var path = newState.paths.find(p => p.id === action.path_id);
-		path.description = action.description;
-		newState.active_universe_index = newState.universes.findIndex(u => u.id === path.universe_id);
+		var span = getSpan(newState, action.span_id);
+		span.description = action.description;
+		newState.active_universe_index = newState.universes.findIndex(u => u.id === span.universe_id);
 		return newState;
 	}
 
@@ -107,6 +166,7 @@ export default function reducer(state=initialState, action){
 			earliestDateOfRef2: null,
 			latestDateOfRef2: null,
 			RS2duration: 0,
+			isCreatedAtFirstEntering: true
 		};
 
 		if (action.insertIndex === newState.universes.length){
@@ -133,6 +193,15 @@ export default function reducer(state=initialState, action){
 	}
 
 
+	if (action.type == "SET_UNIVERSE_CREATION_TYPE"){
+		var newState = {...state};
+		var universe = newState.universes.find(u => u.id === action.universe_id);
+		universe.isCreatedAtFirstEntering = action.isCreatedAtFirstEntering;
+		return newState;
+	}
+
+
+
 	if (action.type == "SET_ACTIVE_UNIVERSE"){
 		var newState = {...state};
 		var universe_index = newState.universes.findIndex(u => u.id === action.universe_id);
@@ -141,17 +210,16 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "SET_UNIVERSE_FOR_PATH"){
+	if (action.type == "SET_UNIVERSE_FOR_SPAN"){
 		var newState = {...state};
-		var path = newState.paths.find(p => p.id === action.path_id);
-		path.universe_index = action.universe_index;
+		var span = getSpan(newState, action.span_id);
+		span.universe_index = action.universe_index;
 		return newState;
 	}
 
 
 	if (action.type == "LOAD_STATE"){
 		var newState = action.state.data;
-		newState = updateLegacyState(newState);
 		computeStateVariables(newState);
 		newState.active_universe_index = 0;
 		return newState;

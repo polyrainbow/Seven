@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {addUniverse} from '../../actions/index.js';
+import {addUniverse} from '../../actions/universes.js';
 
 import Universe from './Universe';
 

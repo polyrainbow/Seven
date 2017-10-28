@@ -13,13 +13,13 @@ class Visual extends Component {
 	}
 
 	componentDidMount(){
-		renderer.init(this.refs.visualWrapper);
-		renderer.refresh(this.props.data);
+		//renderer.init(this.refs.visualWrapper);
+		//renderer.refresh(this.props.data);
 	}
 
 
 	componentWillReceiveProps(newProps){
-		renderer.refresh(newProps.data);
+		//renderer.refresh(newProps.data);
 	}
 
 	render() {

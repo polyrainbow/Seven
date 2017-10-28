@@ -8,8 +8,9 @@ import {connect} from 'react-redux';
 import {
 	setUniverseName,
 	deleteUniverse,
-	setActiveUniverse
-} from '../../actions/index.js';
+	setActiveUniverse,
+	setUniverseCreationType
+} from '../../actions/universes.js';
 
 class Universe extends Component {
 
@@ -55,6 +56,17 @@ class Universe extends Component {
 					}}
 					defaultValue={universe.name}
 				/>
+			<br/>
+			<label htmlFor={universe.id + "_created_at_entering_input"}>Is created at first entering: </label>
+			<input
+				style={{
+					"transform": "scale(2)"
+				}}
+				id={universe.id + "_created_at_entering_input"}
+				type="checkbox"
+				defaultChecked={universe.isCreatedAtFirstEntering}
+				onChange={(e) => this.props.setUniverseCreationType(universe.id, e.target.checked)}
+			/>
 			</div>
 		);
   }
@@ -70,7 +82,8 @@ function matchDispatchToProps(dispatch){
 	return bindActionCreators({
 		setUniverseName,
 		deleteUniverse,
-		setActiveUniverse
+		setActiveUniverse,
+		setUniverseCreationType
 	}, dispatch);
 }
 
