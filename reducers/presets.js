@@ -1,7 +1,7 @@
 var empty_preset = {
     "name": "",
     "data": {
-        "spans": [],
+        "paths": [],
         "universes": []
     }
 };

@@ -26,7 +26,7 @@ const initialState = {
 
 export default function reducer(state=initialState, action){
 
-	if (action.type == "DELETE_SPAN"){
+	if (action.type === "DELETE_SPAN"){
 		var newState = {...state};
 		newState.paths.forEach(p => {
 			p.spans = p.spans.filter(s => s.id !== action.span_id);
@@ -34,13 +34,13 @@ export default function reducer(state=initialState, action){
 		return newState;
 	}
 
-	if (action.type == "DELETE_PATH"){
+	if (action.type === "DELETE_PATH"){
 		var newState = {...state};
 		newState.paths = newState.paths.filter(p => p.id !== action.path_id);
 		return newState;
 	}
 
-	if (action.type == "ADD_PATH"){
+	if (action.type === "ADD_PATH"){
 		var newState = {...state};
 
 		var newPath = {
@@ -67,7 +67,7 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "SET_PATH_NAME"){
+	if (action.type === "SET_PATH_NAME"){
 		var newState = {...state};
 		var path = newState.paths.find(p => p.id === action.path_id);
 		path.name = action.name;
@@ -76,7 +76,7 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "ADD_SPAN"){
+	if (action.type === "ADD_SPAN"){
 		var newState = {...state};
 
 		var newSpan = {
@@ -103,7 +103,7 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "SET_SPAN_START_TIME"){
+	if (action.type === "SET_SPAN_START_TIME"){
 		var newState = {...state};
 		var span = getSpan(newState, action.span_id);
 		span.startTime = action.startTime;
@@ -112,7 +112,7 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "SET_SPAN_END_TIME"){
+	if (action.type === "SET_SPAN_END_TIME"){
 		var newState = {...state};
 		var span = getSpan(newState, action.span_id);
 		span.endTime = action.endTime;
@@ -121,7 +121,7 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "SET_SPAN_ACTIVITY"){
+	if (action.type === "SET_SPAN_ACTIVITY"){
 		var newState = {...state};
 		var span = getSpan(newState, action.span_id);
 		span.isInactive = action.isInactive;
@@ -129,7 +129,7 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "SET_TIME_DILATION_FACTOR"){
+	if (action.type === "SET_TIME_DILATION_FACTOR"){
 		var newState = {...state};
 		var span = getSpan(newState, action.span_id);
 		span.dilationFactor = action.factor;
@@ -138,7 +138,7 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "SET_SPAN_DESCRIPTION"){
+	if (action.type === "SET_SPAN_DESCRIPTION"){
 		var newState = {...state};
 		var span = getSpan(newState, action.span_id);
 		span.description = action.description;
@@ -147,7 +147,7 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "SET_UNIVERSE_NAME"){
+	if (action.type === "SET_UNIVERSE_NAME"){
 		var newState = {...state};
 		var universe = newState.universes.find(u => u.id === action.universe_id);
 		universe.name = action.name;
@@ -156,7 +156,7 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "ADD_UNIVERSE"){
+	if (action.type === "ADD_UNIVERSE"){
 		var newState = {...state};
 
 		var newUniverse = {
@@ -183,7 +183,7 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "DELETE_UNIVERSE"){
+	if (action.type === "DELETE_UNIVERSE"){
 		var newState = {...state};
 		newState.universes = newState.universes.filter(u => u.id !== action.universe_id);
 		if (newState.active_universe_index >= newState.universes.length){
@@ -193,7 +193,7 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "SET_UNIVERSE_CREATION_TYPE"){
+	if (action.type === "SET_UNIVERSE_CREATION_TYPE"){
 		var newState = {...state};
 		var universe = newState.universes.find(u => u.id === action.universe_id);
 		universe.isCreatedAtFirstEntering = action.isCreatedAtFirstEntering;
@@ -202,7 +202,7 @@ export default function reducer(state=initialState, action){
 
 
 
-	if (action.type == "SET_ACTIVE_UNIVERSE"){
+	if (action.type === "SET_ACTIVE_UNIVERSE"){
 		var newState = {...state};
 		var universe_index = newState.universes.findIndex(u => u.id === action.universe_id);
 		newState.active_universe_index = universe_index;
@@ -210,7 +210,7 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "SET_UNIVERSE_FOR_SPAN"){
+	if (action.type === "SET_UNIVERSE_FOR_SPAN"){
 		var newState = {...state};
 		var span = getSpan(newState, action.span_id);
 		span.universe_index = action.universe_index;
@@ -218,7 +218,7 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "LOAD_STATE"){
+	if (action.type === "LOAD_STATE"){
 		var newState = action.state.data;
 		computeStateVariables(newState);
 		newState.active_universe_index = 0;
@@ -226,7 +226,7 @@ export default function reducer(state=initialState, action){
 	}
 
 
-	if (action.type == "SET_PRESET"){
+	if (action.type === "SET_PRESET"){
 		var newState = presets[action.preset_index].data;
 		computeStateVariables(newState);
 		newState.active_universe_index = 0;
