@@ -8,7 +8,7 @@ var getSpan = (state, span_id) => {
 	for (var p = 0; p < state.paths.length; p++){
 		var path = state.paths[p];
 		for (var s = 0; s < path.spans.length; s++){
-			var span = paths.spans[s];
+			var span = path.spans[s];
 			if (span.id === span_id){
 				return span;
 			}

@@ -154,8 +154,11 @@ var drawUniverses = (data) => {
         drawUniversePlane(u, i, data);
     });
 
-    data.spans
-    .forEach((p, i, a) => {
+    var active_path = data.paths.find(p => p.id === data.active_path_id);
+
+    if (!active_path) return;
+
+    active_path.spans.forEach((p, i, a) => {
         if (data.universes[p.universe_index]){
             createSpan(p, data);
             if (a[i+1] && a[i+1].universe_index !== p.universe_index){
@@ -195,6 +198,12 @@ var drawUniversePlane = function(u, i, data){
     var line = new THREE.LineSegments( geometry, material);
     scene.add(line);
 
+    var active_path = data.paths.find(p => p.id === data.active_path_id);
+
+    if (!active_path){
+        return;
+    }
+
     if (u.RS2duration > 31536000000){
         u.earliestDateOfRef2 && createText(u.earliestDateOfRef2.years, 5, y, 5);
         u.latestDateOfRef2 && createText(u.latestDateOfRef2.years, 5, y, -5);
@@ -230,22 +239,22 @@ var drawUniversePlane = function(u, i, data){
         );
     }
 
-    if (data.RS1duration > 31536000000){
+    if (active_path.RS1duration > 31536000000){
         var unit = "years";
         var x_start_value = "0 " + unit;
-        var x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60 / 24 / 365) + " " + unit;
-    } else if (data.RS1duration > 86400000){
+        var x_end_value = Math.round(active_path.RS1duration / 1000 / 60 / 60 / 24 / 365) + " " + unit;
+    } else if (active_path.RS1duration > 86400000){
         unit = "days";
         x_start_value = "0 " + unit;
-        x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60 / 24) + " " + unit;
-    } else if (data.RS1duration > 3600000){
+        x_end_value = Math.round(active_path.RS1duration / 1000 / 60 / 60 / 24) + " " + unit;
+    } else if (active_path.RS1duration > 3600000){
         unit = "hours";
         x_start_value = "0 " + unit;
-        x_end_value = Math.round(data.RS1duration / 1000 / 60 / 60) + " " + unit;
+        x_end_value = Math.round(active_path.RS1duration / 1000 / 60 / 60) + " " + unit;
     } else {
         unit = "seconds";
         x_start_value = "0 " + unit;
-        x_end_value = Math.round(data.RS1duration / 1000) + " " + unit;
+        x_end_value = Math.round(active_path.RS1duration / 1000) + " " + unit;
     }
 
 

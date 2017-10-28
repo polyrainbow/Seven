@@ -114,7 +114,7 @@ var computeStateVariables = (state) => {
 
 	//Shall we compute earliest/latest date for a single path for each universe
 	//or for all paths together for each universe? The answer: BOTH!
-	// Here we compute the earliest/latest date for each universe with all paths
+	// Here we compute the earliest/latest date in RS2 for each universe with all paths
 	// included.
 	// TODO: Compute earliest/latest date for each path in each universe
 	state.universes.forEach((u, i) => {
