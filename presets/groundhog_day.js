@@ -1,6 +1,7 @@
 module.exports = {
 	"name": "Groundhog Day",
 	"data": {
+		"visualization_mode": "Timeline Tree",
 		"paths": [
 			{
 				"id": "e4b93ec0-0544-45d2-8b33-d4e70e4c340c",

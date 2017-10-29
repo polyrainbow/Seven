@@ -1,6 +1,7 @@
 module.exports = {
 	"name": "Cooper",
 	"data": {
+		"visualization_mode": "3D Universes",
 		"paths": [
 			{
 				"id": "8213d8e0-4bfa-4d2c-aa00-416b61376a04",

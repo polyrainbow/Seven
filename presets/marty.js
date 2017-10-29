@@ -1,6 +1,7 @@
 module.exports = {
     "name": "Marty McFly",
 	"data": {
+    	"visualization_mode": "3D Universes",
 		"paths": [
 			{
 				"id": "d3b6cb94-76ba-4a9e-ab1f-27cbe30e91de",

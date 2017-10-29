@@ -1,6 +1,7 @@
 module.exports = {
 	"name": "Spock",
 	"data": {
+		"visualization_mode": "3D Universes",
 		"paths": [
 			{
 				"id": "ebd6cccb-1bf3-4ac7-ad7a-e255bf35e316",
