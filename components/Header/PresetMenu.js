@@ -19,9 +19,13 @@ class PresetMenu extends Component {
 	render() {
 		return (
 			<div style={{
-				"margin": "5px"
+				"margin": "0px 5px"
 			}}>
-				<label>Presets</label>
+				<label
+					style={{
+						"margin": "0px 5px"
+					}}
+				>Presets</label>
 				<select onChange={(e) => this.props.setPreset(e.target.selectedIndex)}>
 					{presets.map(p => <option>{p.name}</option>)}
 				</select>

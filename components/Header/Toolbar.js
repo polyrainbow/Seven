@@ -35,7 +35,7 @@ class Toolbar extends Component {
 			<div style={{
 				"padding": "10px",
 				"display": "flex",
-				"alignItems": "baseline",
+				"alignItems": "center",
 			}}>
 				<ViewMenu/>
 				<PresetMenu/>

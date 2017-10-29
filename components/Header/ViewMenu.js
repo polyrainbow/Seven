@@ -19,7 +19,13 @@ class ViewMenu extends Component {
 	render() {
 		return (
 			<div>
-				<label>View</label>
+				<label
+					style={{
+						"margin": "0px 5px"
+					}}
+				>
+					View
+				</label>
 				<select
 					onChange={(e) => this.props.setVisualizationMode(e.target.value)}
 					value={this.props.data.visualization_mode}
