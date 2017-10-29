@@ -18,40 +18,17 @@ class TimelineVisual extends Component {
 
 
 	componentWillReceiveProps(newProps){
-		this.createVisualization(newProps)
+		this.createVisualization(newProps.data)
 	}
 
 
-	createVisualization(zettel){
-
-		var collectTimelines = (paths, universes) => {
-			var timelines = [];
-			var level = 0;
-
-			var last_universe_index = null;
-
-			paths.forEach((p, i, paths) => {
-				if (p.universe_index !== last_universe_id){
-					timelines.push({
-						level,
-					})
-					level++;
-				}
-			});
-
-
-		}
-
+	createVisualization(data){
 
 		var draw = function(paths, universes){
 
 			var div = document.querySelector("#timeline-vis");
-			var intrinsicWidth = 600;
-			var intrinsicHeight = 400;
-
-			var timelines = collectTimelines(paths, universes);
-
-			// ****************** D3 section ***************************
+			var intrinsicWidth = div.getBoundingClientRect().width;
+			var intrinsicHeight = div.getBoundingClientRect().height;
 
 			// append the svg object to the body of the page
 			// appends a 'group' element to 'svg'
@@ -62,41 +39,38 @@ class TimelineVisual extends Component {
 			.attr("viewBox", [0, 0, intrinsicWidth, intrinsicHeight].join(" "))
 			.append("g");
 
-			// Update the nodes...
-			var i = 0;
-			var node = svg
-			.selectAll('g.node')
-			.data(nodes, function(d) {
-				return d.id || (d.id = ++i);
-			})
+			svg
+			.append("rect")
+			.style("fill", "#AAAAFF")
+			.attr('x', "0")
+			.attr('y', "0")
+			.attr('width', "100%")
+			.attr('height', "100%");
 
-			// Enter any new modes at the parent's previous position.
-			var nodeEnter = node
+			var i = 0;
+			var timelines = svg
+			.selectAll('g.timeline')
+			.data(universes, function(d) { d.index = ++i; return d.id; });
+
+			// Enter any new timeline at the parent's previous position.
+			var timelineEnter = timelines
 			.enter()
 			.append('g')
-			.attr('class', 'node');
+			.attr('class', 'timeline');
 
 
-			// Add Circle for the "normal" nodes, which are not substitutions
-			// and have a reference node (which means, they are not the central
-			// Home Node)
-			nodeEnter
-			.filter(function(d){ return (!d.isSubstitution) && (d.referenceNode); })
-			.append("a")
-		    .attr("xlink:href", function(d){
-				return zettel_url_prefix + d.ekin;
-			})
-			.append('circle')
-			.attr('class', 'node')
-			.style("fill", "#fff")
-			.style("stroke", "#77a")
+			timelineEnter
+			.append("rect")
+			.attr('class', 'timeline')
+			.style("fill", "#000")
+			.style("stroke", "#000")
 			.style("stroke-width", "5")
-			.attr('r', "27")
-			.attr("transform", function(d) {
-				return "translate(" + d.x + "," + d.y + ")";
-			});
+			.attr('x', "20")
+			.attr('y', t => t.index * 100)
+			.attr('width', "300")
+			.attr('height', "5");
 
-			// ... and now for the central node
+			/*
 			nodeEnter
 			.filter(function(d){ return (!d.referenceNode); })
 			.append("a")
@@ -113,7 +87,7 @@ class TimelineVisual extends Component {
 				return "translate(" + d.x + "," + d.y + ")";
 			});
 
-
+*/
 		/*
 
 			// Add labels for the (real) nodes
@@ -135,7 +109,7 @@ class TimelineVisual extends Component {
 			});
 */
 
-
+/*
 			var stub = svg
 			.selectAll('g.stub')
 			.data(stubs, function(d) {
@@ -150,10 +124,10 @@ class TimelineVisual extends Component {
 			.attr('d', function(d){
 				return `M ${d.origin.x} ${d.origin.y}, ${d.origin.x + 30} ${d.origin.y + 30}`
 			});
-
+*/
 		}
 
-		draw(data);
+		draw(data.paths, data.universes);
 
 	}
 
