@@ -40,6 +40,15 @@ export default function reducer(state=initialState, action){
 		var newState = {...state};
 		newState.paths = newState.paths.filter(p => p.id !== action.path_id);
 		computeStateVariables(newState);
+
+		if (newState.active_path_id === action.path_id){
+			if (newState.paths.length > 0){
+				newState.active_path_id = newState.paths[0].id;
+			} else {
+				newState.active_path_id = null;
+			}
+		}
+
 		return newState;
 	}
 
