@@ -33,9 +33,18 @@ class TimelineVisual extends Component {
 			var intrinsicWidth = div.getBoundingClientRect().width;
 			var intrinsicHeight = div.getBoundingClientRect().height;
 
-			var timelineStart = 0.1 * intrinsicWidth;
-			var timelineEnd = 0.9 * intrinsicWidth;
-			var timelineWidth = timelineEnd - timelineStart;
+			const PATH_THICKNESS = 5;
+
+			var x_start = 0.05 * intrinsicWidth;
+			var x_end = 0.95 * intrinsicWidth;
+			var drawingWidth = x_end - x_start;
+
+			//compute timeline drawing widths for all universes
+			universes.forEach(u => {
+				u.drawStart = x_start + (u.relativeStart * drawingWidth);
+				u.drawEnd = x_start + (u.relativeEnd * drawingWidth);
+				u.drawWidth = u.drawEnd - u.drawStart;
+			});
 
 			// append the svg object to the body of the page
 			// appends a 'group' element to 'svg'
@@ -46,9 +55,10 @@ class TimelineVisual extends Component {
 			.attr("viewBox", [0, 0, intrinsicWidth, intrinsicHeight].join(" "))
 			.append("g");
 
+			//Background color
 			svg
 			.append("rect")
-			.style("fill", "#AAAAFF")
+			.style("fill", "#DDDDFF")
 			.attr('x', "0")
 			.attr('y', "0")
 			.attr('width', "100%")
@@ -72,12 +82,12 @@ class TimelineVisual extends Component {
 			.style("fill", "#000")
 			.style("stroke", "#000")
 			.style("stroke-width", "5")
-			.attr('x1', timelineStart)
+			.attr('x1', t => t.drawStart)
 			.attr('y1', t => getTimelineY(t.index))
-			.attr('x2', timelineEnd)
+			.attr('x2', t => t.drawEnd)
 			.attr('y2', t => getTimelineY(t.index));
 
-
+			//vertical link line of timeline
 			timelineEnter
 			.filter(u => u.isCreatedAtFirstEntering)
 			.append("line")
@@ -85,9 +95,9 @@ class TimelineVisual extends Component {
 			.style("fill", "#000")
 			.style("stroke", "#000")
 			.style("stroke-width", "5")
-			.attr('x1', timelineStart)
+			.attr('x1', t => t.drawStart)
 			.attr('y1', t => getTimelineY(t.index - 1))
-			.attr('x2', timelineStart)
+			.attr('x2', t => t.drawStart)
 			.attr('y2', t => getTimelineY(t.index));
 
 
@@ -101,10 +111,11 @@ class TimelineVisual extends Component {
 			.style('font-family', "sans-serif")
 			.attr('fill', "black")
 			.attr("transform", function(u) {
-				return "translate(" + (timelineStart + 6) + "," + (getTimelineY(u.index) + 9) + ")";
+				return "translate(" + (u.drawStart + 6) + "," + (getTimelineY(u.index) + 12) + ")";
 			});
 
 
+			//Start of univere date text
 			timelineEnter
 			.append('text')
 			.attr("dy", ".35em")
@@ -114,10 +125,10 @@ class TimelineVisual extends Component {
 			.style('font-family', "sans-serif")
 			.attr('fill', "black")
 			.attr("transform", function(u) {
-				return "translate(" + (timelineStart + 6) + "," + (getTimelineY(u.index) - 14) + ")";
+				return "translate(" + (u.drawStart + 6) + "," + (getTimelineY(u.index) - 14) + ")";
 			});
 
-
+			//End of universe date text
 			timelineEnter
 			.append('text')
 			.attr("dy", ".35em")
@@ -127,55 +138,83 @@ class TimelineVisual extends Component {
 			.style('font-family', "sans-serif")
 			.attr('fill', "black")
 			.attr("transform", function(u) {
-				return "translate(" + (timelineEnd - 6) + "," + (getTimelineY(u.index) - 14) + ")";
+				return "translate(" + (u.drawEnd - 6) + "," + (getTimelineY(u.index) - 14) + ")";
 			});
 
 
+			var path_colors = [
+				"#07F",
+				"#F70",
+				"#7F0"
+			];
+
+			//draw all paths
+			paths.forEach((path, path_index) => {
+				var spans = path.spans;
+
+				var i = 0;
+				var svgSpans = svg
+				.selectAll('g.span_of_path_' + path.id)
+				.data(spans, function(d) {
+					d.index = i;
+					i++;
+					return d.id;
+				});
 
 
-			//TEST
-			var spans = paths[0] && paths[0].spans || [];
-
-			var i = 0;
-			var svgSpans = svg
-			.selectAll('g.span')
-			.data(spans, function(d) { d.index = i; i++; return d.id; });
-
-			// Enter any new timeline at the parent's previous position.
-			var spanEnter = svgSpans
-			.enter()
-			.append('g')
-			.attr('class', 'span');
+				var spanEnter = svgSpans
+				.enter()
+				.append('g')
+				.attr('class', 'span');
 
 
-			spanEnter
-			.append("line")
-			.attr('class', 'span')
-			.style("stroke", "#0AF")
-			.style("stroke-width", "5")
-			.attr('x1', span => timelineStart + (span.relativeStartRS2 * timelineWidth))
-			.attr('y1', span => getTimelineY(span.universe_index) - 5)
-			.attr('x2', span => timelineStart + (span.relativeEndRS2 * timelineWidth))
-			.attr('y2', span => getTimelineY(span.universe_index) - 5);
+				//Span line
+				spanEnter
+				.append("line")
+				.attr('class', 'span')
+				.attr('stroke-linecap', "round")
+				.style("stroke", path_colors[path_index])
+				.style("stroke-width", PATH_THICKNESS)
+				.attr('x1', span => {
+					var u = universes[span.universe_index];
+					return u.drawStart + (span.relativeStartRS2 * u.drawWidth);
+				})
+				.attr('y1', span => getTimelineY(span.universe_index) - (PATH_THICKNESS * (path_index + 1)))
+				.attr('x2', span => {
+					var u = universes[span.universe_index];
+					return u.drawStart + (span.relativeEndRS2 * u.drawWidth)
+				})
+				.attr('y2', span => {
+					return getTimelineY(span.universe_index) - (PATH_THICKNESS * (path_index + 1));
+				});
 
 
-			spanEnter
-			.filter((s, i) => {
-				var next = spanEnter.data()[i+1];
-				return next && (s.universe_index !== next.universe_index);
-			})
-			.append("line")
-			.attr('class', 'span')
-			.style("stroke", "#00E")
-			.style("stroke-width", "5")
-			.attr('x1', (span, i) => timelineStart + (span.relativeEndRS2 * timelineWidth))
-			.attr('y1', (span, i) => getTimelineY(span.universe_index) - 5)
-			.attr('x2', (span, i) => {
-				return timelineStart + (spans[span.index+1].relativeStartRS2 * timelineWidth);
-			})
-			.attr('y2', (span, i) => {
-				return getTimelineY(spans[span.index+1].universe_index) - 5;
-			});
+				//universe cross links between spans
+				spanEnter
+				.filter((s, i) => {
+					var next = spanEnter.data()[i+1];
+					return next && (s.universe_index !== next.universe_index);
+				})
+				.append("line")
+				.attr('class', 'span-crossline')
+				.attr('stroke-linecap', "round")
+				.style("stroke", path_colors[path_index])
+				.style("stroke-width", PATH_THICKNESS)
+				.attr('x1', (span, i) => {
+					var u = universes[span.universe_index];
+					return u.drawStart + (span.relativeEndRS2 * u.drawWidth);
+				})
+				.attr('y1', (span, i) => getTimelineY(span.universe_index) - (PATH_THICKNESS * (path_index + 1)))
+				.attr('x2', (span, i) => {
+					var target_universe_index = spans[span.index+1].universe_index;
+					var u = universes[target_universe_index];
+					return u.drawStart + (spans[span.index+1].relativeStartRS2 * u.drawWidth);
+				})
+				.attr('y2', (span, i) => {
+					return getTimelineY(spans[span.index+1].universe_index) - (PATH_THICKNESS * (path_index + 1));
+				});
+
+			});  //of paths.forEach
 
 		}
 

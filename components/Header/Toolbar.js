@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import ViewMenu from './ViewMenu';
 import PresetMenu from './PresetMenu';
 
 import {bindActionCreators} from 'redux';
@@ -36,6 +37,7 @@ class Toolbar extends Component {
 				"display": "flex",
 				"alignItems": "baseline",
 			}}>
+				<ViewMenu/>
 				<PresetMenu/>
 				<button
 					style={{

@@ -31,12 +31,14 @@ export default function reducer(state=initialState, action){
 		newState.paths.forEach(p => {
 			p.spans = p.spans.filter(s => s.id !== action.span_id);
 		});
+		computeStateVariables(newState);
 		return newState;
 	}
 
 	if (action.type === "DELETE_PATH"){
 		var newState = {...state};
 		newState.paths = newState.paths.filter(p => p.id !== action.path_id);
+		computeStateVariables(newState);
 		return newState;
 	}
 

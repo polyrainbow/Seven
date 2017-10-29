@@ -10,7 +10,7 @@ import {
 	setPreset
 } from '../../actions/system.js';
 
-class PresetMenu extends Component {
+class ViewMenu extends Component {
 
 	constructor(props) {
 		super(props);
@@ -18,12 +18,11 @@ class PresetMenu extends Component {
 
 	render() {
 		return (
-			<div style={{
-				"margin": "5px"
-			}}>
-				<label>Presets</label>
+			<div>
+				<label>View</label>
 				<select onChange={(e) => this.props.setPreset(e.target.selectedIndex)}>
-					{presets.map(p => <option>{p.name}</option>)}
+					<option>3D Universes</option>
+					<option>Timeline Tree</option>
 				</select>
 			</div>
 		);
@@ -42,4 +41,4 @@ function matchDispatchToProps(dispatch){
 	}, dispatch);
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(PresetMenu);
+export default connect(mapStateToProps, matchDispatchToProps)(ViewMenu);
