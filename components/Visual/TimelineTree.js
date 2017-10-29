@@ -176,16 +176,20 @@ class TimelineTree extends Component {
 				.style("stroke", path_colors[path_index])
 				.style("stroke-width", PATH_THICKNESS)
 				.attr('x1', span => {
-					var u = universes[span.universe_index];
+					var u = universes.find(u => u.id === span.universe_id);
 					return u.drawStart + (span.relativeStartRS2 * u.drawWidth);
 				})
-				.attr('y1', span => getTimelineY(span.universe_index) - (PATH_THICKNESS * (path_index + 1)))
+				.attr('y1', span => {
+					var universe_index = universes.findIndex(u => u.id === span.universe_id);
+					return getTimelineY(universe_index) - (PATH_THICKNESS * (path_index + 1));
+				})
 				.attr('x2', span => {
-					var u = universes[span.universe_index];
-					return u.drawStart + (span.relativeEndRS2 * u.drawWidth)
+					var u = universes.find(u => u.id === span.universe_id);
+					return u.drawStart + (span.relativeEndRS2 * u.drawWidth);
 				})
 				.attr('y2', span => {
-					return getTimelineY(span.universe_index) - (PATH_THICKNESS * (path_index + 1));
+					var universe_index = universes.findIndex(u => u.id === span.universe_id);
+					return getTimelineY(universe_index) - (PATH_THICKNESS * (path_index + 1));
 				});
 
 
@@ -193,7 +197,7 @@ class TimelineTree extends Component {
 				spanEnter
 				.filter((s, i) => {
 					var next = spanEnter.data()[i+1];
-					return next && (s.universe_index !== next.universe_index);
+					return next && (s.universe_id !== next.universe_id);
 				})
 				.append("line")
 				.attr('class', 'span-crossline')
@@ -201,17 +205,21 @@ class TimelineTree extends Component {
 				.style("stroke", path_colors[path_index])
 				.style("stroke-width", PATH_THICKNESS)
 				.attr('x1', (span, i) => {
-					var u = universes[span.universe_index];
+					var u = universes.find(u => u.id === span.universe_id);
 					return u.drawStart + (span.relativeEndRS2 * u.drawWidth);
 				})
-				.attr('y1', (span, i) => getTimelineY(span.universe_index) - (PATH_THICKNESS * (path_index + 1)))
+				.attr('y1', (span, i) => {
+					var universe_index = universes.findIndex(u => u.id === span.universe_id);
+					return getTimelineY(universe_index) - (PATH_THICKNESS * (path_index + 1));
+				})
 				.attr('x2', (span, i) => {
-					var target_universe_index = spans[span.index+1].universe_index;
-					var u = universes[target_universe_index];
-					return u.drawStart + (spans[span.index+1].relativeStartRS2 * u.drawWidth);
+					var target_universe = universes.find(u => u.id === spans[span.index+1].universe_id);spans[span.index+1];
+					return target_universe.drawStart + (spans[span.index+1].relativeStartRS2 * target_universe.drawWidth);
 				})
 				.attr('y2', (span, i) => {
-					return getTimelineY(spans[span.index+1].universe_index) - (PATH_THICKNESS * (path_index + 1));
+					var nextSpan = spans[span.index+1];
+					var universe_index = universes.findIndex(u => u.id === nextSpan.universe_id);
+					return getTimelineY(universe_index) - (PATH_THICKNESS * (path_index + 1));
 				});
 
 			});  //of paths.forEach

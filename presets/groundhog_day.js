@@ -29,7 +29,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_id": "b1f634e4-e5da-4e7f-b929-cbb01c620bca",
+						"universe_id": "945d445f-5d12-4224-af27-1ed0bf41527c",
 						"durationInRS1": 86400000,
 						"description": "This ist the first time that Phil experiences the 2nd February 1993.",
 						"isInactive": false,
@@ -328,7 +328,7 @@ module.exports = {
 				"RS2duration": 86400000
 			}
 		],
-		"active_universe_index": 0,
+		"active_universe_id": "945d445f-5d12-4224-af27-1ed0bf41527c",
 		"active_path_id": "e4b93ec0-0544-45d2-8b33-d4e70e4c340c"
 	}
 }
