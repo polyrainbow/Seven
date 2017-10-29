@@ -217,7 +217,7 @@ var drawUniversePlane = function(u, i, data){
         );
     }
 
-    var x_span = dateFormatter.msPairToUsefeul(0, active_path.RS1duration);
+    var x_span = dateFormatter.msPairToUseful(0, active_path.RS1duration);
 
     createText(x_span.start, -5, y, 6);
     createText(x_span.end, 3, y, 6);

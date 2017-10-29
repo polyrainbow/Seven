@@ -4,10 +4,10 @@ import ReactDOM from 'react-dom';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-var renderer = require("../utils/renderer.js");
+var renderer = require("../../utils/renderer.js");
 var moment = require("moment");
 
-class TimelineVisual extends Component {
+class TimelineTree extends Component {
 
 	constructor(props, context) {
 		super(props, context);
@@ -240,4 +240,4 @@ function matchDispatchToProps(dispatch){
 	}, dispatch);
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(TimelineVisual);
+export default connect(mapStateToProps, matchDispatchToProps)(TimelineTree);

@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-var renderer = require("../utils/renderer.js");
+var renderer = require("../../utils/renderer.js");
 
-class Visual extends Component {
+class Universes3D extends Component {
 
 	constructor(props, context) {
 		super(props, context);
@@ -42,4 +42,4 @@ function matchDispatchToProps(dispatch){
 	}, dispatch);
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(Visual);
+export default connect(mapStateToProps, matchDispatchToProps)(Universes3D);

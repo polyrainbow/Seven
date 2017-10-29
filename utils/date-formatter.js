@@ -18,7 +18,7 @@ var msToSeconds = ms => Math.round(ms / 1000);
         "Dec"
     ];
 
-var msPairToUseful = (ms_start, ms_end) => {
+var msPairToUseful = (ms0, ms1) => {
 
 	var distance = Math.abs(ms1 - ms0);
 

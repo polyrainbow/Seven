@@ -20,7 +20,8 @@ const initialState = {
 	paths: [],
 	universes: [],
 	active_universe_index: 0,
-	active_path_id: null
+	active_path_id: null,
+	visualization_mode: "3D Universes"
 };
 
 
@@ -239,6 +240,13 @@ export default function reducer(state=initialState, action){
 		var newState = presets[action.preset_index].data;
 		computeStateVariables(newState);
 		newState.active_universe_index = 0;
+		return newState;
+	}
+
+
+	if (action.type === "SET_VISUALIZATION_MODE"){
+		var newState = {...state};
+		newState.visualization_mode = action.visualization_mode;
 		return newState;
 	}
 

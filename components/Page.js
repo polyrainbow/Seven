@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Header from './Header';
 import Editor from './Editor/';
-import Visual from './Visual';
-import TimelineVisual from './TimelineVisual';
+import Visual from './Visual/';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -30,7 +29,7 @@ class Page extends Component {
 			}}>
 				<Header/>
 				<Editor/>
-				<TimelineVisual/>
+				<Visual/>
 			</div>;
 
 		return page;

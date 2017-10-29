@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 var presets = require("../../presets/index.js");
 
 import {
-	setPreset
+	setVisualizationMode
 } from '../../actions/system.js';
 
 class ViewMenu extends Component {
@@ -20,9 +20,12 @@ class ViewMenu extends Component {
 		return (
 			<div>
 				<label>View</label>
-				<select onChange={(e) => this.props.setPreset(e.target.selectedIndex)}>
-					<option>3D Universes</option>
-					<option>Timeline Tree</option>
+				<select
+					onChange={(e) => this.props.setVisualizationMode(e.target.value)}
+					value={this.props.data.visualization_mode}
+				>
+					<option value="3D Universes">3D Universes</option>
+					<option value="Timeline Tree">Timeline Tree</option>
 				</select>
 			</div>
 		);
@@ -37,7 +40,7 @@ function mapStateToProps(state){
 
 function matchDispatchToProps(dispatch){
 	return bindActionCreators({
-		setPreset
+		setVisualizationMode
 	}, dispatch);
 }
 

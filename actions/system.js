@@ -16,7 +16,16 @@ const setPreset = (preset_index) => {
 }
 
 
+const setVisualizationMode = (visualization_mode) => {
+	return {
+		type: "SET_VISUALIZATION_MODE",
+		visualization_mode
+	}
+}
+
+
 module.exports = {
 	loadState,
 	setPreset,
+	setVisualizationMode
 }
