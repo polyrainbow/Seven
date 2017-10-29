@@ -19,6 +19,20 @@ class SpanEditor extends Component {
 	}
 
 
+	renderActivePathSelect(){
+		return [
+			<label htmlFor="spans_for_path_select">Spans for path: </label>,
+			<select
+				onChange={(e) => this.props.setActivePath(e.target.value)}
+				value={this.props.data.active_path_id}
+			>
+				{this.getPathSelectOptions(this.props.data.paths)}
+			</select>,
+			<br/>
+		];
+	}
+
+
 	getPathSelectOptions(paths){
 		return paths.map(p =>
 			<option
@@ -68,14 +82,7 @@ class SpanEditor extends Component {
 		return (
 			<div>
 				<h2>Spans</h2>
-				<label htmlFor="spans_for_path_select">Spans for path: </label>
-				<select
-					onChange={(e) => this.props.setActivePath(e.target.value)}
-					value={this.props.data.active_path_id}
-				>
-					{this.getPathSelectOptions(this.props.data.paths)}
-				</select>
-				<br/>
+				{this.props.data.paths.length > 0 ? this.renderActivePathSelect() : ""}
 				{this.props.data.active_path_id ? this.renderSpansOfPath(
 					this.props.data.paths.find(p => p.id === this.props.data.active_path_id)
 				) : "Please create a path before creating spans."}
