@@ -232,7 +232,7 @@ export default function reducer(state=initialState, action){
 	if (action.type === "SET_UNIVERSE_FOR_SPAN"){
 		var newState = {...state};
 		var span = getSpan(newState, action.span_id);
-		span.universe_index = action.universe_index;
+		span.universe_id = action.universe_id;
 		return newState;
 	}
 

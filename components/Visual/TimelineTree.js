@@ -75,10 +75,11 @@ class TimelineTree extends Component {
 			.append('g')
 			.attr('class', 'timeline');
 
-
+			//Timeline
 			timelineEnter
 			.append("line")
 			.attr('class', 'timeline')
+			.attr('stroke-linecap', "round")
 			.style("fill", "#000")
 			.style("stroke", "#000")
 			.style("stroke-width", "5")
@@ -92,6 +93,7 @@ class TimelineTree extends Component {
 			.filter(u => u.isCreatedAtFirstEntering)
 			.append("line")
 			.attr('class', 'timeline')
+			.attr('stroke-linecap', "round")
 			.style("fill", "#000")
 			.style("stroke", "#000")
 			.style("stroke-width", "5")
@@ -168,8 +170,16 @@ class TimelineTree extends Component {
 				.attr('class', 'span');
 
 
-				//Span line
+				//Valid (renderable) Span lines
 				spanEnter
+				.filter(span => {
+					return (
+						(typeof span.relativeStartRS2 === "number")
+						&& (!isNaN(span.relativeStartRS2))
+						&& (typeof span.relativeEndRS2 === "number")
+						&& (!isNaN(span.relativeEndRS2))
+					);
+				})
 				.append("line")
 				.attr('class', 'span')
 				.attr('stroke-linecap', "round")

@@ -50,7 +50,7 @@ class Span extends Component {
 				<input
 					id={span.id + "_start_time_input"}
 					type="datetime-local"
-					onChange={(e) => {console.log(e.target.value)
+					onChange={(e) => {
 						var object = moment(e.target.value).toObject();
 						if (!objectIsUnixStartTime(object)){
 							this.props.setSpanStartTime(span.id, object);
