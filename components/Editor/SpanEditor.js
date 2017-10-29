@@ -69,7 +69,10 @@ class SpanEditor extends Component {
 			<div>
 				<h2>Spans</h2>
 				<label htmlFor="spans_for_path_select">Spans for path: </label>
-				<select>
+				<select
+					onChange={(e) => this.props.setActivePath(e.target.value)}
+					value={this.props.data.active_path_id}
+				>
 					{this.getPathSelectOptions(this.props.data.paths)}
 				</select>
 				<br/>
