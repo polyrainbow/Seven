@@ -1,7 +1,7 @@
 var constants = require('../constants.js');
 var moment = require("moment");
 var computeStateVariables = require("./computeStateVariables.js")
-var presets = require("./presets.js");
+var presets = require("../presets/");
 var uuidv4 = require("uuid/v4");
 
 var getSpan = (state, span_id) => {
@@ -64,6 +64,13 @@ export default function reducer(state=initialState, action){
 
 		return newState;
 
+	}
+
+
+	if (action.type === "SET_ACTIVE_PATH"){
+		var newState = {...state};
+		newState.active_path_id = action.path_id;
+		return newState;
 	}
 
 

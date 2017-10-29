@@ -198,6 +198,8 @@ var drawUniversePlane = function(u, i, data){
     var line = new THREE.LineSegments( geometry, material);
     scene.add(line);
 
+    createText(u.name, -5.5, y, 5, 90 * 2 * Math.PI / 360, 0xffff00);
+
     var active_path = data.paths.find(p => p.id === data.active_path_id);
 
     if (!active_path){
@@ -257,11 +259,8 @@ var drawUniversePlane = function(u, i, data){
         x_end_value = Math.round(active_path.RS1duration / 1000) + " " + unit;
     }
 
-
     createText(x_start_value, -5, y, 6);
     createText(x_end_value, 3, y, 6);
-
-    createText(u.name, -5.5, y, 5, 90 * 2 * Math.PI / 360, 0xffff00);
 
 }
 

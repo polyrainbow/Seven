@@ -35,9 +35,18 @@ const setPathDescription = (path_id, description) => {
 }
 
 
+const setActivePath = (path_id) => {
+	return {
+		type: "SET_ACTIVE_PATH",
+		path_id
+	}
+}
+
+
 module.exports = {
 	addPath,
 	deletePath,
 	setPathName,
-	setPathDescription
+	setPathDescription,
+	setActivePath
 }

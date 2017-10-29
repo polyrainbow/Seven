@@ -43,7 +43,7 @@ class Path extends Component {
 					<h4>📈 Path</h4>
 					<div>
 						<button
-							onClick={() => this.props.setActiveUniverse(universe.id)}
+							onClick={() => this.props.setActivePath(path.id)}
 							style={{
 								"margin": "0px 5px"
 							}}

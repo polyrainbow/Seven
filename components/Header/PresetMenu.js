@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-var presets = require("../../reducers/presets.js");
+var presets = require("../../presets/index.js");
 
 import {
 	setPreset
