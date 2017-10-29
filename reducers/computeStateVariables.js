@@ -143,8 +143,13 @@ var computeStateVariables = (state) => {
 
 	//compute relative start/end of universe times in relation to master times
 	state.universes.forEach((u) => {
-		u.relativeStart = Math.abs(moment(u.earliestDateOfRef2).diff(state.earliestDateInRS2)) / state.RS2duration;
-		u.relativeEnd = Math.abs(moment(u.latestDateOfRef2).diff(state.earliestDateInRS2)) / state.RS2duration;
+		if (state.RS2duration > 0){
+			u.relativeStart = Math.abs(moment(u.earliestDateOfRef2).diff(state.earliestDateInRS2)) / state.RS2duration;
+			u.relativeEnd = Math.abs(moment(u.latestDateOfRef2).diff(state.earliestDateInRS2)) / state.RS2duration;
+		} else {
+			u.relativeStart = 0;
+			u.relativeEnd = 0;
+		}
 	})
 
 
