@@ -212,6 +212,7 @@ class TimelineTree extends Component {
 				.append("line")
 				.attr('class', 'span-crossline')
 				.attr('stroke-linecap', "round")
+				.attr('stroke-dasharray', "5, 10")
 				.style("stroke", path_colors[path_index])
 				.style("stroke-width", PATH_THICKNESS)
 				.attr('x1', (span, i) => {

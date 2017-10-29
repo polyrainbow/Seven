@@ -7,8 +7,41 @@ module.exports = {
 				"id": "e4b93ec0-0544-45d2-8b33-d4e70e4c340c",
 				"name": "Phil",
 				"description": "",
-				"RS1duration": 0,
+				"RS1duration": 349200000,
 				"spans": [
+					{
+						"id": "25f5a83d-6e6b-4ba9-b348-12f708cb795a",
+						"startTime": {
+							"years": 1993,
+							"months": 1,
+							"date": 2,
+							"hours": 5,
+							"minutes": 0,
+							"seconds": 0,
+							"milliseconds": 0
+						},
+						"endTime": {
+							"years": 1993,
+							"months": 1,
+							"date": 2,
+							"hours": 6,
+							"minutes": 0,
+							"seconds": 0,
+							"milliseconds": 0
+						},
+						"dilationFactor": 1,
+						"universe_id": "945d445f-5d12-4224-af27-1ed0bf41527c",
+						"durationInRS1": 3600000,
+						"description": "",
+						"isInactive": false,
+						"index": 0,
+						"relativeStartRS1": 0,
+						"relativeEndRS1": 0.010309278350515464,
+						"relativeStartRS2": 0,
+						"relativeEndRS2": 0.04,
+						"relativeStartRS2Global": 0,
+						"relativeEndRS2Global": 0.04
+					},
 					{
 						"id": "6fbdd911-a7db-4ccd-966e-597f8898b178",
 						"startTime": {
@@ -34,10 +67,13 @@ module.exports = {
 						"durationInRS1": 86400000,
 						"description": "This ist the first time that Phil experiences the 2nd February 1993.",
 						"isInactive": false,
-						"relativeStartRS1": 0,
-						"relativeEndRS1": 0.25,
-						"relativeStartRS2": 0,
-						"relativeEndRS2": 1
+						"relativeStartRS1": 0.010309278350515464,
+						"relativeEndRS1": 0.25773195876288657,
+						"relativeStartRS2": 0.04,
+						"relativeEndRS2": 1,
+						"relativeStartRS2Global": 0.04,
+						"relativeEndRS2Global": 1,
+						"index": 1
 					},
 					{
 						"id": "e5c8d33a-dccf-49f9-b51a-06cb7521ad75",
@@ -64,10 +100,13 @@ module.exports = {
 						"durationInRS1": 86400000,
 						"description": "",
 						"isInactive": false,
-						"relativeStartRS1": 0.25,
-						"relativeEndRS1": 0.5,
+						"relativeStartRS1": 0.25773195876288657,
+						"relativeEndRS1": 0.5051546391752577,
 						"relativeStartRS2": 0,
-						"relativeEndRS2": 1
+						"relativeEndRS2": 1,
+						"relativeStartRS2Global": 0.04,
+						"relativeEndRS2Global": 1,
+						"index": 2
 					},
 					{
 						"id": "351543b6-99bf-4ad3-bd4c-c8c9209efec3",
@@ -94,10 +133,13 @@ module.exports = {
 						"durationInRS1": 86400000,
 						"description": "",
 						"isInactive": false,
-						"relativeStartRS1": 0.5,
-						"relativeEndRS1": 0.75,
+						"relativeStartRS1": 0.5051546391752577,
+						"relativeEndRS1": 0.7525773195876289,
 						"relativeStartRS2": 0,
-						"relativeEndRS2": 1
+						"relativeEndRS2": 1,
+						"relativeStartRS2Global": 0.04,
+						"relativeEndRS2Global": 1,
+						"index": 3
 					},
 					{
 						"id": "ebe9e87d-0b8e-48f0-8a87-105a479fc6f4",
@@ -124,13 +166,15 @@ module.exports = {
 						"durationInRS1": 86400000,
 						"description": "",
 						"isInactive": false,
-						"relativeStartRS1": 0.75,
+						"relativeStartRS1": 0.7525773195876289,
 						"relativeEndRS1": 1,
 						"relativeStartRS2": 0,
-						"relativeEndRS2": 1
+						"relativeEndRS2": 1,
+						"relativeStartRS2Global": 0.04,
+						"relativeEndRS2Global": 1,
+						"index": 4
 					}
 				],
-				"RS1duration": 345600000,
 				"universes": [
 					{
 						"id": "945d445f-5d12-4224-af27-1ed0bf41527c",
@@ -240,7 +284,7 @@ module.exports = {
 					"years": 1993,
 					"months": 1,
 					"date": 2,
-					"hours": 6,
+					"hours": 5,
 					"minutes": 0,
 					"seconds": 0,
 					"milliseconds": 0
@@ -254,7 +298,14 @@ module.exports = {
 					"seconds": 0,
 					"milliseconds": 0
 				},
-				"RS2duration": 86400000
+				"RS2duration": 90000000,
+				"relativeStart": 0,
+				"relativeEnd": 1,
+				"drawStart": 34,
+				"drawEnd": 646,
+				"drawWidth": 612,
+				"index": 0,
+				"isCreatedAtFirstEntering": false
 			},
 			{
 				"id": "f86906d0-d206-40ee-b80f-f405f7580c43",
@@ -278,7 +329,14 @@ module.exports = {
 					"seconds": 0,
 					"milliseconds": 0
 				},
-				"RS2duration": 86400000
+				"RS2duration": 86400000,
+				"relativeStart": 0.04,
+				"relativeEnd": 1,
+				"drawStart": 58.480000000000004,
+				"drawEnd": 646,
+				"drawWidth": 587.52,
+				"index": 1,
+				"isCreatedAtFirstEntering": true
 			},
 			{
 				"id": "de0f8b86-72d2-495d-b65a-9113df5f9997",
@@ -302,7 +360,14 @@ module.exports = {
 					"seconds": 0,
 					"milliseconds": 0
 				},
-				"RS2duration": 86400000
+				"RS2duration": 86400000,
+				"relativeStart": 0.04,
+				"relativeEnd": 1,
+				"drawStart": 58.480000000000004,
+				"drawEnd": 646,
+				"drawWidth": 587.52,
+				"index": 2,
+				"isCreatedAtFirstEntering": true
 			},
 			{
 				"id": "75cb50bd-04cd-4d69-bf50-c986f26d2bb9",
@@ -326,10 +391,36 @@ module.exports = {
 					"seconds": 0,
 					"milliseconds": 0
 				},
-				"RS2duration": 86400000
+				"RS2duration": 86400000,
+				"relativeStart": 0.04,
+				"relativeEnd": 1,
+				"drawStart": 58.480000000000004,
+				"drawEnd": 646,
+				"drawWidth": 587.52,
+				"index": 3,
+				"isCreatedAtFirstEntering": true
 			}
 		],
-		"active_universe_id": "945d445f-5d12-4224-af27-1ed0bf41527c",
-		"active_path_id": "e4b93ec0-0544-45d2-8b33-d4e70e4c340c"
+		"active_universe_id": "75cb50bd-04cd-4d69-bf50-c986f26d2bb9",
+		"active_path_id": "e4b93ec0-0544-45d2-8b33-d4e70e4c340c",
+		"earliestDateInRS2": {
+			"years": 1993,
+			"months": 1,
+			"date": 2,
+			"hours": 5,
+			"minutes": 0,
+			"seconds": 0,
+			"milliseconds": 0
+		},
+		"latestDateInRS2": {
+			"years": 1993,
+			"months": 1,
+			"date": 3,
+			"hours": 6,
+			"minutes": 0,
+			"seconds": 0,
+			"milliseconds": 0
+		},
+		"RS2duration": 90000000
 	}
 }
