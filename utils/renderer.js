@@ -25,15 +25,17 @@ var moment = require("moment");
     }
 
 
-    var createInterUniverseConnection = (span1, span2) =>{
+    var createInterUniverseConnection = (span1, span2, data) =>{
 
         var color = 0x00ff00;
 
         var x0 = 10 * span1.relativeEndRS1 - 5;
         var x1 = 10 * span2.relativeStartRS1 - 5;
 
-        var y0 = getUniverseYPosition(span1.universe_index) + 0.04;
-        var y1 = getUniverseYPosition(span2.universe_index) + 0.04;
+        var origin_universe_index = data.universes.findIndex(u => u.id === span1.universe_id);
+        var y0 = getUniverseYPosition(origin_universe_index) + 0.04;
+        var target_universe_index = data.universes.findIndex(u => u.id === span2.universe_id);
+        var y1 = getUniverseYPosition(target_universe_index) + 0.04;
 
         var z0 = 10 * -span1.relativeEndRS2 + 5;
         var z1 = 10 * -span2.relativeStartRS2 + 5;
@@ -69,7 +71,9 @@ var moment = require("moment");
 
     var color = (span.dilationFactor === 1) ? 0x00ffff : 0xff2222;
 
-    var y = getUniverseYPosition(span.universe_index) + 0.04;
+    var universe_index = data.universes.findIndex(u => u.id === span.universe_id);
+
+    var y = getUniverseYPosition(universe_index) + 0.04;
 
     var x0 = 10 * span.relativeStartRS1 - 5;
     var x1 = 10 * span.relativeEndRS1 - 5;
@@ -146,13 +150,15 @@ var drawUniverses = (data) => {
 
     if (!active_path) return;
 
-    active_path.spans.forEach((p, i, a) => {
-        if (data.universes[p.universe_index]){
-            createSpan(p, data);
-            if (a[i+1] && a[i+1].universe_index !== p.universe_index){
+    active_path.spans.forEach((span, i, spans) => {
+        var universe = data.universes.find(u => u.id === span.universe_id);
+        if (universe){
+            createSpan(span, data);
+            if (spans[i+1] && spans[i+1].universe_id !== span.universe_id){
                 //draw universe link only if both universes exist
-                if (data.universes[a[i+1].universe_index]){
-                    createInterUniverseConnection(p, a[i+1])
+                var target_universe = data.universes.find(u => u.id === spans[i+1].universe_id);
+                if (target_universe){
+                    createInterUniverseConnection(span, spans[i+1], data)
                 }
             }
         }
@@ -369,7 +375,7 @@ var refresh = (data) => {
     //scene.add( axisHelper );
     console.log(data); /////////////////////////////////////////////////
     drawUniverses(data);
-    active_universe_index = data.active_universe_index;
+    active_universe_index = data.universes.findIndex(u => u.id === data.active_universe_id);
 }
 
 

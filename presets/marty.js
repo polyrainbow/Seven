@@ -29,7 +29,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
 						"durationInRS1": 345600000,
 						"description": "Marty lived in the year 1985 before he commited his first time travel.",
 						"isInactive": false,
@@ -59,7 +59,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
 						"durationInRS1": 172800000,
 						"description": "",
 						"isInactive": false,
@@ -89,7 +89,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
 						"durationInRS1": 3600000,
 						"description": "",
 						"isInactive": false,
@@ -119,7 +119,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
 						"durationInRS1": 172800000,
 						"description": "",
 						"isInactive": false,
@@ -149,7 +149,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
 						"durationInRS1": 3600000,
 						"description": "",
 						"isInactive": false,
@@ -179,7 +179,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
 						"durationInRS1": 7200000,
 						"description": "",
 						"isInactive": false,
@@ -209,7 +209,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
 						"durationInRS1": 7200000,
 						"description": "",
 						"isInactive": false,
@@ -239,7 +239,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
 						"durationInRS1": 172800000,
 						"description": "",
 						"isInactive": false,
@@ -269,7 +269,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
 						"durationInRS1": 172800000,
 						"description": "",
 						"isInactive": false,

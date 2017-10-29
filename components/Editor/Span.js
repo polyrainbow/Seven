@@ -24,7 +24,7 @@ class Span extends Component {
 
 	getUniverseOptions(data){
 		return data.universes.map((u, i) => {
-			return <option value={i}>{u.name}</option>;
+			return <option value={u.id}>{u.name}</option>;
 		});
 	}
 
@@ -84,8 +84,8 @@ class Span extends Component {
 				<label htmlFor={span.id + "_universe_select"}>Universe: </label>
 				<select
 					id={span.id + "_universe_select"}
-					defaultValue={span.universe_index}
-					onChange={(e) => this.props.setUniverseForSpan(span.id, e.target.selectedIndex)}
+					defaultValue={span.universe_id}
+					onChange={(e) => this.props.setUniverseForSpan(span.id, e.target.value)}
 				>
 					{this.getUniverseOptions(this.props.data)}
 				</select>

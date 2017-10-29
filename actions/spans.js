@@ -50,11 +50,11 @@ const setSpanDescription = (span_id, description) => {
 }
 
 
-const setUniverseForSpan = (span_id, universe_index) => {
+const setUniverseForSpan = (span_id, universe_id) => {
 	return {
 		type: "SET_UNIVERSE_FOR_SPAN",
 		span_id,
-		universe_index
+		universe_id
 	}
 }
 
@@ -67,61 +67,6 @@ const setSpanActivity = (span_id, isInactive) => {
 	}
 }
 
-
-/********************
-	UNIVERSES
-********************/
-
-
-const addUniverse = (insertIndex) => {
-	return {
-		type: "ADD_UNIVERSE",
-		insertIndex
-	}
-}
-
-const deleteUniverse = (universe_id) => {
-	return {
-		type: "DELETE_UNIVERSE",
-		universe_id
-	}
-}
-
-
-const setUniverseName = (universe_id, name) => {
-	return {
-		type: "SET_UNIVERSE_NAME",
-		universe_id,
-		name
-	}
-}
-
-
-const setActiveUniverse = (universe_id) => {
-	return {
-		type: "SET_ACTIVE_UNIVERSE",
-		universe_id
-	}
-}
-
-/***********************
-	SYSTEM
-***********************/
-
-const loadState = (state) => {
-	return {
-		type: "LOAD_STATE",
-		state
-	}
-}
-
-
-const setPreset = (preset_index) => {
-	return {
-		type: "SET_PRESET",
-		preset_index
-	}
-}
 
 
 module.exports = {

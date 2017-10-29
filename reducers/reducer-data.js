@@ -19,7 +19,7 @@ var getSpan = (state, span_id) => {
 const initialState = {
 	paths: [],
 	universes: [],
-	active_universe_index: 0,
+	active_universe_id: null,
 	active_path_id: null,
 	visualization_mode: "3D Universes"
 };
@@ -94,7 +94,7 @@ export default function reducer(state=initialState, action){
 			startTime: null,
 			endTime: null,
 			dilationFactor: 1,
-			universe_index: 0,
+			universe_id: newState.universes[0].id,
 			durationInRS1: 0,
 			description: "",
 			isInactive: false
@@ -152,7 +152,7 @@ export default function reducer(state=initialState, action){
 		var newState = {...state};
 		var span = getSpan(newState, action.span_id);
 		span.description = action.description;
-		newState.active_universe_index = newState.universes.findIndex(u => u.id === span.universe_id);
+		newState.active_universe_id = span.universe_id;
 		return newState;
 	}
 
@@ -161,7 +161,7 @@ export default function reducer(state=initialState, action){
 		var newState = {...state};
 		var universe = newState.universes.find(u => u.id === action.universe_id);
 		universe.name = action.name;
-		newState.active_universe_index = newState.universes.findIndex(u => u.id === action.universe_id);
+		newState.active_universe_id = action.universe_id;
 		return newState;
 	}
 
@@ -187,7 +187,7 @@ export default function reducer(state=initialState, action){
 			console.log("Strange insert index: " + action.insertIndex);
 		}
 
-		newState.active_universe_index = action.insertIndex;
+		newState.active_universe_id = newUniverse.id;
 		computeStateVariables(newState);
 		return newState;
 	}
@@ -196,9 +196,19 @@ export default function reducer(state=initialState, action){
 	if (action.type === "DELETE_UNIVERSE"){
 		var newState = {...state};
 		newState.universes = newState.universes.filter(u => u.id !== action.universe_id);
-		if (newState.active_universe_index >= newState.universes.length){
-			newState.active_universe_index = 0;
+		if (newState.active_universe_id === action.universe_id){
+			if (newState.universes.length > 0){
+				newState.active_universe_id = newState.universes[0].id;
+			} else {
+				newState.active_universe_id = null;
+			}
 		}
+
+		//delete all spans in this universe
+		newState.paths.forEach(p => {
+			p.spans = p.spans.filter(s => s.universe_id !== action.universe_id);
+		})
+
 		return newState;
 	}
 
@@ -214,8 +224,7 @@ export default function reducer(state=initialState, action){
 
 	if (action.type === "SET_ACTIVE_UNIVERSE"){
 		var newState = {...state};
-		var universe_index = newState.universes.findIndex(u => u.id === action.universe_id);
-		newState.active_universe_index = universe_index;
+		newState.active_universe_id = action.universe_id;
 		return newState;
 	}
 
@@ -231,7 +240,11 @@ export default function reducer(state=initialState, action){
 	if (action.type === "LOAD_STATE"){
 		var newState = action.state.data;
 		computeStateVariables(newState);
-		newState.active_universe_index = 0;
+		if (newState.universes.length > 0){
+			newState.active_universe_id = newState.universes[0].id;
+		} else {
+			newState.active_universe_id = null;
+		}
 		return newState;
 	}
 
@@ -239,7 +252,11 @@ export default function reducer(state=initialState, action){
 	if (action.type === "SET_PRESET"){
 		var newState = presets[action.preset_index].data;
 		computeStateVariables(newState);
-		newState.active_universe_index = 0;
+		if (newState.universes.length > 0){
+			newState.active_universe_id = newState.universes[0].id;
+		} else {
+			newState.active_universe_id = null;
+		}
 		return newState;
 	}
 

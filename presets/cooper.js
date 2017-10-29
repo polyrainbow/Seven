@@ -29,7 +29,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "a4b25ddb-008b-4821-b80b-f161d18b766c",
 						"durationInRS1": 86400000,
 						"description": "",
 						"isInactive": false,
@@ -59,7 +59,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 61320,
-						"universe_index": 0,
+						"universe_id": "a4b25ddb-008b-4821-b80b-f161d18b766c",
 						"durationInRS1": 30890958.90410959,
 						"description": "Due to his proximity to the black hole \"Gargantua\", one hour of Cooper's time equals 61320 hours of earth time.",
 						"isInactive": false,
@@ -89,7 +89,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "a4b25ddb-008b-4821-b80b-f161d18b766c",
 						"durationInRS1": 86400000,
 						"description": "",
 						"isInactive": false,

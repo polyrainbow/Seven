@@ -1,12 +1,12 @@
 var moment = require("moment");
 
-var getEarliestDateOfRefSys2 = (paths, universe_index) => {
+var getEarliestDateOfRefSys2 = (paths, universe_id) => {
 
 	var all_spans = [].concat(...paths.map(p => p.spans));
 
-	//if universe index is given, consider spans in this universe only
-	if (typeof universe_index === "number"){
-		var spans_to_consider = all_spans.filter(s => s.universe_index === universe_index);
+	//if universe_id is given, consider spans in this universe only
+	if (universe_id){
+		var spans_to_consider = all_spans.filter(s => s.universe_id === universe_id);
 	} else {
 		spans_to_consider = all_spans;
 	}
@@ -39,13 +39,13 @@ var getEarliestDateOfRefSys2 = (paths, universe_index) => {
 
 }
 
-var getLatestDateOfRefSys2 = (paths, universe_index) => {
+var getLatestDateOfRefSys2 = (paths, universe_id) => {
 
 	var all_spans = [].concat(...paths.map(p => p.spans));
 
-	//if universe index is given, consider spans in this universe only
-	if (typeof universe_index === "number"){
-		var spans_to_consider = all_spans.filter(s => s.universe_index === universe_index);
+	//if universe_id is given, consider spans in this universe only
+	if (universe_id){
+		var spans_to_consider = all_spans.filter(s => s.universe_id === universe_id);
 	} else {
 		spans_to_consider = all_spans;
 	}
@@ -128,9 +128,9 @@ var computeStateVariables = (state) => {
 	// Here we compute the earliest/latest date in RS2 for each universe with
 	// spans of all paths considered.
 	// TODO: Compute earliest/latest dates per path per universe
-	state.universes.forEach((u, i) => {
-		u.earliestDateOfRef2 = getEarliestDateOfRefSys2(state.paths, i);
-		u.latestDateOfRef2 = getLatestDateOfRefSys2(state.paths, i);
+	state.universes.forEach((u) => {
+		u.earliestDateOfRef2 = getEarliestDateOfRefSys2(state.paths, u.id);
+		u.latestDateOfRef2 = getLatestDateOfRefSys2(state.paths, u.id);
 		u.RS2duration = Math.abs(moment(u.earliestDateOfRef2).diff(u.latestDateOfRef2));
 	});
 
@@ -142,7 +142,7 @@ var computeStateVariables = (state) => {
 
 
 	//compute relative start/end of universe times in relation to master times
-	state.universes.forEach((u, i) => {
+	state.universes.forEach((u) => {
 		u.relativeStart = Math.abs(moment(u.earliestDateOfRef2).diff(state.earliestDateInRS2)) / state.RS2duration;
 		u.relativeEnd = Math.abs(moment(u.latestDateOfRef2).diff(state.earliestDateInRS2)) / state.RS2duration;
 	})
@@ -156,7 +156,7 @@ var computeStateVariables = (state) => {
 
 	state.paths.forEach(path => {
 		path.spans.forEach(span => {
-			var u = state.universes[span.universe_index];
+			var u = state.universes.find(u => u.id === span.universe_id);
 
 			span.relativeStartRS1 = getRelativeStartOfSpanInRS1(span.id, path);
 			span.relativeEndRS1 = getRelativeEndOfSpanInRS1(span.id, path);

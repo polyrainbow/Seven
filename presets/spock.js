@@ -29,7 +29,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "d3d38051-ff73-4642-8dd6-f808518fb46e",
 						"durationInRS1": 1167609600000,
 						"description": "",
 						"isInactive": false,
@@ -59,7 +59,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "d3d38051-ff73-4642-8dd6-f808518fb46e",
 						"durationInRS1": 86400000,
 						"description": "",
 						"isInactive": false,
@@ -89,7 +89,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "d3d38051-ff73-4642-8dd6-f808518fb46e",
 						"durationInRS1": 13042800000,
 						"description": "",
 						"isInactive": false,
@@ -119,7 +119,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "d3d38051-ff73-4642-8dd6-f808518fb46e",
 						"durationInRS1": 86400000,
 						"description": "",
 						"isInactive": false,
@@ -149,7 +149,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "d3d38051-ff73-4642-8dd6-f808518fb46e",
 						"durationInRS1": 50115600000,
 						"description": "",
 						"isInactive": false,
@@ -179,7 +179,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "d3d38051-ff73-4642-8dd6-f808518fb46e",
 						"durationInRS1": 21600000,
 						"description": "",
 						"isInactive": false,
@@ -209,7 +209,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "d3d38051-ff73-4642-8dd6-f808518fb46e",
 						"durationInRS1": 536457600000,
 						"description": "",
 						"isInactive": false,
@@ -239,7 +239,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "d3d38051-ff73-4642-8dd6-f808518fb46e",
 						"durationInRS1": 345600000,
 						"description": "",
 						"isInactive": false,
@@ -269,7 +269,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 0,
+						"universe_id": "d3d38051-ff73-4642-8dd6-f808518fb46e",
 						"durationInRS1": 3187209600000,
 						"description": "",
 						"isInactive": false,
@@ -299,7 +299,7 @@ module.exports = {
 							"milliseconds": 0
 						},
 						"dilationFactor": 1,
-						"universe_index": 1,
+						"universe_id": "b1f634e4-e5da-4e7f-b929-cbb01c620bca",
 						"durationInRS1": 157766400000,
 						"description": "",
 						"isInactive": false,
@@ -363,7 +363,7 @@ module.exports = {
 				"isCreatedAtFirstEntering": true
 			}
 		],
-		"active_universe_index": 1,
+		"active_universe_id": "d3d38051-ff73-4642-8dd6-f808518fb46e",
 		"active_path_id": "ebd6cccb-1bf3-4ac7-ad7a-e255bf35e316"
 	}
 };
