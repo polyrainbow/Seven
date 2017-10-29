@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 var renderer = require("../utils/renderer.js");
+var moment = require("moment");
 
 class TimelineVisual extends Component {
 
@@ -24,11 +25,17 @@ class TimelineVisual extends Component {
 
 	createVisualization(data){
 
+		var getTimelineY = (i) => i * 100 + 100;
+
 		var draw = function(paths, universes){
 
 			var div = document.querySelector("#timeline-vis");
 			var intrinsicWidth = div.getBoundingClientRect().width;
 			var intrinsicHeight = div.getBoundingClientRect().height;
+
+			var timelineStart = 0.1 * intrinsicWidth;
+			var timelineEnd = 0.9 * intrinsicWidth;
+			var timelineWidth = timelineEnd - timelineStart;
 
 			// append the svg object to the body of the page
 			// appends a 'group' element to 'svg'
@@ -50,7 +57,7 @@ class TimelineVisual extends Component {
 			var i = 0;
 			var timelines = svg
 			.selectAll('g.timeline')
-			.data(universes, function(d) { d.index = ++i; return d.id; });
+			.data(universes, function(d) { d.index = i; i++; return d.id; });
 
 			// Enter any new timeline at the parent's previous position.
 			var timelineEnter = timelines
@@ -60,71 +67,116 @@ class TimelineVisual extends Component {
 
 
 			timelineEnter
-			.append("rect")
+			.append("line")
 			.attr('class', 'timeline')
 			.style("fill", "#000")
 			.style("stroke", "#000")
 			.style("stroke-width", "5")
-			.attr('x', "20")
-			.attr('y', t => t.index * 100)
-			.attr('width', "300")
-			.attr('height', "5");
+			.attr('x1', timelineStart)
+			.attr('y1', t => getTimelineY(t.index))
+			.attr('x2', timelineEnd)
+			.attr('y2', t => getTimelineY(t.index));
 
-			/*
-			nodeEnter
-			.filter(function(d){ return (!d.referenceNode); })
-			.append("a")
-		    .attr("xlink:href", function(d){
-				return zettel_url_prefix + d.ekin;
-			})
-			.append('circle')
-			.attr('class', 'node')
-			.style("fill", "#fca")
+
+			timelineEnter
+			.filter(u => u.isCreatedAtFirstEntering)
+			.append("line")
+			.attr('class', 'timeline')
+			.style("fill", "#000")
 			.style("stroke", "#000")
-			.style("stroke-width", "8")
-			.attr('r', "33")
-			.attr("transform", function(d) {
-				return "translate(" + d.x + "," + d.y + ")";
-			});
+			.style("stroke-width", "5")
+			.attr('x1', timelineStart)
+			.attr('y1', t => getTimelineY(t.index - 1))
+			.attr('x2', timelineStart)
+			.attr('y2', t => getTimelineY(t.index));
 
-*/
-		/*
 
-			// Add labels for the (real) nodes
-			nodeEnter
-			.filter(d => !d.isSubstitution)
-			.append("a")
-		    .attr("xlink:href", function(d){
-				return zettel_url_prefix + d.ekin;
-			})
+			// Universe name label
+			timelineEnter
 			.append('text')
 			.attr("dy", ".35em")
-			.attr("text-anchor", "middle")
-			.text(d => d.name)
+			.attr("text-anchor", "left")
+			.text(u => u.name)
 			.attr('font-size', "12")
 			.style('font-family', "sans-serif")
 			.attr('fill', "black")
-			.attr("transform", function(d) {
-				return "translate(" + d.x + "," + d.y + ")";
+			.attr("transform", function(u) {
+				return "translate(" + (timelineStart + 6) + "," + (getTimelineY(u.index) + 9) + ")";
 			});
-*/
 
-/*
-			var stub = svg
-			.selectAll('g.stub')
-			.data(stubs, function(d) {
-				return d.id || (d.id = ++i);
-			})
-			.enter()
-			.filter(d => !d.subNodes)
-			.insert('path', "g")
-			.attr("class", "link")
-			.attr("stroke", "#77a")
-			.attr("stroke-width", "7")
-			.attr('d', function(d){
-				return `M ${d.origin.x} ${d.origin.y}, ${d.origin.x + 30} ${d.origin.y + 30}`
+
+			timelineEnter
+			.append('text')
+			.attr("dy", ".35em")
+			.attr("text-anchor", "start")
+			.text(u => moment(u.earliestDateOfRef2).format("MMM Y"))
+			.attr('font-size', "12")
+			.style('font-family', "sans-serif")
+			.attr('fill', "black")
+			.attr("transform", function(u) {
+				return "translate(" + (timelineStart + 6) + "," + (getTimelineY(u.index) - 14) + ")";
 			});
-*/
+
+
+			timelineEnter
+			.append('text')
+			.attr("dy", ".35em")
+			.attr("text-anchor", "end")
+			.text(u => moment(u.latestDateOfRef2).format("MMM Y"))
+			.attr('font-size', "12")
+			.style('font-family', "sans-serif")
+			.attr('fill', "black")
+			.attr("transform", function(u) {
+				return "translate(" + (timelineEnd - 6) + "," + (getTimelineY(u.index) - 14) + ")";
+			});
+
+
+
+
+			//TEST
+			var spans = paths[0] && paths[0].spans || [];
+
+			var i = 0;
+			var svgSpans = svg
+			.selectAll('g.span')
+			.data(spans, function(d) { d.index = i; i++; return d.id; });
+
+			// Enter any new timeline at the parent's previous position.
+			var spanEnter = svgSpans
+			.enter()
+			.append('g')
+			.attr('class', 'span');
+
+
+			spanEnter
+			.append("line")
+			.attr('class', 'span')
+			.style("stroke", "#0AF")
+			.style("stroke-width", "5")
+			.attr('x1', span => timelineStart + (span.relativeStartRS2 * timelineWidth))
+			.attr('y1', span => getTimelineY(span.universe_index) - 5)
+			.attr('x2', span => timelineStart + (span.relativeEndRS2 * timelineWidth))
+			.attr('y2', span => getTimelineY(span.universe_index) - 5);
+
+
+			spanEnter
+			.filter((s, i) => {
+				var next = spanEnter.data()[i+1];
+				return next && (s.universe_index !== next.universe_index);
+			})
+			.append("line")
+			.attr('class', 'span')
+			.style("stroke", "#00E")
+			.style("stroke-width", "5")
+			.attr('x1', (span, i) => timelineStart + (span.relativeEndRS2 * timelineWidth))
+			.attr('y1', (span, i) => getTimelineY(span.universe_index) - 5)
+			.attr('x2', (span, i) => {
+				return timelineStart + (spans[span.index+1].relativeStartRS2 * timelineWidth);
+			})
+			.attr('y2', (span, i) => {
+				return getTimelineY(spans[span.index+1].universe_index) - 5;
+			});
+
 		}
 
 		draw(data.paths, data.universes);

@@ -1,21 +1,9 @@
+var dateFormatter = require("./date-formatter.js");
+var moment = require("moment");
+
 /*****************************
     PRIVATE
 *****************************/
-
-    var month_names = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-    ]
 
     var distance_between_universes = 5;
     var camera;
@@ -211,56 +199,28 @@ var drawUniversePlane = function(u, i, data){
         u.latestDateOfRef2 && createText(u.latestDateOfRef2.years, 5, y, -5);
     } else if (u.RS2duration > 2628000000){
         u.earliestDateOfRef2 && createText(
-            month_names[parseInt(u.earliestDateOfRef2.months)]
-            + " "
-            + u.earliestDateOfRef2.years,
+            moment(u.earliestDateOfRef2).format("MMM Y"),
             5, y, 5
         );
         u.latestDateOfRef2 && createText(
-            month_names[parseInt(u.latestDateOfRef2.months)]
-            + " "
-            + u.latestDateOfRef2.years,
+            moment(u.latestDateOfRef2).format("MMM Y"),
             5, y, -5
         );
     } else {
         u.earliestDateOfRef2 && createText(
-            u.earliestDateOfRef2.date
-            + " "
-            + month_names[parseInt(u.earliestDateOfRef2.months)]
-            + " "
-            + u.earliestDateOfRef2.years,
+            moment(u.earliestDateOfRef2).format("D MMM Y"),
             5, y, 5
         );
         u.latestDateOfRef2 && createText(
-            u.latestDateOfRef2.date
-            + " "
-            + month_names[parseInt(u.latestDateOfRef2.months)]
-            + " "
-            + u.latestDateOfRef2.years,
+            moment(u.latestDateOfRef2).format("D MMM Y"),
             5, y, -5
         );
     }
 
-    if (active_path.RS1duration > 31536000000){
-        var unit = "years";
-        var x_start_value = "0 " + unit;
-        var x_end_value = Math.round(active_path.RS1duration / 1000 / 60 / 60 / 24 / 365) + " " + unit;
-    } else if (active_path.RS1duration > 86400000){
-        unit = "days";
-        x_start_value = "0 " + unit;
-        x_end_value = Math.round(active_path.RS1duration / 1000 / 60 / 60 / 24) + " " + unit;
-    } else if (active_path.RS1duration > 3600000){
-        unit = "hours";
-        x_start_value = "0 " + unit;
-        x_end_value = Math.round(active_path.RS1duration / 1000 / 60 / 60) + " " + unit;
-    } else {
-        unit = "seconds";
-        x_start_value = "0 " + unit;
-        x_end_value = Math.round(active_path.RS1duration / 1000) + " " + unit;
-    }
+    var x_span = dateFormatter.msPairToUsefeul(0, active_path.RS1duration);
 
-    createText(x_start_value, -5, y, 6);
-    createText(x_end_value, 3, y, 6);
+    createText(x_span.start, -5, y, 6);
+    createText(x_span.end, 3, y, 6);
 
 }
 
