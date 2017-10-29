@@ -122,7 +122,15 @@ class TimelineTree extends Component {
 			.append('text')
 			.attr("dy", ".35em")
 			.attr("text-anchor", "start")
-			.text(u => moment(u.earliestDateOfRef2).format("MMM Y"))
+			.text(u => {
+			    if (u.RS2duration > 31536000000){
+			        return u.earliestDateOfRef2.years;
+			    } else if (u.RS2duration > 2628000000){
+			        return moment(u.earliestDateOfRef2).format("MMM Y");
+			    } else {
+			        return moment(u.earliestDateOfRef2).format("D MMM Y");
+			    }
+			})
 			.attr('font-size', "12")
 			.style('font-family', "sans-serif")
 			.attr('fill', "black")
@@ -135,7 +143,15 @@ class TimelineTree extends Component {
 			.append('text')
 			.attr("dy", ".35em")
 			.attr("text-anchor", "end")
-			.text(u => moment(u.latestDateOfRef2).format("MMM Y"))
+			.text(u => {
+			    if (u.RS2duration > 31536000000){
+			        return u.latestDateOfRef2.years;
+			    } else if (u.RS2duration > 2628000000){
+			        return moment(u.latestDateOfRef2).format("MMM Y");
+			    } else {
+			        return moment(u.latestDateOfRef2).format("D MMM Y");
+			    }
+			})
 			.attr('font-size', "12")
 			.style('font-family', "sans-serif")
 			.attr('fill', "black")
