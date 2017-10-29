@@ -37,7 +37,7 @@ class Span extends Component {
 				"border": "2px solid grey",
 				"margin": "10px 0px",
 				"padding": "10px",
-				"background": "radial-gradient(circle at 50% 10%, rgba(247, 221, 189, 0.79) -10%, transparent 90%), linear-gradient(140deg, rgba(255, 87, 87, 0.48) -20%, transparent 90%), linear-gradient(-150deg, #6BCCE6 -10%, transparent 60%), radial-gradient(40% 50% at 50% 120%, rgba(30, 12, 76, 0.25), transparent), linear-gradient(to right, rgba(245, 34, 116, 0.63), rgba(39, 97, 249, 0.65), white)"
+				"background": "radial-gradient(circle at 50% 10%, rgba(226, 251, 255, 0.79) -10%, transparent 90%), linear-gradient(140deg, rgba(255, 87, 87, 0.48) -20%, transparent 90%), linear-gradient(-150deg, rgb(207, 230, 107) -10%, transparent 60%), radial-gradient(40% 50% at 50% 120%, rgba(72, 0, 255, 0.25), transparent), linear-gradient(to right, rgba(34, 187, 245, 0.63), rgba(39, 249, 191, 0.65), #8e94ff)"
 			}}>
 				<div style={{
 					"display": "flex",

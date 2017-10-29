@@ -28,7 +28,7 @@ class Universe extends Component {
 				"border": "2px solid grey",
 				"margin": "10px 0px",
 				"padding": "10px",
-				"background": "url(assets/HubbleUltraDeepField_fade.jpg)"
+				"background": "radial-gradient(circle at 50% 10%, rgba(226, 240, 255, 0.79) -10%, transparent 90%), linear-gradient(140deg, rgba(255, 87, 87, 0.48) -20%, transparent 90%), linear-gradient(-150deg, rgb(145, 130, 236) -10%, transparent 60%), radial-gradient(40% 50% at 50% 120%, rgba(72, 0, 255, 0.25), transparent), linear-gradient(to right, rgba(135, 104, 255, 0.63), rgba(81, 39, 249, 0.65), #0009b2)"
 			}}>
 				<div style={{
 					"display": "flex",
