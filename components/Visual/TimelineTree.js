@@ -98,7 +98,26 @@ class TimelineTree extends Component {
 			.style("stroke", "#000")
 			.style("stroke-width", "5")
 			.attr('x1', t => t.drawStart)
-			.attr('y1', t => getTimelineY(t.index - 1))
+			.attr('y1', t => {
+				// get timeline index of last timeline that began before this one
+				var timelinesThatBeganEarlier = universes.filter(u => {
+					return (
+						(u.relativeStart < t.relativeStart)
+						&& (u.index < t.index)
+					);
+				});
+
+				//parent timeline is the last timeline before this timeline, that began earlier
+				if (timelinesThatBeganEarlier.length > 0){
+					var parentTimeline = timelinesThatBeganEarlier[timelinesThatBeganEarlier.length - 1];
+					console.log("Parent timeline index", parentTimeline.index)
+					return getTimelineY(parentTimeline.index);
+				} else {
+					return getTimelineY(t.index - 1);
+				}
+
+
+			})
 			.attr('x2', t => t.drawStart)
 			.attr('y2', t => getTimelineY(t.index));
 
