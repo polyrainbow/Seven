@@ -30,7 +30,10 @@ class TimelineTree extends Component {
 
 		var getTimelineY = (i) => (i * TIMELINE_GAP) + TIMELINE_GAP;
 
-		var draw = function(paths, universes){
+		var draw = function(state){
+
+			var universes = state.universes;
+			var paths = state.paths;
 
 			var div = document.querySelector("#timeline-vis");
 			var intrinsicWidth = div.getBoundingClientRect().width;
@@ -46,6 +49,7 @@ class TimelineTree extends Component {
 				u.drawEnd = MIN_X + (u.relativeEnd * drawingWidth);
 				u.drawWidth = u.drawEnd - u.drawStart;
 			});
+
 
 			// append the svg object to the body of the page
 			// appends a 'group' element to 'svg'
@@ -65,6 +69,31 @@ class TimelineTree extends Component {
 			.attr('width', "100%")
 			.attr('height', "100%");
 
+
+			//Grid points
+			var i = 0;
+			var grid_points = svg
+			.selectAll('g.grid_points')
+			.data(state.gridPoints, function(d) { d.index = i; i++; return d.id; });
+
+			// Enter any new timeline at the parent's previous position.
+			var gridPointEnter = grid_points
+			.enter()
+			.append('g')
+			.attr('class', 'timeline');
+
+			gridPointEnter
+			.append("line")
+			.attr('class', 'gridline')
+			.style("stroke", "#ccc")
+			.style("stroke-width", "2")
+			.attr('x1', gp => gp.relativePosition * drawingWidth)
+			.attr('y1', gp => 0)
+			.attr('x2', gp => gp.relativePosition * drawingWidth)
+			.attr('y2', gp => intrinsicHeight);
+
+
+			//Timelines
 			var i = 0;
 			var timelines = svg
 			.selectAll('g.timeline')
@@ -272,7 +301,7 @@ class TimelineTree extends Component {
 
 		}
 
-		draw(data.paths, data.universes);
+		draw(data);
 
 	}
 
