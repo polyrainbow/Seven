@@ -80,21 +80,33 @@ class TimelineTree extends Component {
 			var gridPointEnter = grid_points
 			.enter()
 			.append('g')
-			.attr('class', 'timeline');
+			.attr('class', 'gridpoint');
 
 			gridPointEnter
 			.append("line")
 			.attr('class', 'gridline')
 			.style("stroke", "#ccc")
 			.style("stroke-width", "2")
-			.attr('x1', gp => gp.relativePosition * drawingWidth)
-			.attr('y1', gp => 0)
-			.attr('x2', gp => gp.relativePosition * drawingWidth)
+			.attr('x1', gp => gp.relativePosition * drawingWidth + MIN_X)
+			.attr('y1', gp => "0")
+			.attr('x2', gp => gp.relativePosition * drawingWidth + MIN_X)
 			.attr('y2', gp => intrinsicHeight);
+
+			gridPointEnter
+			.append("text")
+			.attr("dy", ".35em")
+			.attr("text-anchor", "left")
+			.text(gp => gp.moment.years)
+			.attr('font-size', "12")
+			.style('font-family', "sans-serif")
+			.attr('fill', "black")
+			.attr("transform", function(gp) {
+				return "translate(" + ((gp.relativePosition * drawingWidth + MIN_X) + 6) + "," + "12" + ")";
+			});
 
 
 			//Timelines
-			var i = 0;
+			i = 0;
 			var timelines = svg
 			.selectAll('g.timeline')
 			.data(universes, function(d) { d.index = i; i++; return d.id; });

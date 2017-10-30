@@ -118,21 +118,34 @@ var getRelativeEndOfSpanInRS1 = (span_id, path) => {
 var getGridPoints = (state) => {
 
 	var gridPoints = [];
-
-	if (state.RS2duration > 31536000000){
-		//Grid points in year resolution
-		var first_year = state.earliestDateInRS2.years;
-		var year = first_year;
+	//Already go to century resolution, when duration longer than a fourth of a century
+	if (state.RS2duration > (3153600000000 / 4)){
+		//Grid points in century resolution
+		var next_century_year = Math.ceil(state.earliestDateInRS2.years/100) * 100;
+		var year = next_century_year;
 		while (year < state.latestDateInRS2.years){
-			year = year + 1;
-			console.log(year)
 			var first_day_of_year = moment(year + "-01-01 00:00");
-			var relativePosition =	first_day_of_year.diff(state.earliestDateInRS2) / state.RS2duration;
+			var relativePosition = first_day_of_year.diff(state.earliestDateInRS2) / state.RS2duration;
 			gridPoints.push({
 				relativePosition,
 				moment: first_day_of_year.toObject()
 			});
+			year = year + 100;
 		}
+	} else if (state.RS2duration > 31536000000){
+			//Grid points in year resolution
+			var first_year = state.earliestDateInRS2.years;
+			var year = first_year;
+			while (year < state.latestDateInRS2.years){
+				year = year + 1;
+				console.log(year)
+				var first_day_of_year = moment(year + "-01-01 00:00");
+				var relativePosition =	first_day_of_year.diff(state.earliestDateInRS2) / state.RS2duration;
+				gridPoints.push({
+					relativePosition,
+					moment: first_day_of_year.toObject()
+				});
+			}
 	} else if (state.RS2duration > 2628000000){
 		//Grid points in month resolution
 		var newDate = {
