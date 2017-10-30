@@ -134,41 +134,46 @@ var getGridPoints = (state) => {
 			year = year + 100;
 		}
 	} else if (state.RS2duration > 31536000000){
-			//Grid points in year resolution
-			var first_year = state.earliestDateInRS2.years;
-			var year = first_year;
-			while (year < state.latestDateInRS2.years){
-				year = year + 1;
-				console.log(year)
-				var first_day_of_year = moment(year + "-01-01 00:00");
-				var relativePosition =	first_day_of_year.diff(state.earliestDateInRS2) / state.RS2duration;
-				gridPoints.push({
-					relativePosition,
-					moment: first_day_of_year.toObject(),
-					label: year
-				});
-			}
+		//Grid points in year resolution
+		var first_year = state.earliestDateInRS2.years;
+		var year = first_year;
+		while (year < state.latestDateInRS2.years){
+			year = year + 1;
+			var first_day_of_year = moment(year + "-01-01 00:00");
+			var relativePosition =	first_day_of_year.diff(state.earliestDateInRS2) / state.RS2duration;
+			gridPoints.push({
+				relativePosition,
+				moment: first_day_of_year.toObject(),
+				label: year
+			});
+		}
 	} else if (state.RS2duration > 2628000000){
 		//Grid points in month resolution
-		var newDate = {
-			...state.earliestDateInRS2,
-			months: state.earliestDateInRS2.months < 11 ? state.earliestDateInRS2.months + 1 : 0,
-			years: state.earliestDateInRS2.years < 11 ? state.earliestDateInRS2.years : state.earliestDateInRS2.years + 1
-		};
-
-		while (moment(newDate).diff(state.latestDateInRS2) > 2628000000){
-			newDate = moment(newDate).add(1, 'month');
+		var newDate = moment(state.earliestDateInRS2).add(1, "month").startOf("month");
+		while (moment(state.latestDateInRS2).diff(newDate) >= 2628000000){
 			var date_object = newDate.toObject();
+			var relativePosition = newDate.diff(state.earliestDateInRS2) / state.RS2duration;
 			gridPoints.push({
 				relativePosition,
 				moment: date_object,
 				label: newDate.format("MMM YYYY")
 			});
+			newDate = newDate.add(1, 'month');
 		}
 	} else {
 		//Grid points in day resolution
-		//var newDate = go to the next 00:00 date starting at state.earliestDateInRS2
-		return [];
+		//go to the next 00:00 date starting at state.earliestDateInRS2
+		var newDate = moment(state.earliestDateInRS2).add(1, "day").startOf("day");
+		while (moment(state.latestDateInRS2).diff(newDate) >= 86400000){
+			var date_object = newDate.toObject();
+			var relativePosition = newDate.diff(state.earliestDateInRS2) / state.RS2duration;
+			gridPoints.push({
+				relativePosition,
+				moment: date_object,
+				label: newDate.format("DD MMM YYYY")
+			});
+			newDate = newDate.add(1, 'day');
+		}
 	}
 	console.log(gridPoints)
 	return gridPoints;

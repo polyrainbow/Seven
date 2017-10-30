@@ -37,7 +37,8 @@ class TimelineTree extends Component {
 
 			var div = document.querySelector("#timeline-vis");
 			var intrinsicWidth = div.getBoundingClientRect().width;
-			var intrinsicHeight = div.getBoundingClientRect().height;
+			var verticalSpaceNeeded = universes.length * TIMELINE_GAP + 50;
+			var intrinsicHeight = Math.max(div.getBoundingClientRect().height, verticalSpaceNeeded);
 
 			const MIN_X = 0.05 * intrinsicWidth;
 			const MAX_X = 0.95 * intrinsicWidth;
