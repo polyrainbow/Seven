@@ -24,10 +24,12 @@ class Toolbar extends Component {
 		saveAs(blob, "my-timeline.seven.json");
 	}
 
-	handleFileInputChange(file){
+	handleFileInputChange(e){
+		var file = e.target.files[0];
 		readFileAsJSON(file, (newState) => {
 			this.props.loadState(newState);
 		}, (e) => console.log(e));
+		e.target.value = "";
 	}
 
 	render() {
@@ -61,7 +63,7 @@ class Toolbar extends Component {
 					id="fileInput"
 					type="file"
 					style={{"display": "none"}}
-					onChange={(e) => this.handleFileInputChange(e.target.files[0])}
+					onChange={this.handleFileInputChange.bind(this)}
 				/>
 			</div>
 		);

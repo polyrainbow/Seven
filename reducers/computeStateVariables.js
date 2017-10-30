@@ -150,7 +150,7 @@ var getGridPoints = (state) => {
 	} else if (state.RS2duration > 2628000000){
 		//Grid points in month resolution
 		var newDate = moment(state.earliestDateInRS2).add(1, "month").startOf("month");
-		while (moment(state.latestDateInRS2).diff(newDate) >= 2628000000){
+		while (moment(state.latestDateInRS2).diff(newDate) >= 0){
 			var date_object = newDate.toObject();
 			var relativePosition = newDate.diff(state.earliestDateInRS2) / state.RS2duration;
 			gridPoints.push({
@@ -164,7 +164,7 @@ var getGridPoints = (state) => {
 		//Grid points in day resolution
 		//go to the next 00:00 date starting at state.earliestDateInRS2
 		var newDate = moment(state.earliestDateInRS2).add(1, "day").startOf("day");
-		while (moment(state.latestDateInRS2).diff(newDate) >= 86400000){
+		while (moment(state.latestDateInRS2).diff(newDate) >= 0){
 			var date_object = newDate.toObject();
 			var relativePosition = newDate.diff(state.earliestDateInRS2) / state.RS2duration;
 			gridPoints.push({
