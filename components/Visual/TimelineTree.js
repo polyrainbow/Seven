@@ -25,7 +25,10 @@ class TimelineTree extends Component {
 
 	createVisualization(data){
 
-		var getTimelineY = (i) => i * 100 + 100;
+		const PATH_THICKNESS = 5;
+		const TIMELINE_GAP = 65;
+
+		var getTimelineY = (i) => (i * TIMELINE_GAP) + TIMELINE_GAP;
 
 		var draw = function(paths, universes){
 
@@ -33,16 +36,14 @@ class TimelineTree extends Component {
 			var intrinsicWidth = div.getBoundingClientRect().width;
 			var intrinsicHeight = div.getBoundingClientRect().height;
 
-			const PATH_THICKNESS = 5;
-
-			var x_start = 0.05 * intrinsicWidth;
-			var x_end = 0.95 * intrinsicWidth;
-			var drawingWidth = x_end - x_start;
+			const MIN_X = 0.05 * intrinsicWidth;
+			const MAX_X = 0.95 * intrinsicWidth;
+			var drawingWidth = MAX_X - MIN_X;
 
 			//compute timeline drawing widths for all universes
 			universes.forEach(u => {
-				u.drawStart = x_start + (u.relativeStart * drawingWidth);
-				u.drawEnd = x_start + (u.relativeEnd * drawingWidth);
+				u.drawStart = MIN_X + (u.relativeStart * drawingWidth);
+				u.drawEnd = MIN_X + (u.relativeEnd * drawingWidth);
 				u.drawWidth = u.drawEnd - u.drawStart;
 			});
 
@@ -110,7 +111,6 @@ class TimelineTree extends Component {
 				//parent timeline is the last timeline before this timeline, that began earlier
 				if (timelinesThatBeganEarlier.length > 0){
 					var parentTimeline = timelinesThatBeganEarlier[timelinesThatBeganEarlier.length - 1];
-					console.log("Parent timeline index", parentTimeline.index)
 					return getTimelineY(parentTimeline.index);
 				} else {
 					return getTimelineY(t.index - 1);
