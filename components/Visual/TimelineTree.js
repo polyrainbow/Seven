@@ -278,7 +278,13 @@ class TimelineTree extends Component {
 
 	render() {
 		return (
-			<div id="timeline-vis"/>
+			<div
+				id="timeline-vis"
+				className="visualWrapper"
+				style={{
+					"gridArea": "2 / 2 / 3 / 3"
+				}}
+			/>
 		);
   }
 }
