@@ -96,7 +96,7 @@ class TimelineTree extends Component {
 			.append("text")
 			.attr("dy", ".35em")
 			.attr("text-anchor", "left")
-			.text(gp => gp.moment.years)
+			.text(gp => gp.label)
 			.attr('font-size', "12")
 			.style('font-family', "sans-serif")
 			.attr('fill', "black")

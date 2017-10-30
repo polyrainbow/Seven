@@ -128,7 +128,8 @@ var getGridPoints = (state) => {
 			var relativePosition = first_day_of_year.diff(state.earliestDateInRS2) / state.RS2duration;
 			gridPoints.push({
 				relativePosition,
-				moment: first_day_of_year.toObject()
+				moment: first_day_of_year.toObject(),
+				label: year
 			});
 			year = year + 100;
 		}
@@ -143,7 +144,8 @@ var getGridPoints = (state) => {
 				var relativePosition =	first_day_of_year.diff(state.earliestDateInRS2) / state.RS2duration;
 				gridPoints.push({
 					relativePosition,
-					moment: first_day_of_year.toObject()
+					moment: first_day_of_year.toObject(),
+					label: year
 				});
 			}
 	} else if (state.RS2duration > 2628000000){
@@ -156,13 +158,16 @@ var getGridPoints = (state) => {
 
 		while (moment(newDate).diff(state.latestDateInRS2) > 2628000000){
 			newDate = moment(newDate).add(1, 'month');
+			var date_object = newDate.toObject();
 			gridPoints.push({
 				relativePosition,
-				moment: newDate.toObject()
+				moment: date_object,
+				label: newDate.format("MMM YYYY")
 			});
 		}
 	} else {
 		//Grid points in day resolution
+		//var newDate = go to the next 00:00 date starting at state.earliestDateInRS2
 		return [];
 	}
 	console.log(gridPoints)
