@@ -14,10 +14,13 @@ export default class AppTitle extends Component {
 				"alignItems": "center"
 			}}>
 				<div>
-					<img src="assets/seven_logo.svg" style={{
-						"height": "30px",
-						"marginRight": "10px"
-					}} />
+					<img
+						src="assets/seven_logo.svg" style={{
+							"height": "30px",
+							"marginRight": "10px"
+						}}
+						alt="Seven Logo"
+					/>
 				</div>
 				<div>
 					<h1 style={{

@@ -25,8 +25,12 @@ class PresetMenu extends Component {
 					style={{
 						"margin": "0px 5px"
 					}}
+					htmlFor="toolbar_select_preset"
 				>Presets</label>
-				<select onChange={(e) => this.props.setPreset(e.target.selectedIndex)}>
+				<select
+					onChange={(e) => this.props.setPreset(e.target.selectedIndex)}
+					id="toolbar_select_preset"
+				>
 					{presets.map(p => <option>{p.name}</option>)}
 				</select>
 			</div>
