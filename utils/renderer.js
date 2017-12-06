@@ -14,7 +14,7 @@ var moment = require("moment");
     var universeTexture;
     var active_universe_index = 0;
     var camera_y_offset = 6;
-    const debug_mode = false;
+    const DEBUG_MODE = true;
     var universe_plane_material;
     var universe_plane_geometry;
     var pointGeometry = new THREE.CircleGeometry( 0.2, 16 );
@@ -300,7 +300,7 @@ var moveCamera = (
 var animate = () => {
     requestAnimationFrame( animate );
 
-    if (!debug_mode){
+    if (!DEBUG_MODE){
 
         var camera_position_x_target = 1;
         var camera_position_y_target = getUniverseYPosition(active_universe_index) + camera_y_offset;
@@ -376,6 +376,17 @@ var refresh = (data) => {
     console.log(data); /////////////////////////////////////////////////
     drawUniverses(data);
     active_universe_index = data.universes.findIndex(u => u.id === data.active_universe_id);
+}
+
+
+window.focusFirstUniverseFromAbove = () => {
+  camera.position.x = 0;
+  camera.position.y = 8;
+  camera.position.z = 0;
+
+  camera.rotation.x = 1.5 * Math.PI;
+  camera.rotation.y = 0;
+  camera.rotation.z = 0;
 }
 
 
