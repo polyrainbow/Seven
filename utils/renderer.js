@@ -19,6 +19,7 @@ var moment = require("moment");
     var universe_plane_geometry;
     var pointGeometry = new THREE.CircleGeometry( 0.2, 16 );
     var textGeometries = [];
+    const SPAN_Y_OFFSET = 0.04;
 
     var getUniverseYPosition = (universe_index) => {
         return -distance_between_universes * universe_index;
@@ -33,9 +34,9 @@ var moment = require("moment");
         var x1 = 10 * span2.relativeStartRS1 - 5;
 
         var origin_universe_index = data.universes.findIndex(u => u.id === span1.universe_id);
-        var y0 = getUniverseYPosition(origin_universe_index) + 0.04;
+        var y0 = getUniverseYPosition(origin_universe_index) + SPAN_Y_OFFSET;
         var target_universe_index = data.universes.findIndex(u => u.id === span2.universe_id);
-        var y1 = getUniverseYPosition(target_universe_index) + 0.04;
+        var y1 = getUniverseYPosition(target_universe_index) + SPAN_Y_OFFSET;
 
         var z0 = 10 * -span1.relativeEndRS2 + 5;
         var z1 = 10 * -span2.relativeStartRS2 + 5;
@@ -73,7 +74,7 @@ var moment = require("moment");
 
     var universe_index = data.universes.findIndex(u => u.id === span.universe_id);
 
-    var y = getUniverseYPosition(universe_index) + 0.04;
+    var y = getUniverseYPosition(universe_index) + SPAN_Y_OFFSET;
 
     var x0 = 10 * span.relativeStartRS1 - 5;
     var x1 = 10 * span.relativeEndRS1 - 5;
