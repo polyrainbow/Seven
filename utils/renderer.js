@@ -231,7 +231,7 @@ var drawUniversePlane = function(u, i, data){
 }
 
 
-var createLine = (x0, y0, z0, x1, y1, z1, color) => {
+var createLineLegacy = (x0, y0, z0, x1, y1, z1, color) => {
     var material = new THREE.LineBasicMaterial({ color: color, linewidth: 3 });
     var geometry = new THREE.Geometry();
     geometry.vertices.push(new THREE.Vector3(x0, y0, z0));
@@ -239,6 +239,60 @@ var createLine = (x0, y0, z0, x1, y1, z1, color) => {
     var line = new THREE.Line(geometry, material);
     scene.add(line);
     return line;
+}
+
+var createLine = (x0, y0, z0, x1, y1, z1, color) => {
+    let LINE_WIDTH = 0.1;
+
+    let startVector = new THREE.Vector3(x0, y0, z0);
+    let endVector = new THREE.Vector3(x1, y1, z1);
+    let lineVector = endVector.clone().sub(startVector);
+
+    let yAxisVector = new THREE.Vector3(0, 1, 0);
+
+    //let's get the four edges of the plane
+    var A = lineVector
+    .clone().normalize().applyAxisAngle(yAxisVector, 0.5 * Math.PI)
+    .setLength(LINE_WIDTH / 2).add(startVector);
+
+    var B = lineVector
+    .clone().normalize().applyAxisAngle(yAxisVector, 1.5 * Math.PI)
+    .setLength(LINE_WIDTH / 2).add(startVector);
+
+    var C = lineVector
+    .clone().normalize().applyAxisAngle(yAxisVector, 0.5 * Math.PI)
+    .setLength(LINE_WIDTH / 2).add(endVector);
+
+    var D = lineVector
+    .clone().normalize().applyAxisAngle(yAxisVector, 1.5 * Math.PI)
+    .setLength(LINE_WIDTH / 2).add(endVector);
+    console.log(A, B, C, D)
+    var geometry = new THREE.Geometry();
+    geometry.vertices.push(A);
+    geometry.vertices.push(B);
+    geometry.vertices.push(C);
+    geometry.vertices.push(D);
+
+    var material = new THREE.MeshBasicMaterial( { color : color, side:THREE.DoubleSide } );
+
+    //create two new triangular faces for the plane
+    var face0 = new THREE.Face3( 2, 1, 0 );
+    var face1 = new THREE.Face3( 1, 2, 3 );
+
+    //add the face to the geometry's faces array
+    geometry.faces.push( face0 );
+    geometry.faces.push( face1 );
+
+    //the face normals and vertex normals can be calculated automatically if not supplied above
+    geometry.computeFaceNormals();
+    geometry.computeVertexNormals();
+
+    let mesh = new THREE.Mesh( geometry, material );
+    mesh.name = "Line";
+    console.log(mesh)
+    scene.add( mesh );
+console.log(scene)
+    return mesh;
 }
 
 
