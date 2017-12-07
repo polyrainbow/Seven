@@ -33,6 +33,7 @@ var moment = require("moment");
     var universe_plane_geometry;
     var pointGeometry = new THREE.CircleGeometry( 0.2, 16 );
     var textGeometries = [];
+    var id_counter = 0;
 
 
     var getUniverseYPosition = (universe_index) => {
@@ -114,6 +115,9 @@ var createPoint = (x, y, z, color) => {
     pointMesh.position.y = y;
     pointMesh.position.z = z;
     pointMesh.rotation.x = 1.5 * Math.PI;
+
+    pointMesh.name = "point_" + ++id_counter;
+
     scene.add( pointMesh );
     return pointMesh;
 }
@@ -146,6 +150,8 @@ var createText = (text, x, y, z, rotation_z, color) => {
 
     textMesh.rotation.x = 1.5 * Math.PI;
     textMesh.rotation.z = rotation_z || 0;
+
+    textMesh.name = "text_" + ++id_counter;
 
     scene.add(textMesh);
 
@@ -454,6 +460,14 @@ window.focusFirstUniverseFromAbove = () => {
   camera.rotation.x = 1.5 * Math.PI;
   camera.rotation.y = 0;
   camera.rotation.z = 0;
+
+  window.scene = scene;
+
+  while (scene.children.filter(child => child.name.includes("text_")).length > 0){
+      var textChild = scene.children.filter(child => child.name.includes("text_"))[0];
+      scene.remove(textChild);
+  }
+
 }
 
 
