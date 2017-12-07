@@ -5,7 +5,23 @@ var moment = require("moment");
     PRIVATE
 *****************************/
 
-    var distance_between_universes = 5;
+    const DISTANCE_BETWEEN_UNIVERSES = 5;
+    const CAMERA_Y_OFFSET = 6;
+    const DEBUG_MODE = false;
+    const UNIVERSE_SIZE = 10;
+    const CAM_MOVE_PER_FRAME = 0.1;
+    const SPAN_Y_OFFSET = 0.04;
+    const LINE_WIDTH = 0.1;
+    const SPAN_AS_LINE_THRESHOLD_LENGTH = 0.25;
+    const COLORS = {
+        SPAN: 0x00ffff,
+        DILATED_SPAN: 0xff2222,
+        INTER_UNIVERSE_CONNECTION: 0x00ff00,
+        UNIVERSE_GRID: 0x333333,
+        UNIVERSE_LABEL: 0xffff00
+    };
+
+
     var camera;
     var scene;
     var renderer;
@@ -13,35 +29,30 @@ var moment = require("moment");
     var font;
     var universeTexture;
     var active_universe_index = 0;
-    var camera_y_offset = 6;
-    const DEBUG_MODE = true;
     var universe_plane_material;
     var universe_plane_geometry;
     var pointGeometry = new THREE.CircleGeometry( 0.2, 16 );
     var textGeometries = [];
-    const SPAN_Y_OFFSET = 0.04;
+
 
     var getUniverseYPosition = (universe_index) => {
-        return -distance_between_universes * universe_index;
+        return -DISTANCE_BETWEEN_UNIVERSES * universe_index;
     }
 
 
     var createInterUniverseConnection = (span1, span2, data) =>{
-
-        var color = 0x00ff00;
-
-        var x0 = 10 * span1.relativeEndRS1 - 5;
-        var x1 = 10 * span2.relativeStartRS1 - 5;
+        var x0 = UNIVERSE_SIZE * span1.relativeEndRS1 - 5;
+        var x1 = UNIVERSE_SIZE * span2.relativeStartRS1 - 5;
 
         var origin_universe_index = data.universes.findIndex(u => u.id === span1.universe_id);
         var y0 = getUniverseYPosition(origin_universe_index) + SPAN_Y_OFFSET;
         var target_universe_index = data.universes.findIndex(u => u.id === span2.universe_id);
         var y1 = getUniverseYPosition(target_universe_index) + SPAN_Y_OFFSET;
 
-        var z0 = 10 * -span1.relativeEndRS2 + 5;
-        var z1 = 10 * -span2.relativeStartRS2 + 5;
+        var z0 = UNIVERSE_SIZE * -span1.relativeEndRS2 + 5;
+        var z1 = UNIVERSE_SIZE * -span2.relativeStartRS2 + 5;
 
-        createLine(x0, y0, z0, x1, y1, z1, color);
+        createLine(x0, y0, z0, x1, y1, z1, COLORS.INTER_UNIVERSE_CONNECTION);
 
     }
 
@@ -70,23 +81,23 @@ var moment = require("moment");
         return;
     }
 
-    var color = (span.dilationFactor === 1) ? 0x00ffff : 0xff2222;
+    var color = (span.dilationFactor === 1) ? COLORS.SPAN : COLORS.DILATED_SPAN;
 
     var universe_index = data.universes.findIndex(u => u.id === span.universe_id);
 
     var y = getUniverseYPosition(universe_index) + SPAN_Y_OFFSET;
 
-    var x0 = 10 * span.relativeStartRS1 - 5;
-    var x1 = 10 * span.relativeEndRS1 - 5;
+    var x0 = UNIVERSE_SIZE * span.relativeStartRS1 - 5;
+    var x1 = UNIVERSE_SIZE * span.relativeEndRS1 - 5;
 
-    var z0 = 10 * -span.relativeStartRS2 + 5;
-    var z1 = 10 * -span.relativeEndRS2 + 5;
+    var z0 = UNIVERSE_SIZE * -span.relativeStartRS2 + 5;
+    var z1 = UNIVERSE_SIZE * -span.relativeEndRS2 + 5;
 
     var length = Math.sqrt(
         Math.pow(Math.abs(x1 - x0), 2) + Math.pow(Math.abs(z1 - z0), 2)
     );
 
-    if (length < 0.25){
+    if (length < SPAN_AS_LINE_THRESHOLD_LENGTH){
         createPoint((x0 + x1) / 2, y + 0.02, (z0 + z1) / 2, color);
     } else {
         createPoint(x0, y + 0.02, z0, color);
@@ -178,9 +189,10 @@ var drawUniversePlane = function(u, i, data){
     scene.add(mesh);
 
 
-    var size = 5, step = 1;
+    var size = 5;
+    var step = 1;
     var geometry = new THREE.Geometry();
-    var material = new THREE.LineBasicMaterial({color: 0x333333});
+    var material = new THREE.LineBasicMaterial({color: COLORS.UNIVERSE_GRID});
 
     for ( var i = - size; i <= size; i += step){
         geometry.vertices.push(new THREE.Vector3( - size, y, i ));
@@ -193,7 +205,7 @@ var drawUniversePlane = function(u, i, data){
     var line = new THREE.LineSegments( geometry, material);
     scene.add(line);
 
-    createText(u.name, -5.5, y, 5, 90 * 2 * Math.PI / 360, 0xffff00);
+    createText(u.name, -5.5, y, 5, 90 * 2 * Math.PI / 360, COLORS.UNIVERSE_LABEL);
 
     var active_path = data.paths.find(p => p.id === data.active_path_id);
 
@@ -231,7 +243,7 @@ var drawUniversePlane = function(u, i, data){
 
 }
 
-
+//not used because lineWidth does not work on Windows
 var createLineLegacy = (x0, y0, z0, x1, y1, z1, color) => {
     var material = new THREE.LineBasicMaterial({ color: color, linewidth: 3 });
     var geometry = new THREE.Geometry();
@@ -243,8 +255,6 @@ var createLineLegacy = (x0, y0, z0, x1, y1, z1, color) => {
 }
 
 var createLine = (x0, y0, z0, x1, y1, z1, color) => {
-    let LINE_WIDTH = 0.1;
-
     let startVector = new THREE.Vector3(x0, y0, z0);
     let endVector = new THREE.Vector3(x1, y1, z1);
     let lineVector = endVector.clone().sub(startVector);
@@ -267,7 +277,7 @@ var createLine = (x0, y0, z0, x1, y1, z1, color) => {
     var D = lineVector
     .clone().normalize().applyAxisAngle(yAxisVector, 1.5 * Math.PI)
     .setLength(LINE_WIDTH / 2).add(endVector);
-    console.log(A, B, C, D)
+
     var geometry = new THREE.Geometry();
     geometry.vertices.push(A);
     geometry.vertices.push(B);
@@ -277,6 +287,9 @@ var createLine = (x0, y0, z0, x1, y1, z1, color) => {
     var material = new THREE.MeshBasicMaterial( { color : color, side:THREE.DoubleSide } );
 
     //create two new triangular faces for the plane
+    //order of vertices is important!
+    //the face normal is calculated by looking at the
+    //counter clockwise order of the vertices.
     var face0 = new THREE.Face3( 2, 1, 0 );
     var face1 = new THREE.Face3( 1, 2, 3 );
 
@@ -289,10 +302,7 @@ var createLine = (x0, y0, z0, x1, y1, z1, color) => {
     geometry.computeVertexNormals();
 
     let mesh = new THREE.Mesh( geometry, material );
-    mesh.name = "Line";
-    console.log(mesh)
     scene.add( mesh );
-console.log(scene)
     return mesh;
 }
 
@@ -306,47 +316,47 @@ var moveCamera = (
     camera_rotation_z_target
 ) => {
     if (camera.position.x < camera_position_x_target){
-        camera.position.x += 0.1;
+        camera.position.x += CAM_MOVE_PER_FRAME;
     }
     if (camera.position.x > camera_position_x_target){
-        camera.position.x -= 0.1;
+        camera.position.x -= CAM_MOVE_PER_FRAME;
     }
 
     if (camera.position.y < camera_position_y_target){
-        camera.position.y += 0.1;
+        camera.position.y += CAM_MOVE_PER_FRAME;
     }
     if (camera.position.y > camera_position_y_target){
-        camera.position.y -= 0.1;
+        camera.position.y -= CAM_MOVE_PER_FRAME;
     }
 
     if (camera.position.z < camera_position_z_target){
-        camera.position.z += 0.1;
+        camera.position.z += CAM_MOVE_PER_FRAME;
     }
     if (camera.position.z > camera_position_z_target){
-        camera.position.z -= 0.1;
+        camera.position.z -= CAM_MOVE_PER_FRAME;
     }
 
     //Rotation
 
     if (camera.rotation.x < camera_rotation_x_target){
-        camera.rotation.x += 0.1;
+        camera.rotation.x += CAM_MOVE_PER_FRAME;
     }
     if (camera.rotation.x > camera_rotation_x_target){
-        camera.rotation.x -= 0.1;
+        camera.rotation.x -= CAM_MOVE_PER_FRAME;
     }
 
     if (camera.rotation.y < camera_rotation_y_target){
-        camera.rotation.y += 0.1;
+        camera.rotation.y += CAM_MOVE_PER_FRAME;
     }
     if (camera.rotation.y > camera_rotation_y_target){
-        camera.rotation.y -= 0.1;
+        camera.rotation.y -= CAM_MOVE_PER_FRAME;
     }
 
     if (camera.rotation.z < camera_rotation_z_target){
-        camera.rotation.z += 0.1;
+        camera.rotation.z += CAM_MOVE_PER_FRAME;
     }
     if (camera.rotation.z > camera_rotation_z_target){
-        camera.rotation.z -= 0.1;
+        camera.rotation.z -= CAM_MOVE_PER_FRAME;
     }
 
 };
@@ -358,7 +368,7 @@ var animate = () => {
     if (!DEBUG_MODE){
 
         var camera_position_x_target = 1;
-        var camera_position_y_target = getUniverseYPosition(active_universe_index) + camera_y_offset;
+        var camera_position_y_target = getUniverseYPosition(active_universe_index) + CAMERA_Y_OFFSET;
         var camera_position_z_target = 11;
 
         var camera_rotation_x_target = -30 * 2 * Math.PI / 360;
@@ -414,7 +424,9 @@ var init = (parentElement) => {
     textureLoader.load('assets/HubbleUltraDeepField_1024.jpg', (texture) => {
         universeTexture = texture;
         universe_plane_material = new THREE.MeshBasicMaterial({map: universeTexture});
-        universe_plane_geometry = new THREE.PlaneGeometry( 10, 10, 10 );
+        universe_plane_geometry = new THREE.PlaneGeometry(
+            UNIVERSE_SIZE, UNIVERSE_SIZE, UNIVERSE_SIZE
+        );
     });
 
     animate();
