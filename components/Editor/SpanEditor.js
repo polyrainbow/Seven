@@ -82,10 +82,10 @@ class SpanEditor extends Component {
 		return (
 			<div>
 				<h2>Spans</h2>
-				{this.props.data.paths.length > 0 ? this.renderActivePathSelect() : ""}
-				{this.props.data.active_path_id ? this.renderSpansOfPath(
+				{((this.props.data.paths.length > 0) && (this.props.data.universes.length > 0)) ? this.renderActivePathSelect() : ""}
+				{(this.props.data.active_path_id && (this.props.data.universes.length > 0)) ? this.renderSpansOfPath(
 					this.props.data.paths.find(p => p.id === this.props.data.active_path_id)
-				) : "Please create a path before creating spans."}
+				) : "Please create a universe and a path before creating spans."}
 			</div>
 		);
   }
