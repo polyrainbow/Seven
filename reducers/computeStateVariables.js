@@ -192,11 +192,6 @@ var getSpanDurationInRF1 = (span) => {
 		result = span.RF1DurationSpentInFrozenTime;
 	}
 
-	//legacy states compatibility
-	else {
-		result = Math.abs(moment(span.startTime).diff(span.endTime)) / span.dilationFactor;
-	}
-
 	return result;
 }
 

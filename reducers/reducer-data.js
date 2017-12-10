@@ -1,6 +1,7 @@
 var constants = require('../constants.js');
 var moment = require("moment");
-var computeStateVariables = require("./computeStateVariables.js")
+var computeStateVariables = require("./computeStateVariables.js");
+var updateLegacyState = require("./updateLegacyState.js");
 var presets = require("../presets/");
 var uuidv4 = require("uuid/v4");
 
@@ -268,6 +269,7 @@ export default function reducer(state=initialState, action){
 
 	if (action.type === "LOAD_STATE"){
 		var newState = action.state.data;
+		updateLegacyState(newState);
 		computeStateVariables(newState);
 		if (newState.universes.length > 0){
 			newState.active_universe_id = newState.universes[0].id;
@@ -280,6 +282,7 @@ export default function reducer(state=initialState, action){
 
 	if (action.type === "SET_PRESET"){
 		var newState = presets[action.preset_index].data;
+		updateLegacyState(newState);
 		computeStateVariables(newState);
 		if (newState.universes.length > 0){
 			newState.active_universe_id = newState.universes[0].id;
