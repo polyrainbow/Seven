@@ -45,7 +45,7 @@ class Span extends Component {
 					"display": "flex",
 					"justifyContent": "space-between"
 				}}>
-					<h4>📍 Span</h4>
+					<h4>🕰️ Span</h4>
 					<button onClick={() => this.props.deleteSpan(span.id)}>Delete</button>
 				</div>
 				<label htmlFor={span.id + "_universe_select"}>Universe: </label>
