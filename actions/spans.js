@@ -15,6 +15,22 @@ const deleteSpan = (span_id) => {
 	}
 }
 
+const setSpanType = (span_id, spanType) => {
+	return {
+		type: "SET_SPAN_TYPE",
+		span_id,
+		spanType
+	}
+}
+
+const setRF1DurationSpentInFrozenTime = (span_id, duration) => { console.log(duration)
+	return {
+		type: "SET_RF1_DURATION_SPENT_IN_FROZEN_TIME",
+		span_id,
+		duration
+	}
+}
+
 const setSpanStartTime = (span_id, startTime) => {
 	return {
 		type: "SET_SPAN_START_TIME",
@@ -72,10 +88,12 @@ const setSpanActivity = (span_id, isInactive) => {
 module.exports = {
 	addSpan,
 	deleteSpan,
+	setSpanType,
 	setSpanStartTime,
 	setSpanEndTime,
 	setTimeDilationFactor,
 	setSpanDescription,
 	setSpanActivity,
-	setUniverseForSpan
+	setUniverseForSpan,
+	setRF1DurationSpentInFrozenTime
 }

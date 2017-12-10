@@ -48,7 +48,7 @@ class Toolbar extends Component {
 					onClick={() => this.downloadState()}
 					disabled={this.props.appState.data.universes.length === 0 && this.props.appState.data.paths.length === 0}
 				>
-					Download
+					Save
 				</button>
 				<button
 					style={{

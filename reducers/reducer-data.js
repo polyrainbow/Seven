@@ -102,11 +102,13 @@ export default function reducer(state=initialState, action){
 			id: uuidv4(),
 			startTime: null,
 			endTime: null,
+			type: "frozen-0",
 			dilationFactor: 1,
 			universe_id: newState.universes[0].id,
 			durationInRS1: 0,
 			description: "",
-			isInactive: false
+			isInactive: false,
+			rf1DurationSpentInFrozenTime: 0
 		};
 
 		var path = newState.paths.find(p => p.id === action.path_id);
@@ -135,6 +137,24 @@ export default function reducer(state=initialState, action){
 		var newState = {...state};
 		var span = getSpan(newState, action.span_id);
 		span.endTime = action.endTime;
+		computeStateVariables(newState);
+		return newState;
+	}
+
+
+	if (action.type === "SET_SPAN_TYPE"){
+		var newState = {...state};
+		var span = getSpan(newState, action.span_id);
+		span.type = action.spanType;
+		computeStateVariables(newState);
+		return newState;
+	}
+
+
+	if (action.type === "SET_RF1_DURATION_SPENT_IN_FROZEN_TIME"){
+		var newState = {...state};
+		var span = getSpan(newState, action.span_id);
+		span.rf1DurationSpentInFrozenTime = action.duration;
 		computeStateVariables(newState);
 		return newState;
 	}

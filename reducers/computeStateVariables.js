@@ -181,19 +181,51 @@ var getGridPoints = (state) => {
 }
 
 
-var computeStateVariables = (state) => {
-	//currentSpan.startTime && currentSpan.endTime && currentSpan.dilationFactor are already defined
+var getSpanDurationInRF1 = (span) => {
+	let result;
 
+	if (span.type === "frozen-0"){
+		result = Math.abs(moment(span.startTime).diff(span.endTime)) / span.dilationFactor;
+	} else if (span.type === "frozen-1"){
+		result = 0;
+	} else if (span.type === "frozen-2"){
+		result = span.rf1DurationSpentInFrozenTime;
+	}
+
+	//legacy states compatibility
+	else {
+		result = Math.abs(moment(span.startTime).diff(span.endTime)) / span.dilationFactor;
+	}
+
+	return result;
+}
+
+
+var computeStateVariables = (state) => {
+	/* Already defined by user are:
+		span.startTime
+		span.endTime
+		span.dilationFactor
+		span.rf1DurationSpentInFrozenTime
+	*/
+
+	// Computing span.durationInRS1
 	state.paths.forEach(path => {
 		path.spans.forEach(span => {
-			span.durationInRS1 = Math.abs(moment(span.startTime).diff(span.endTime)) / span.dilationFactor;
+			span.durationInRS1 = getSpanDurationInRF1(span);
 		});
 	});
 
 
-	// Here we compute the earliest/latest date in RS2 for each universe with
-	// spans of all paths considered.
-	// TODO: Compute earliest/latest dates per path per universe
+	/* Computing
+		universe.earliestDateOfRef2
+		universe.latestDateOfRef2
+		universe.RS2duration
+
+		Here we compute the earliest/latest date in RS2 for each universe with
+		spans of all paths considered.
+		TODO: Do we need to compute earliest/latest dates per path per universe?
+	*/
 	state.universes.forEach((u) => {
 		u.earliestDateOfRef2 = getEarliestDateOfRefSys2(state.paths, u.id);
 		u.latestDateOfRef2 = getLatestDateOfRefSys2(state.paths, u.id);
@@ -235,8 +267,15 @@ var computeStateVariables = (state) => {
 			span.relativeStartRS1 = getRelativeStartOfSpanInRS1(span.id, path);
 			span.relativeEndRS1 = getRelativeEndOfSpanInRS1(span.id, path);
 
-			span.relativeStartRS2 = moment(span.startTime).diff(u.earliestDateOfRef2) / u.RS2duration;
-			span.relativeEndRS2 = Math.abs(moment(span.endTime).diff(u.earliestDateOfRef2)) / u.RS2duration;
+			span.relativeStartRS2 = u.RS2duration > 0 ? moment(span.startTime).diff(u.earliestDateOfRef2) / u.RS2duration : 0;
+
+			if (span.type === "frozen-0"){
+				span.relativeEndRS2 = u.RS2duration > 0 ? Math.abs(moment(span.endTime).diff(u.earliestDateOfRef2)) / u.RS2duration : 0;
+			} else if (span.type === "frozen-1"){
+				span.relativeEndRS2 = u.RS2duration > 0 ? Math.abs(moment(span.endTime).diff(u.earliestDateOfRef2)) / u.RS2duration : 0;
+			} else if (span.type === "frozen-2"){
+				span.relativeEndRS2 = span.relativeStartRS2;
+			}
 
 			//relative start with times of all universes combined
 			span.relativeStartRS2Global = moment(span.startTime).diff(state.earliestDateInRS2) / state.RS2duration;

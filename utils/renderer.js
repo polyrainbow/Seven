@@ -16,6 +16,7 @@ var moment = require("moment");
     const COLORS = {
         SPAN: 0x00ffff,
         DILATED_SPAN: 0xff2222,
+        FROZEN_SPAN: 0xffffff,
         INTER_UNIVERSE_CONNECTION: 0x00ff00,
         UNIVERSE_GRID: 0x333333,
         UNIVERSE_LABEL: 0xffff00
@@ -82,7 +83,12 @@ var moment = require("moment");
         return;
     }
 
-    var color = (span.dilationFactor === 1) ? COLORS.SPAN : COLORS.DILATED_SPAN;
+    let color;
+    if (span.type === "frozen-0"){
+      color = (span.dilationFactor === 1) ? COLORS.SPAN : COLORS.DILATED_SPAN;
+    } else {
+      color = COLORS.FROZEN_SPAN;
+    }
 
     var universe_index = data.universes.findIndex(u => u.id === span.universe_id);
 
