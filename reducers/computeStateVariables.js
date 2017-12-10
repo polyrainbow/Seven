@@ -1,6 +1,6 @@
 var moment = require("moment");
 
-var getEarliestDateOfRefSys2 = (paths, universe_id) => {
+var getEarliestDateOfRF2 = (paths, universe_id) => {
 
 	var all_spans = [].concat(...paths.map(p => p.spans));
 
@@ -39,7 +39,7 @@ var getEarliestDateOfRefSys2 = (paths, universe_id) => {
 
 }
 
-var getLatestDateOfRefSys2 = (paths, universe_id) => {
+var getLatestDateOfRF2 = (paths, universe_id) => {
 
 	var all_spans = [].concat(...paths.map(p => p.spans));
 
@@ -79,38 +79,38 @@ var getLatestDateOfRefSys2 = (paths, universe_id) => {
 }
 
 
-var getDurationOfRS1 = (spans) => {
-	var RS1duration = 0;
+var getDurationOfRF1 = (spans) => {
+	var RF1duration = 0;
 	spans.forEach(span => {
-		RS1duration += span.durationInRS1;
+		RF1duration += span.durationInRF1;
 	});
-	return RS1duration;
+	return RF1duration;
 }
 
-var getRelativeStartOfSpanInRS1 = (span_id, path) => {
+var getRelativeStartOfSpanInRF1 = (span_id, path) => {
 	var s_index = path.spans.findIndex(s => s.id === span_id);
 
 	var start_in_ms = 0;
 
 	for (var i = 0; i < s_index; i++){
-		start_in_ms += path.spans[i].durationInRS1;
+		start_in_ms += path.spans[i].durationInRF1;
 	}
 
-	return start_in_ms / path.RS1duration;
+	return start_in_ms / path.RF1duration;
 
 }
 
 
-var getRelativeEndOfSpanInRS1 = (span_id, path) => {
+var getRelativeEndOfSpanInRF1 = (span_id, path) => {
 	var s_index = path.spans.findIndex(s => s.id === span_id);
 
 	var end_in_ms = 0;
 
 	for (var i = 0; i <= s_index; i++){
-		end_in_ms += path.spans[i].durationInRS1;
+		end_in_ms += path.spans[i].durationInRF1;
 	}
 
-	return end_in_ms / path.RS1duration;
+	return end_in_ms / path.RF1duration;
 
 }
 
@@ -119,13 +119,13 @@ var getGridPoints = (state) => {
 
 	var gridPoints = [];
 	//Already go to century resolution, when duration longer than a fourth of a century
-	if (state.RS2duration > (3153600000000 / 4)){
+	if (state.RF2duration > (3153600000000 / 4)){
 		//Grid points in century resolution
-		var next_century_year = Math.ceil(state.earliestDateInRS2.years/100) * 100;
+		var next_century_year = Math.ceil(state.earliestDateInRF2.years/100) * 100;
 		var year = next_century_year;
-		while (year < state.latestDateInRS2.years){
+		while (year < state.latestDateInRF2.years){
 			var first_day_of_year = moment(year + "-01-01 00:00");
-			var relativePosition = first_day_of_year.diff(state.earliestDateInRS2) / state.RS2duration;
+			var relativePosition = first_day_of_year.diff(state.earliestDateInRF2) / state.RF2duration;
 			gridPoints.push({
 				relativePosition,
 				moment: first_day_of_year.toObject(),
@@ -133,26 +133,26 @@ var getGridPoints = (state) => {
 			});
 			year = year + 100;
 		}
-	} else if (state.RS2duration > 31536000000){
+	} else if (state.RF2duration > 31536000000){
 		//Grid points in year resolution
-		var first_year = state.earliestDateInRS2.years;
+		var first_year = state.earliestDateInRF2.years;
 		var year = first_year;
-		while (year < state.latestDateInRS2.years){
+		while (year < state.latestDateInRF2.years){
 			year = year + 1;
 			var first_day_of_year = moment(year + "-01-01 00:00");
-			var relativePosition =	first_day_of_year.diff(state.earliestDateInRS2) / state.RS2duration;
+			var relativePosition =	first_day_of_year.diff(state.earliestDateInRF2) / state.RF2duration;
 			gridPoints.push({
 				relativePosition,
 				moment: first_day_of_year.toObject(),
 				label: year
 			});
 		}
-	} else if (state.RS2duration > 2628000000){
+	} else if (state.RF2duration > 2628000000){
 		//Grid points in month resolution
-		var newDate = moment(state.earliestDateInRS2).add(1, "month").startOf("month");
-		while (moment(state.latestDateInRS2).diff(newDate) >= 0){
+		var newDate = moment(state.earliestDateInRF2).add(1, "month").startOf("month");
+		while (moment(state.latestDateInRF2).diff(newDate) >= 0){
 			var date_object = newDate.toObject();
-			var relativePosition = newDate.diff(state.earliestDateInRS2) / state.RS2duration;
+			var relativePosition = newDate.diff(state.earliestDateInRF2) / state.RF2duration;
 			gridPoints.push({
 				relativePosition,
 				moment: date_object,
@@ -162,11 +162,11 @@ var getGridPoints = (state) => {
 		}
 	} else {
 		//Grid points in day resolution
-		//go to the next 00:00 date starting at state.earliestDateInRS2
-		var newDate = moment(state.earliestDateInRS2).add(1, "day").startOf("day");
-		while (moment(state.latestDateInRS2).diff(newDate) >= 0){
+		//go to the next 00:00 date starting at state.earliestDateInRF2
+		var newDate = moment(state.earliestDateInRF2).add(1, "day").startOf("day");
+		while (moment(state.latestDateInRF2).diff(newDate) >= 0){
 			var date_object = newDate.toObject();
-			var relativePosition = newDate.diff(state.earliestDateInRS2) / state.RS2duration;
+			var relativePosition = newDate.diff(state.earliestDateInRF2) / state.RF2duration;
 			gridPoints.push({
 				relativePosition,
 				moment: date_object,
@@ -189,7 +189,7 @@ var getSpanDurationInRF1 = (span) => {
 	} else if (span.type === "frozen-1"){
 		result = 0;
 	} else if (span.type === "frozen-2"){
-		result = span.rf1DurationSpentInFrozenTime;
+		result = span.RF1DurationSpentInFrozenTime;
 	}
 
 	//legacy states compatibility
@@ -206,13 +206,13 @@ var computeStateVariables = (state) => {
 		span.startTime
 		span.endTime
 		span.dilationFactor
-		span.rf1DurationSpentInFrozenTime
+		span.RF1DurationSpentInFrozenTime
 	*/
 
-	// Computing span.durationInRS1
+	// Computing span.durationInRF1
 	state.paths.forEach(path => {
 		path.spans.forEach(span => {
-			span.durationInRS1 = getSpanDurationInRF1(span);
+			span.durationInRF1 = getSpanDurationInRF1(span);
 		});
 	});
 
@@ -220,33 +220,33 @@ var computeStateVariables = (state) => {
 	/* Computing
 		universe.earliestDateOfRef2
 		universe.latestDateOfRef2
-		universe.RS2duration
+		universe.RF2duration
 
-		Here we compute the earliest/latest date in RS2 for each universe with
+		Here we compute the earliest/latest date in RF2 for each universe with
 		spans of all paths considered.
 		TODO: Do we need to compute earliest/latest dates per path per universe?
 	*/
 	state.universes.forEach((u) => {
-		u.earliestDateOfRef2 = getEarliestDateOfRefSys2(state.paths, u.id);
-		u.latestDateOfRef2 = getLatestDateOfRefSys2(state.paths, u.id);
-		u.RS2duration = Math.abs(moment(u.earliestDateOfRef2).diff(u.latestDateOfRef2));
+		u.earliestDateOfRef2 = getEarliestDateOfRF2(state.paths, u.id);
+		u.latestDateOfRef2 = getLatestDateOfRF2(state.paths, u.id);
+		u.RF2duration = Math.abs(moment(u.earliestDateOfRef2).diff(u.latestDateOfRef2));
 	});
 
 
-	// Earliest/latest date and duration of all universes combined (RS2)
-	state.earliestDateInRS2 = getEarliestDateOfRefSys2(state.paths);
-	state.latestDateInRS2 = getLatestDateOfRefSys2(state.paths);
-	state.RS2duration = Math.abs(moment(state.earliestDateInRS2).diff(state.latestDateInRS2));
+	// Earliest/latest date and duration of all universes combined (RF2)
+	state.earliestDateInRF2 = getEarliestDateOfRF2(state.paths);
+	state.latestDateInRF2 = getLatestDateOfRF2(state.paths);
+	state.RF2duration = Math.abs(moment(state.earliestDateInRF2).diff(state.latestDateInRF2));
 
-	//relies on state.earliestDateInRS2, state.latestDateInRS2, state.RS2duration
+	//relies on state.earliestDateInRF2, state.latestDateInRF2, state.RF2duration
 	state.gridPoints = getGridPoints(state);
 
 
 	//compute relative start/end of universe times in relation to master times
 	state.universes.forEach((u) => {
-		if (state.RS2duration > 0){
-			u.relativeStart = Math.abs(moment(u.earliestDateOfRef2).diff(state.earliestDateInRS2)) / state.RS2duration;
-			u.relativeEnd = Math.abs(moment(u.latestDateOfRef2).diff(state.earliestDateInRS2)) / state.RS2duration;
+		if (state.RF2duration > 0){
+			u.relativeStart = Math.abs(moment(u.earliestDateOfRef2).diff(state.earliestDateInRF2)) / state.RF2duration;
+			u.relativeEnd = Math.abs(moment(u.latestDateOfRef2).diff(state.earliestDateInRF2)) / state.RF2duration;
 		} else {
 			u.relativeStart = 0;
 			u.relativeEnd = 0;
@@ -254,9 +254,9 @@ var computeStateVariables = (state) => {
 	})
 
 
-	//Here, we rely on span.durationInRS1
+	//Here, we rely on span.durationInRF1
 	state.paths.forEach(path =>
-		path.RS1duration = getDurationOfRS1(path.spans)
+		path.RF1duration = getDurationOfRF1(path.spans)
 	);
 
 
@@ -264,22 +264,22 @@ var computeStateVariables = (state) => {
 		path.spans.forEach(span => {
 			var u = state.universes.find(u => u.id === span.universe_id);
 
-			span.relativeStartRS1 = getRelativeStartOfSpanInRS1(span.id, path);
-			span.relativeEndRS1 = getRelativeEndOfSpanInRS1(span.id, path);
+			span.relativeStartRF1 = getRelativeStartOfSpanInRF1(span.id, path);
+			span.relativeEndRF1 = getRelativeEndOfSpanInRF1(span.id, path);
 
-			span.relativeStartRS2 = u.RS2duration > 0 ? moment(span.startTime).diff(u.earliestDateOfRef2) / u.RS2duration : 0;
+			span.relativeStartRF2 = u.RF2duration > 0 ? moment(span.startTime).diff(u.earliestDateOfRef2) / u.RF2duration : 0;
 
 			if (span.type === "frozen-0"){
-				span.relativeEndRS2 = u.RS2duration > 0 ? Math.abs(moment(span.endTime).diff(u.earliestDateOfRef2)) / u.RS2duration : 0;
+				span.relativeEndRF2 = u.RF2duration > 0 ? Math.abs(moment(span.endTime).diff(u.earliestDateOfRef2)) / u.RF2duration : 0;
 			} else if (span.type === "frozen-1"){
-				span.relativeEndRS2 = u.RS2duration > 0 ? Math.abs(moment(span.endTime).diff(u.earliestDateOfRef2)) / u.RS2duration : 0;
+				span.relativeEndRF2 = u.RF2duration > 0 ? Math.abs(moment(span.endTime).diff(u.earliestDateOfRef2)) / u.RF2duration : 0;
 			} else if (span.type === "frozen-2"){
-				span.relativeEndRS2 = span.relativeStartRS2;
+				span.relativeEndRF2 = span.relativeStartRF2;
 			}
 
 			//relative start with times of all universes combined
-			span.relativeStartRS2Global = moment(span.startTime).diff(state.earliestDateInRS2) / state.RS2duration;
-			span.relativeEndRS2Global = Math.abs(moment(span.endTime).diff(state.earliestDateInRS2)) / state.RS2duration;
+			span.relativeStartRF2Global = moment(span.startTime).diff(state.earliestDateInRF2) / state.RF2duration;
+			span.relativeEndRF2Global = Math.abs(moment(span.endTime).diff(state.earliestDateInRF2)) / state.RF2duration;
 		});
 	});
 

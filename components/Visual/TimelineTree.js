@@ -184,9 +184,9 @@ class TimelineTree extends Component {
 			.attr("dy", ".35em")
 			.attr("text-anchor", "start")
 			.text(u => {
-			    if (u.RS2duration > 31536000000){
+			    if (u.RF2duration > 31536000000){
 			        return u.earliestDateOfRef2.years;
-			    } else if (u.RS2duration > 2628000000){
+			    } else if (u.RF2duration > 2628000000){
 			        return moment(u.earliestDateOfRef2).format("MMM Y");
 			    } else {
 			        return moment(u.earliestDateOfRef2).format("D MMM Y");
@@ -205,9 +205,9 @@ class TimelineTree extends Component {
 			.attr("dy", ".35em")
 			.attr("text-anchor", "end")
 			.text(u => {
-			    if (u.RS2duration > 31536000000){
+			    if (u.RF2duration > 31536000000){
 			        return u.latestDateOfRef2.years;
-			    } else if (u.RS2duration > 2628000000){
+			    } else if (u.RF2duration > 2628000000){
 			        return moment(u.latestDateOfRef2).format("MMM Y");
 			    } else {
 			        return moment(u.latestDateOfRef2).format("D MMM Y");
@@ -251,10 +251,10 @@ class TimelineTree extends Component {
 				spanEnter
 				.filter(span => {
 					return (
-						(typeof span.relativeStartRS2 === "number")
-						&& (!isNaN(span.relativeStartRS2))
-						&& (typeof span.relativeEndRS2 === "number")
-						&& (!isNaN(span.relativeEndRS2))
+						(typeof span.relativeStartRF2 === "number")
+						&& (!isNaN(span.relativeStartRF2))
+						&& (typeof span.relativeEndRF2 === "number")
+						&& (!isNaN(span.relativeEndRF2))
 					);
 				})
 				.append("line")
@@ -264,7 +264,7 @@ class TimelineTree extends Component {
 				.style("stroke-width", PATH_THICKNESS)
 				.attr('x1', span => {
 					var u = universes.find(u => u.id === span.universe_id);
-					return u.drawStart + (span.relativeStartRS2 * u.drawWidth);
+					return u.drawStart + (span.relativeStartRF2 * u.drawWidth);
 				})
 				.attr('y1', span => {
 					var universe_index = universes.findIndex(u => u.id === span.universe_id);
@@ -272,7 +272,7 @@ class TimelineTree extends Component {
 				})
 				.attr('x2', span => {
 					var u = universes.find(u => u.id === span.universe_id);
-					return u.drawStart + (span.relativeEndRS2 * u.drawWidth);
+					return u.drawStart + (span.relativeEndRF2 * u.drawWidth);
 				})
 				.attr('y2', span => {
 					var universe_index = universes.findIndex(u => u.id === span.universe_id);
@@ -294,7 +294,7 @@ class TimelineTree extends Component {
 				.style("stroke-width", PATH_THICKNESS)
 				.attr('x1', (span, i) => {
 					var u = universes.find(u => u.id === span.universe_id);
-					return u.drawStart + (span.relativeEndRS2 * u.drawWidth);
+					return u.drawStart + (span.relativeEndRF2 * u.drawWidth);
 				})
 				.attr('y1', (span, i) => {
 					var universe_index = universes.findIndex(u => u.id === span.universe_id);
@@ -302,7 +302,7 @@ class TimelineTree extends Component {
 				})
 				.attr('x2', (span, i) => {
 					var target_universe = universes.find(u => u.id === spans[span.index+1].universe_id);spans[span.index+1];
-					return target_universe.drawStart + (spans[span.index+1].relativeStartRS2 * target_universe.drawWidth);
+					return target_universe.drawStart + (spans[span.index+1].relativeStartRF2 * target_universe.drawWidth);
 				})
 				.attr('y2', (span, i) => {
 					var nextSpan = spans[span.index+1];

@@ -43,16 +43,16 @@ var moment = require("moment");
 
 
     var createInterUniverseConnection = (span1, span2, data) =>{
-        var x0 = UNIVERSE_SIZE * span1.relativeEndRS1 - 5;
-        var x1 = UNIVERSE_SIZE * span2.relativeStartRS1 - 5;
+        var x0 = UNIVERSE_SIZE * span1.relativeEndRF1 - 5;
+        var x1 = UNIVERSE_SIZE * span2.relativeStartRF1 - 5;
 
         var origin_universe_index = data.universes.findIndex(u => u.id === span1.universe_id);
         var y0 = getUniverseYPosition(origin_universe_index) + SPAN_Y_OFFSET;
         var target_universe_index = data.universes.findIndex(u => u.id === span2.universe_id);
         var y1 = getUniverseYPosition(target_universe_index) + SPAN_Y_OFFSET;
 
-        var z0 = UNIVERSE_SIZE * -span1.relativeEndRS2 + 5;
-        var z1 = UNIVERSE_SIZE * -span2.relativeStartRS2 + 5;
+        var z0 = UNIVERSE_SIZE * -span1.relativeEndRF2 + 5;
+        var z1 = UNIVERSE_SIZE * -span2.relativeStartRF2 + 5;
 
         createLine(x0, y0, z0, x1, y1, z1, COLORS.INTER_UNIVERSE_CONNECTION);
 
@@ -94,11 +94,11 @@ var moment = require("moment");
 
     var y = getUniverseYPosition(universe_index) + SPAN_Y_OFFSET;
 
-    var x0 = UNIVERSE_SIZE * span.relativeStartRS1 - 5;
-    var x1 = UNIVERSE_SIZE * span.relativeEndRS1 - 5;
+    var x0 = UNIVERSE_SIZE * span.relativeStartRF1 - 5;
+    var x1 = UNIVERSE_SIZE * span.relativeEndRF1 - 5;
 
-    var z0 = UNIVERSE_SIZE * -span.relativeStartRS2 + 5;
-    var z1 = UNIVERSE_SIZE * -span.relativeEndRS2 + 5;
+    var z0 = UNIVERSE_SIZE * -span.relativeStartRF2 + 5;
+    var z1 = UNIVERSE_SIZE * -span.relativeEndRF2 + 5;
 
     var length = Math.sqrt(
         Math.pow(Math.abs(x1 - x0), 2) + Math.pow(Math.abs(z1 - z0), 2)
@@ -225,10 +225,10 @@ var drawUniversePlane = function(u, i, data){
         return;
     }
 
-    if (u.RS2duration > 31536000000){
+    if (u.RF2duration > 31536000000){
         u.earliestDateOfRef2 && createText(u.earliestDateOfRef2.years, 5, y, 5);
         u.latestDateOfRef2 && createText(u.latestDateOfRef2.years, 5, y, -5);
-    } else if (u.RS2duration > 2628000000){
+    } else if (u.RF2duration > 2628000000){
         u.earliestDateOfRef2 && createText(
             moment(u.earliestDateOfRef2).format("MMM Y"),
             5, y, 5
@@ -248,7 +248,7 @@ var drawUniversePlane = function(u, i, data){
         );
     }
 
-    var x_span = dateFormatter.msPairToUseful(0, active_path.RS1duration);
+    var x_span = dateFormatter.msPairToUseful(0, active_path.RF1duration);
 
     createText(x_span.start, -5, y, 6);
     createText(x_span.end, 3, y, 6);

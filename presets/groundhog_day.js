@@ -7,7 +7,7 @@ module.exports = {
 				"id": "e4b93ec0-0544-45d2-8b33-d4e70e4c340c",
 				"name": "Phil",
 				"description": "",
-				"RS1duration": 349200000,
+				"RF1duration": 349200000,
 				"spans": [
 					{
 						"id": "25f5a83d-6e6b-4ba9-b348-12f708cb795a",
@@ -31,16 +31,16 @@ module.exports = {
 						},
 						"dilationFactor": 1,
 						"universe_id": "945d445f-5d12-4224-af27-1ed0bf41527c",
-						"durationInRS1": 3600000,
+						"durationInRF1": 3600000,
 						"description": "",
 						"isInactive": false,
 						"index": 0,
-						"relativeStartRS1": 0,
-						"relativeEndRS1": 0.010309278350515464,
-						"relativeStartRS2": 0,
-						"relativeEndRS2": 0.04,
-						"relativeStartRS2Global": 0,
-						"relativeEndRS2Global": 0.04
+						"relativeStartRF1": 0,
+						"relativeEndRF1": 0.010309278350515464,
+						"relativeStartRF2": 0,
+						"relativeEndRF2": 0.04,
+						"relativeStartRF2Global": 0,
+						"relativeEndRF2Global": 0.04
 					},
 					{
 						"id": "6fbdd911-a7db-4ccd-966e-597f8898b178",
@@ -64,15 +64,15 @@ module.exports = {
 						},
 						"dilationFactor": 1,
 						"universe_id": "945d445f-5d12-4224-af27-1ed0bf41527c",
-						"durationInRS1": 86400000,
+						"durationInRF1": 86400000,
 						"description": "This ist the first time that Phil experiences the 2nd February 1993.",
 						"isInactive": false,
-						"relativeStartRS1": 0.010309278350515464,
-						"relativeEndRS1": 0.25773195876288657,
-						"relativeStartRS2": 0.04,
-						"relativeEndRS2": 1,
-						"relativeStartRS2Global": 0.04,
-						"relativeEndRS2Global": 1,
+						"relativeStartRF1": 0.010309278350515464,
+						"relativeEndRF1": 0.25773195876288657,
+						"relativeStartRF2": 0.04,
+						"relativeEndRF2": 1,
+						"relativeStartRF2Global": 0.04,
+						"relativeEndRF2Global": 1,
 						"index": 1
 					},
 					{
@@ -97,15 +97,15 @@ module.exports = {
 						},
 						"dilationFactor": 1,
 						"universe_id": "f86906d0-d206-40ee-b80f-f405f7580c43",
-						"durationInRS1": 86400000,
+						"durationInRF1": 86400000,
 						"description": "",
 						"isInactive": false,
-						"relativeStartRS1": 0.25773195876288657,
-						"relativeEndRS1": 0.5051546391752577,
-						"relativeStartRS2": 0,
-						"relativeEndRS2": 1,
-						"relativeStartRS2Global": 0.04,
-						"relativeEndRS2Global": 1,
+						"relativeStartRF1": 0.25773195876288657,
+						"relativeEndRF1": 0.5051546391752577,
+						"relativeStartRF2": 0,
+						"relativeEndRF2": 1,
+						"relativeStartRF2Global": 0.04,
+						"relativeEndRF2Global": 1,
 						"index": 2
 					},
 					{
@@ -130,15 +130,15 @@ module.exports = {
 						},
 						"dilationFactor": 1,
 						"universe_id": "de0f8b86-72d2-495d-b65a-9113df5f9997",
-						"durationInRS1": 86400000,
+						"durationInRF1": 86400000,
 						"description": "",
 						"isInactive": false,
-						"relativeStartRS1": 0.5051546391752577,
-						"relativeEndRS1": 0.7525773195876289,
-						"relativeStartRS2": 0,
-						"relativeEndRS2": 1,
-						"relativeStartRS2Global": 0.04,
-						"relativeEndRS2Global": 1,
+						"relativeStartRF1": 0.5051546391752577,
+						"relativeEndRF1": 0.7525773195876289,
+						"relativeStartRF2": 0,
+						"relativeEndRF2": 1,
+						"relativeStartRF2Global": 0.04,
+						"relativeEndRF2Global": 1,
 						"index": 3
 					},
 					{
@@ -163,15 +163,15 @@ module.exports = {
 						},
 						"dilationFactor": 1,
 						"universe_id": "75cb50bd-04cd-4d69-bf50-c986f26d2bb9",
-						"durationInRS1": 86400000,
+						"durationInRF1": 86400000,
 						"description": "",
 						"isInactive": false,
-						"relativeStartRS1": 0.7525773195876289,
-						"relativeEndRS1": 1,
-						"relativeStartRS2": 0,
-						"relativeEndRS2": 1,
-						"relativeStartRS2Global": 0.04,
-						"relativeEndRS2Global": 1,
+						"relativeStartRF1": 0.7525773195876289,
+						"relativeEndRF1": 1,
+						"relativeStartRF2": 0,
+						"relativeEndRF2": 1,
+						"relativeStartRF2Global": 0.04,
+						"relativeEndRF2Global": 1,
 						"index": 4
 					}
 				],
@@ -198,7 +198,7 @@ module.exports = {
 							"seconds": 0,
 							"milliseconds": 0
 						},
-						"RS2duration": 86400000
+						"RF2duration": 86400000
 					},
 					{
 						"id": "f86906d0-d206-40ee-b80f-f405f7580c43",
@@ -222,7 +222,7 @@ module.exports = {
 							"seconds": 0,
 							"milliseconds": 0
 						},
-						"RS2duration": 86400000
+						"RF2duration": 86400000
 					},
 					{
 						"id": "de0f8b86-72d2-495d-b65a-9113df5f9997",
@@ -246,7 +246,7 @@ module.exports = {
 							"seconds": 0,
 							"milliseconds": 0
 						},
-						"RS2duration": 86400000
+						"RF2duration": 86400000
 					},
 					{
 						"id": "75cb50bd-04cd-4d69-bf50-c986f26d2bb9",
@@ -270,7 +270,7 @@ module.exports = {
 							"seconds": 0,
 							"milliseconds": 0
 						},
-						"RS2duration": 86400000
+						"RF2duration": 86400000
 					}
 				]
 			}
@@ -298,7 +298,7 @@ module.exports = {
 					"seconds": 0,
 					"milliseconds": 0
 				},
-				"RS2duration": 90000000,
+				"RF2duration": 90000000,
 				"relativeStart": 0,
 				"relativeEnd": 1,
 				"drawStart": 34,
@@ -329,7 +329,7 @@ module.exports = {
 					"seconds": 0,
 					"milliseconds": 0
 				},
-				"RS2duration": 86400000,
+				"RF2duration": 86400000,
 				"relativeStart": 0.04,
 				"relativeEnd": 1,
 				"drawStart": 58.480000000000004,
@@ -360,7 +360,7 @@ module.exports = {
 					"seconds": 0,
 					"milliseconds": 0
 				},
-				"RS2duration": 86400000,
+				"RF2duration": 86400000,
 				"relativeStart": 0.04,
 				"relativeEnd": 1,
 				"drawStart": 58.480000000000004,
@@ -391,7 +391,7 @@ module.exports = {
 					"seconds": 0,
 					"milliseconds": 0
 				},
-				"RS2duration": 86400000,
+				"RF2duration": 86400000,
 				"relativeStart": 0.04,
 				"relativeEnd": 1,
 				"drawStart": 58.480000000000004,
@@ -403,7 +403,7 @@ module.exports = {
 		],
 		"active_universe_id": "75cb50bd-04cd-4d69-bf50-c986f26d2bb9",
 		"active_path_id": "e4b93ec0-0544-45d2-8b33-d4e70e4c340c",
-		"earliestDateInRS2": {
+		"earliestDateInRF2": {
 			"years": 1993,
 			"months": 1,
 			"date": 2,
@@ -412,7 +412,7 @@ module.exports = {
 			"seconds": 0,
 			"milliseconds": 0
 		},
-		"latestDateInRS2": {
+		"latestDateInRF2": {
 			"years": 1993,
 			"months": 1,
 			"date": 3,
@@ -421,6 +421,6 @@ module.exports = {
 			"seconds": 0,
 			"milliseconds": 0
 		},
-		"RS2duration": 90000000
+		"RF2duration": 90000000
 	}
 }

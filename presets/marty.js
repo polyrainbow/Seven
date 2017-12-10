@@ -7,7 +7,7 @@ module.exports = {
 				"id": "d3b6cb94-76ba-4a9e-ab1f-27cbe30e91de",
 				"name": "Marty's Time Travels",
 				"description": "",
-				"RS1duration": 0,
+				"RF1duration": 0,
 				"spans": [
 					{
 						"id": "c80d34bc-06ec-4a11-b0f7-5b5d961e313a",
@@ -31,13 +31,13 @@ module.exports = {
 						},
 						"dilationFactor": 1,
 						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
-						"durationInRS1": 345600000,
+						"durationInRF1": 345600000,
 						"description": "Marty lived in the year 1985 before he commited his first time travel.",
 						"isInactive": false,
-						"relativeStartRS1": 0,
-						"relativeEndRS1": 0.32653061224489793,
-						"relativeStartRS2": 0.8124775414520627,
-						"relativeEndRS2": 0.8125459865505381
+						"relativeStartRF1": 0,
+						"relativeEndRF1": 0.32653061224489793,
+						"relativeStartRF2": 0.8124775414520627,
+						"relativeEndRF2": 0.8125459865505381
 					},
 					{
 						"id": "b09b8a88-b831-46b2-ab96-9ebda7d8db37",
@@ -61,13 +61,13 @@ module.exports = {
 						},
 						"dilationFactor": 1,
 						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
-						"durationInRS1": 172800000,
+						"durationInRF1": 172800000,
 						"description": "",
 						"isInactive": false,
-						"relativeStartRS1": 0.32653061224489793,
-						"relativeEndRS1": 0.4897959183673469,
-						"relativeStartRS2": 0.6249721941787444,
-						"relativeEndRS2": 0.6250064167279821
+						"relativeStartRF1": 0.32653061224489793,
+						"relativeEndRF1": 0.4897959183673469,
+						"relativeStartRF2": 0.6249721941787444,
+						"relativeEndRF2": 0.6250064167279821
 					},
 					{
 						"id": "1cf878f8-8599-4cd0-ae4d-3b083da0d5bc",
@@ -91,13 +91,13 @@ module.exports = {
 						},
 						"dilationFactor": 1,
 						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
-						"durationInRS1": 3600000,
+						"durationInRF1": 3600000,
 						"description": "",
 						"isInactive": false,
-						"relativeStartRS1": 0.4897959183673469,
-						"relativeEndRS1": 0.4931972789115646,
-						"relativeStartRS2": 0.8125459865505381,
-						"relativeEndRS2": 0.8125466995203139
+						"relativeStartRF1": 0.4897959183673469,
+						"relativeEndRF1": 0.4931972789115646,
+						"relativeStartRF2": 0.8125459865505381,
+						"relativeEndRF2": 0.8125466995203139
 					},
 					{
 						"id": "c32ad153-c78c-456c-884a-bdffae89f92b",
@@ -121,13 +121,13 @@ module.exports = {
 						},
 						"dilationFactor": 1,
 						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
-						"durationInRS1": 172800000,
+						"durationInRF1": 172800000,
 						"description": "",
 						"isInactive": false,
-						"relativeStartRS1": 0.4931972789115646,
-						"relativeEndRS1": 0.6564625850340136,
-						"relativeStartRS2": 0.9999657774507623,
-						"relativeEndRS2": 1
+						"relativeStartRF1": 0.4931972789115646,
+						"relativeEndRF1": 0.6564625850340136,
+						"relativeStartRF2": 0.9999657774507623,
+						"relativeEndRF2": 1
 					},
 					{
 						"id": "09b245a1-9f95-46f9-93c7-7b120ac6b85a",
@@ -151,13 +151,13 @@ module.exports = {
 						},
 						"dilationFactor": 1,
 						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
-						"durationInRS1": 3600000,
+						"durationInRF1": 3600000,
 						"description": "",
 						"isInactive": false,
-						"relativeStartRS1": 0.6564625850340136,
-						"relativeEndRS1": 0.6598639455782312,
-						"relativeStartRS2": 0.8124775414520627,
-						"relativeEndRS2": 0.8124782544218385
+						"relativeStartRF1": 0.6564625850340136,
+						"relativeEndRF1": 0.6598639455782312,
+						"relativeStartRF2": 0.8124775414520627,
+						"relativeEndRF2": 0.8124782544218385
 					},
 					{
 						"id": "7c55208a-19ed-4122-bd8e-f5aeddca4693",
@@ -181,13 +181,13 @@ module.exports = {
 						},
 						"dilationFactor": 1,
 						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
-						"durationInRS1": 7200000,
+						"durationInRF1": 7200000,
 						"description": "",
 						"isInactive": false,
-						"relativeStartRS1": 0.6598639455782312,
-						"relativeEndRS1": 0.6666666666666666,
-						"relativeStartRS2": 0.6249721941787444,
-						"relativeEndRS2": 0.6249736201182959
+						"relativeStartRF1": 0.6598639455782312,
+						"relativeEndRF1": 0.6666666666666666,
+						"relativeStartRF2": 0.6249721941787444,
+						"relativeEndRF2": 0.6249736201182959
 					},
 					{
 						"id": "e4f2b61b-950f-45c2-80da-0928eccc458c",
@@ -211,13 +211,13 @@ module.exports = {
 						},
 						"dilationFactor": 1,
 						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
-						"durationInRS1": 7200000,
+						"durationInRF1": 7200000,
 						"description": "",
 						"isInactive": false,
-						"relativeStartRS1": 0.6666666666666666,
-						"relativeEndRS1": 0.673469387755102,
-						"relativeStartRS2": 0.8124775414520627,
-						"relativeEndRS2": 0.8124789673916143
+						"relativeStartRF1": 0.6666666666666666,
+						"relativeEndRF1": 0.673469387755102,
+						"relativeStartRF2": 0.8124775414520627,
+						"relativeEndRF2": 0.8124789673916143
 					},
 					{
 						"id": "3060cd85-b6c1-4166-8e5f-094c5178b3e3",
@@ -241,13 +241,13 @@ module.exports = {
 						},
 						"dilationFactor": 1,
 						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
-						"durationInRS1": 172800000,
+						"durationInRF1": 172800000,
 						"description": "",
 						"isInactive": false,
-						"relativeStartRS1": 0.673469387755102,
-						"relativeEndRS1": 0.8367346938775511,
-						"relativeStartRS2": 0,
-						"relativeEndRS2": 0.00003422254923769271
+						"relativeStartRF1": 0.673469387755102,
+						"relativeEndRF1": 0.8367346938775511,
+						"relativeStartRF2": 0,
+						"relativeEndRF2": 0.00003422254923769271
 					},
 					{
 						"id": "f40c700e-5eab-4316-af85-5b392aea6715",
@@ -271,13 +271,13 @@ module.exports = {
 						},
 						"dilationFactor": 1,
 						"universe_id": "772e8275-1f5e-4f26-b002-09d00286784c",
-						"durationInRS1": 172800000,
+						"durationInRF1": 172800000,
 						"description": "",
 						"isInactive": false,
-						"relativeStartRS1": 0.8367346938775511,
-						"relativeEndRS1": 1,
-						"relativeStartRS2": 0.8124775414520627,
-						"relativeEndRS2": 0.8125117640013004
+						"relativeStartRF1": 0.8367346938775511,
+						"relativeEndRF1": 1,
+						"relativeStartRF2": 0.8124775414520627,
+						"relativeEndRF2": 0.8125117640013004
 					}
 				]
 			}
@@ -305,7 +305,7 @@ module.exports = {
 					"seconds": 22,
 					"milliseconds": 341
 				},
-				"RS2duration": 1,
+				"RF2duration": 1,
 				"isCreatedAtFirstEntering": false
 			}
 		],

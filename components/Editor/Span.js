@@ -57,7 +57,7 @@ class Span extends Component {
 					{this.getUniverseOptions(this.props.data)}
 				</select>
 				<br/>
-				<label htmlFor={span.id + "_start_time_input"} >Start Time in Reference Timeline 2: </label>
+				<label htmlFor={span.id + "_start_time_input"} >Start Time in Reference Frame 2: </label>
 				<input
 					id={span.id + "_start_time_input"}
 					type="datetime-local"
@@ -70,7 +70,7 @@ class Span extends Component {
 					defaultValue={moment(span.startTime).format('YYYY-MM-DDTHH:mm')}
 				/>
 				<br/>
-				<label htmlFor={span.id + "_end_time_input"} >End Time in Reference Timeline 2: </label>
+				<label htmlFor={span.id + "_end_time_input"} >End Time in Reference Frame 2: </label>
 				<input
 					id={span.id + "_end_time_input"}
 					type="datetime-local"
@@ -147,11 +147,11 @@ class Span extends Component {
 					/>
 					<label htmlFor={span.id + "_radio_type_frozen-2"}>Time frozen in frame 2</label>
 					<br/>
-					<label htmlFor={span.id + "_rf1_duration_spent_in_frozen_time_input"}>RF1 duration spent in frozen time (seconds): </label>
+					<label htmlFor={span.id + "_RF1_duration_spent_in_frozen_time_input"}>RF1 duration spent in frozen time (seconds): </label>
 					<input
-						id={span.id + "_rf1_duration_spent_in_frozen_time_input"}
+						id={span.id + "_RF1_duration_spent_in_frozen_time_input"}
 						type="number"
-						defaultValue={span.rf1DurationSpentInFrozenTime}
+						defaultValue={span.RF1DurationSpentInFrozenTime}
 						onChange={
 							(e) => this.props.setRF1DurationSpentInFrozenTime(span.id, parseFloat(e.target.value * 1000))
 							/* we immediately convert from seconds to ms */
