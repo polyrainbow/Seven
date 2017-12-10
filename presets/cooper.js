@@ -1,5 +1,5 @@
 module.exports = {
-	"name": "Cooper",
+	"name": "Cooper (Time Dilation Example)",
 	"data": {
 		"visualization_mode": "3D Universes",
 		"paths": [
