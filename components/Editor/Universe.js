@@ -75,16 +75,18 @@ class Universe extends Component {
 					defaultValue={universe.name}
 				/>
 			<br/>
-			<label htmlFor={universe.id + "_created_at_entering_input"}>Is created at first entering: </label>
 			<input
 				style={{
-					"transform": "scale(2)"
+					"transform": "scale(2)",
+					"marginLeft": "6px",
+					"marginRight": "10px",
 				}}
 				id={universe.id + "_created_at_entering_input"}
 				type="checkbox"
 				defaultChecked={universe.isCreatedAtFirstEntering}
 				onChange={(e) => this.props.setUniverseCreationType(universe.id, e.target.checked)}
 			/>
+			<label htmlFor={universe.id + "_created_at_entering_input"}>Is created at first entering</label>
 			</div>
 		);
   }

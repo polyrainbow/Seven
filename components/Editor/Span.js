@@ -135,8 +135,8 @@ class Span extends Component {
 						type="radio"
 						style={{
 							"transform": "scale(2)",
-					    "marginLeft": "6px",
-					    "marginRight": "10px",
+					    	"marginLeft": "6px",
+					    	"marginRight": "10px",
 						}}
 						name={span.id + "_span_type"}
 						id={span.id + "_radio_type_frozen-2"}
@@ -163,8 +163,8 @@ class Span extends Component {
 				<input
 					style={{
 						"transform": "scale(2)",
-				    "marginLeft": "6px",
-				    "marginRight": "10px",
+				    	"marginLeft": "6px",
+				    	"marginRight": "10px",
 					}}
 					id={span.id + "_inactive_input"}
 					type="checkbox"
@@ -177,7 +177,7 @@ class Span extends Component {
 				<textarea
 					style={{
 						"width": "100%",
-    				"height": "90px"
+    					"height": "90px"
 					}}
 					id={span.id + "_description_input"}
 					defaultValue={span.description}
