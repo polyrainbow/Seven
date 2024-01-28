@@ -28,7 +28,7 @@ const initialState = {
 export default function reducer(state=initialState, action){
 
 	if (action.type === "DELETE_SPAN"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		newState.paths.forEach(p => {
 			p.spans = p.spans.filter(s => s.id !== action.span_id);
 		});
@@ -37,7 +37,7 @@ export default function reducer(state=initialState, action){
 	}
 
 	if (action.type === "DELETE_PATH"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		newState.paths = newState.paths.filter(p => p.id !== action.path_id);
 		computeStateVariables(newState);
 
@@ -53,7 +53,7 @@ export default function reducer(state=initialState, action){
 	}
 
 	if (action.type === "ADD_PATH"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 
 		const newPath = {
 			id: uuidv4(),
@@ -80,14 +80,14 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type === "SET_ACTIVE_PATH"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		newState.active_path_id = action.path_id;
 		return newState;
 	}
 
 
 	if (action.type === "SET_PATH_NAME"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		const path = newState.paths.find(p => p.id === action.path_id);
 		path.name = action.name;
 		newState.active_path_id = path.id;
@@ -96,7 +96,7 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type === "ADD_SPAN"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 
 		const newSpan = {
 			id: uuidv4(),
@@ -125,7 +125,7 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type === "SET_SPAN_START_TIME"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		const span = getSpan(newState, action.span_id);
 		span.startTime = action.startTime;
 		computeStateVariables(newState);
@@ -134,7 +134,7 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type === "SET_SPAN_END_TIME"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		const span = getSpan(newState, action.span_id);
 		span.endTime = action.endTime;
 		computeStateVariables(newState);
@@ -143,7 +143,7 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type === "SET_SPAN_TYPE"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		const span = getSpan(newState, action.span_id);
 		span.type = action.spanType;
 		computeStateVariables(newState);
@@ -152,7 +152,7 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type === "SET_RF1_DURATION_SPENT_IN_FROZEN_TIME"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		const span = getSpan(newState, action.span_id);
 		span.RF1DurationSpentInFrozenTime = action.duration;
 		computeStateVariables(newState);
@@ -161,7 +161,7 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type === "SET_SPAN_ACTIVITY"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		const span = getSpan(newState, action.span_id);
 		span.isInactive = action.isInactive;
 		return newState;
@@ -169,7 +169,7 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type === "SET_TIME_DILATION_FACTOR"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		const span = getSpan(newState, action.span_id);
 		span.dilationFactor = action.factor;
 		computeStateVariables(newState);
@@ -178,7 +178,7 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type === "SET_SPAN_DESCRIPTION"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		const span = getSpan(newState, action.span_id);
 		span.description = action.description;
 		newState.active_universe_id = span.universe_id;
@@ -187,7 +187,7 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type === "SET_UNIVERSE_NAME"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		var universe = newState.universes.find(u => u.id === action.universe_id);
 		universe.name = action.name;
 		newState.active_universe_id = action.universe_id;
@@ -196,7 +196,7 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type === "ADD_UNIVERSE"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 
 		var newUniverse = {
 			id: uuidv4(),
@@ -223,7 +223,7 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type === "DELETE_UNIVERSE"){
-		var newState = {...state};
+		const newState = structuredClone(state);
 		newState.universes = newState.universes.filter(u => u.id !== action.universe_id);
 		if (newState.active_universe_id === action.universe_id){
 			if (newState.universes.length > 0){
@@ -243,7 +243,7 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type === "SET_UNIVERSE_CREATION_TYPE"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		const universe = newState.universes.find(u => u.id === action.universe_id);
 		universe.isCreatedAtFirstEntering = action.isCreatedAtFirstEntering;
 		return newState;
@@ -252,14 +252,14 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type === "SET_ACTIVE_UNIVERSE"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		newState.active_universe_id = action.universe_id;
 		return newState;
 	}
 
 
 	if (action.type === "SET_UNIVERSE_FOR_SPAN"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		const span = getSpan(newState, action.span_id);
 		span.universe_id = action.universe_id;
 		return newState;
@@ -293,7 +293,7 @@ export default function reducer(state=initialState, action){
 
 
 	if (action.type === "SET_VISUALIZATION_MODE"){
-		const newState = {...state};
+		const newState = structuredClone(state);
 		newState.visualization_mode = action.visualization_mode;
 		return newState;
 	}

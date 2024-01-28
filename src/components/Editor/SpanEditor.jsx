@@ -50,7 +50,10 @@ class SpanEditor extends Component {
 
 		path.spans.forEach((s, i, a) => {
 			markup.push(
-				<button onClick={() => this.props.addSpan(path.id, i)}>Add span here</button>
+				<button
+          key={Math.random()}
+					onClick={() => this.props.addSpan(path.id, i)}
+				>Add span here</button>
 			);
 
 			markup.push(
@@ -60,7 +63,10 @@ class SpanEditor extends Component {
 
 			if (i === a.length - 1){
 				markup.push(
-					<button onClick={() => this.props.addSpan(path.id, i + 1)}>Add span here</button>
+					<button
+						key={Math.random()}
+            onClick={() => this.props.addSpan(path.id, i + 1)}
+					>Add span here</button>
 				);
 			}
 
