@@ -1,8 +1,6 @@
 import { Component } from 'react';
-
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-
 import presets from "../../presets/index.js";
 import {
 	setPreset

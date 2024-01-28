@@ -452,7 +452,6 @@ var refresh = (data) => {
     }
     //var axisHelper = new THREE.AxisHelper( 5 );
     //scene.add( axisHelper );
-    console.log(data); /////////////////////////////////////////////////
     drawUniverses(data);
     active_universe_index = data.universes.findIndex(u => u.id === data.active_universe_id);
 }

@@ -21,7 +21,7 @@ const setSpanType = (span_id, spanType) => {
 	}
 }
 
-const setRF1DurationSpentInFrozenTime = (span_id, duration) => { console.log(duration)
+const setRF1DurationSpentInFrozenTime = (span_id, duration) => {
 	return {
 		type: "SET_RF1_DURATION_SPENT_IN_FROZEN_TIME",
 		span_id,

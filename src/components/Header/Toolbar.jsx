@@ -1,15 +1,13 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-
+import { Component } from 'react';
 import ViewMenu from './ViewMenu.jsx';
 import PresetMenu from './PresetMenu.jsx';
-
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-
 import {
 	loadState
 } from '../../actions/system.js';
+import { readFileAsJSON } from '../../utils/helpers.js';
+import saveAs from '../../utils/FileSaver.js';
 
 class Toolbar extends Component {
 
@@ -19,7 +17,7 @@ class Toolbar extends Component {
 
 
 	downloadState(){
-		var json = JSON.stringify(this.props.appState, null, "\t");
+		var json = JSON.stringify(this.props.appState, null, "  ");
 		var blob = new Blob([json], {type: "application/json;charset=utf-8"});
 		saveAs(blob, "my-timeline.seven.json");
 	}

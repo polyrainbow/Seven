@@ -25,7 +25,7 @@ class Span extends Component {
 
 
 	getUniverseOptions(data){
-		return data.universes.map((u, i) => {
+		return data.universes.map((u) => {
 			return <option key={Math.random()} value={u.id}>{u.name}</option>;
 		});
 	}
@@ -93,13 +93,13 @@ class Span extends Component {
 						type="radio"
 						style={{
 							"transform": "scale(2)",
-					    "marginLeft": "6px",
-					    "marginRight": "10px",
+							"marginLeft": "6px",
+							"marginRight": "10px",
 						}}
 						name={span.id + "_span_type"}
 						id={span.id + "_radio_type_frozen-0"}
 						checked={span.type === 'frozen-0'}
-						onChange={(e) => {
+						onChange={() => {
 								this.props.setSpanType(span.id, "frozen-0");
 						}}
 					/>
@@ -125,7 +125,7 @@ class Span extends Component {
 						name={span.id + "_span_type"}
 						id={span.id + "_radio_type_frozen-1"}
 						checked={span.type === 'frozen-1'}
-						onChange={(e) => {
+						onChange={() => {
 								this.props.setSpanType(span.id, "frozen-1");
 						}}
 					/>
@@ -135,13 +135,13 @@ class Span extends Component {
 						type="radio"
 						style={{
 							"transform": "scale(2)",
-					    	"marginLeft": "6px",
-					    	"marginRight": "10px",
+							"marginLeft": "6px",
+							"marginRight": "10px",
 						}}
 						name={span.id + "_span_type"}
 						id={span.id + "_radio_type_frozen-2"}
 						checked={span.type === 'frozen-2'}
-						onChange={(e) => {
+						onChange={() => {
 								this.props.setSpanType(span.id, "frozen-2");
 						}}
 					/>
@@ -163,8 +163,8 @@ class Span extends Component {
 				<input
 					style={{
 						"transform": "scale(2)",
-				    	"marginLeft": "6px",
-				    	"marginRight": "10px",
+						"marginLeft": "6px",
+						"marginRight": "10px",
 					}}
 					id={span.id + "_inactive_input"}
 					type="checkbox"
@@ -177,7 +177,7 @@ class Span extends Component {
 				<textarea
 					style={{
 						"width": "100%",
-    					"height": "90px"
+						"height": "90px"
 					}}
 					id={span.id + "_description_input"}
 					defaultValue={span.description}

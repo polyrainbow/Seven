@@ -2,6 +2,7 @@ import computeStateVariables from "./computeStateVariables.js";
 import updateLegacyState from "./updateLegacyState.js";
 import presets from "../presets/index.js";
 import { v4 as uuidv4 } from 'uuid';
+import { immutableSplice } from "../utils/helpers.js";
 
 var getSpan = (state, span_id) => {
 	for (var p = 0; p < state.paths.length; p++){
@@ -68,7 +69,7 @@ export default function reducer(state=initialState, action){
 		} else if (action.insertIndex < newState.paths.length){
 			newState.paths = immutableSplice(newState.paths, action.insertIndex, 0, newPath);
 		} else {
-			console.log("Strange insert index: " + action.insertIndex)
+			console.warn("Strange insert index: " + action.insertIndex)
 		}
 
 		newState.active_path_id = newPath.id;
@@ -117,7 +118,7 @@ export default function reducer(state=initialState, action){
 		} else if (action.insertIndex < path.spans.length){
 			path.spans = immutableSplice(path.spans, action.insertIndex, 0, newSpan);
 		} else {
-			console.log("Strange insert index: " + action.insertIndex)
+			console.warn("Strange insert index: " + action.insertIndex)
 		}
 		return newState;
 	}
@@ -212,7 +213,7 @@ export default function reducer(state=initialState, action){
 		} else if (action.insertIndex < newState.universes.length){
 			newState.universes = immutableSplice(newState.universes, action.insertIndex, 0, newUniverse);
 		} else {
-			console.log("Strange insert index: " + action.insertIndex);
+			console.warn("Strange insert index: " + action.insertIndex);
 		}
 
 		newState.active_universe_id = newUniverse.id;

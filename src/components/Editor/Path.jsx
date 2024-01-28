@@ -18,7 +18,7 @@ class Path extends Component {
 
 	getUniverseOptions(data){
 		return data.universes.map((u, i) => {
-			return <option value={i}>{u.name}</option>;
+			return <option key={Math.random()} value={i}>{u.name}</option>;
 		});
 	}
 
@@ -65,7 +65,7 @@ class Path extends Component {
 				<textarea
 					style={{
 						"width": "100%",
-    					"height": "90px"
+						"height": "90px"
 					}}
 					id={path.id + "_description_input"}
 					defaultValue={path.description}

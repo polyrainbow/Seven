@@ -181,13 +181,13 @@ class TimelineTree extends Component {
 			.attr("dy", ".35em")
 			.attr("text-anchor", "start")
 			.text(u => {
-			    if (u.RF2duration > 31536000000){
-			        return u.earliestDateOfRef2.years;
-			    } else if (u.RF2duration > 2628000000){
-			        return moment(u.earliestDateOfRef2).format("MMM Y");
-			    } else {
-			        return moment(u.earliestDateOfRef2).format("D MMM Y");
-			    }
+				if (u.RF2duration > 31536000000){
+						return u.earliestDateOfRef2.years;
+				} else if (u.RF2duration > 2628000000){
+						return moment(u.earliestDateOfRef2).format("MMM Y");
+				} else {
+						return moment(u.earliestDateOfRef2).format("D MMM Y");
+				}
 			})
 			.attr('font-size', "12")
 			.style('font-family', "sans-serif")
@@ -202,13 +202,13 @@ class TimelineTree extends Component {
 			.attr("dy", ".35em")
 			.attr("text-anchor", "end")
 			.text(u => {
-			    if (u.RF2duration > 31536000000){
-			        return u.latestDateOfRef2.years;
-			    } else if (u.RF2duration > 2628000000){
-			        return moment(u.latestDateOfRef2).format("MMM Y");
-			    } else {
-			        return moment(u.latestDateOfRef2).format("D MMM Y");
-			    }
+				if (u.RF2duration > 31536000000){
+						return u.latestDateOfRef2.years;
+				} else if (u.RF2duration > 2628000000){
+						return moment(u.latestDateOfRef2).format("MMM Y");
+				} else {
+						return moment(u.latestDateOfRef2).format("D MMM Y");
+				}
 			})
 			.attr('font-size', "12")
 			.style('font-family', "sans-serif")
@@ -289,19 +289,19 @@ class TimelineTree extends Component {
 				.attr('stroke-dasharray', "5, 10")
 				.style("stroke", path_colors[path_index])
 				.style("stroke-width", PATH_THICKNESS)
-				.attr('x1', (span, i) => {
+				.attr('x1', (span) => {
 					var u = universes.find(u => u.id === span.universe_id);
 					return u.drawStart + (span.relativeEndRF2 * u.drawWidth);
 				})
-				.attr('y1', (span, i) => {
+				.attr('y1', (span) => {
 					var universe_index = universes.findIndex(u => u.id === span.universe_id);
 					return getTimelineY(universe_index) - (PATH_THICKNESS * (path_index + 1));
 				})
-				.attr('x2', (span, i) => {
+				.attr('x2', (span) => {
 					var target_universe = universes.find(u => u.id === spans[span.index+1].universe_id);spans[span.index+1];
 					return target_universe.drawStart + (spans[span.index+1].relativeStartRF2 * target_universe.drawWidth);
 				})
-				.attr('y2', (span, i) => {
+				.attr('y2', (span) => {
 					var nextSpan = spans[span.index+1];
 					var universe_index = universes.findIndex(u => u.id === nextSpan.universe_id);
 					return getTimelineY(universe_index) - (PATH_THICKNESS * (path_index + 1));

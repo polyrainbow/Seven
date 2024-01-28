@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-
+import { Component } from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-
 import UniverseEditor from './UniverseEditor';
 import PathEditor from './PathEditor';
 import SpanEditor from './SpanEditor';
@@ -21,7 +18,7 @@ class Editor extends Component {
 	getEditor(active_tab){
 		if (active_tab === "universes"){
 			return <UniverseEditor />;
- 		}
+    }
 		if (active_tab === "paths"){
 			return <PathEditor/>;
 		}
@@ -64,7 +61,7 @@ class Editor extends Component {
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(){
 	return {
 	}
 }

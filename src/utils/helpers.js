@@ -22,73 +22,6 @@ limitations under the License.
 
 
 /**
- * Downloads a resource via AJAX, using the HTTP GET method.
- * @method getWithAJAX
- * @param {string} url URL of the resource.
- * @param {function} success_callback Callback function to be called when resource is downloaded and ready. It gets the XMLHttpRequest object.
- * @return {mixed} http.send() Value of http.send()
- * @static
- */
-function getWithAJAX(url, success_callback){
-
-	var http = new XMLHttpRequest();
-
-	http.open("GET", url, true);
-
-	http.onreadystatechange = function() { //Call a function when the state changes.
-
-		if (http.readyState == 4 && http.status == 200) {
-
-			console.log("AJAX successful!");
-
-			success_callback(http);
-
-		}
-	};
-
-	console.log("Sending ajax request to: " + url);
-
-	return http.send();
-
-}
-
-
-/**
- * Downloads a text resource via AJAX, using the HTTP GET method.
- * @method getTextWithAJAX
- * @param {string} url URL of the resource.
- * @param {function} success_callback Callback function to be called when resource is downloaded and ready. It gets the resource as text string.
- * @return {mixed} http.send() Value of http.send()
- * @static
- */
-function getTextWithAJAX(url, success_callback){
-
-	return getWithAJAX(url, function(http){
-		var response = http.responseText;
-		success_callback(response);
-	});
-
-}
-
-
-/**
- * Downloads a JSON resource via AJAX, using the HTTP GET method.
- * @method getJSONWithAJAX
- * @param {string} url URL of the resource.
- * @param {function} success_callback Callback function to be called when resource is downloaded and ready. It gets the resulting javascript object, when JSON parsing was successful.
- * @return {mixed} http.send() Value of http.send()
- * @static
- */
-export function getJSONWithAJAX(url, success_callback){
-
-	getTextWithAJAX(url, function(responseText){
-		parseJSON(responseText, success_callback, undefined);
-	});
-
-}
-
-
-/**
  * Clones a javascript object (instead of just copying references of it).
  * @method cloneObject
  * @param {mixed} obj Source object.
@@ -344,9 +277,7 @@ var getSelectedRadioIndex = function (radios){
 
 
 var log = function(item){
-
 	console.log(item);
-
 };
 
 

@@ -9,13 +9,6 @@ const store = configureStore({
 });
 
 const app = document.getElementById("app");
-
-
-store.subscribe(() => {
-	console.log(store.getState());
-    return;
-})
-
 const root = createRoot(app);
 
 root.render(

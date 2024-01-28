@@ -19,7 +19,7 @@ class UniverseEditor extends Component {
 			);
 
 			markup.push(
-				<Universe key={Math.random()} universe={u} key={"universe_" + u.id}/>
+				<Universe universe={u} key={"universe_" + u.id}/>
 			);
 
 			if (i === a.length - 1){

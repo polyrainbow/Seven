@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-
+import { Component } from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-
 import Universes3D from './Universes3D';
 import TimelineTree from './TimelineTree';
 

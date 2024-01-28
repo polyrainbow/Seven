@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-
+import { Component } from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-
 import {addSpan} from '../../actions/spans.js';
 import {setActivePath} from '../../actions/paths.js';
-
 import Span from './Span.jsx';
 
 class SpanEditor extends Component {
@@ -21,14 +17,15 @@ class SpanEditor extends Component {
 
 	renderActivePathSelect(){
 		return [
-			<label htmlFor="spans_for_path_select">Spans for path: </label>,
+			<label key={Math.random()} htmlFor="spans_for_path_select">Spans for path: </label>,
 			<select
+				key={Math.random()}
 				onChange={(e) => this.props.setActivePath(e.target.value)}
 				value={this.props.data.active_path_id}
 			>
 				{this.getPathSelectOptions(this.props.data.paths)}
 			</select>,
-			<br/>
+			<br key={Math.random()} />
 		];
 	}
 
@@ -36,6 +33,7 @@ class SpanEditor extends Component {
 	getPathSelectOptions(paths){
 		return paths.map(p =>
 			<option
+				key={Math.random()}
 				onChange={() => this.props.setActivePath(p.id)}
 				value={p.id}
 			>

@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
-
+import { Component } from 'react';
 import Header from './Header/index.jsx';
 import Editor from './Editor/index.jsx';
 import Visual from './Visual/index.jsx';
-
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -19,7 +17,7 @@ class Page extends Component {
 			<div style={{
 				"display": "grid",
 				"gridTemplateColumns": "600px auto",
-  				"gridTemplateRows": "50px auto",
+				"gridTemplateRows": "50px auto",
 				"position": "fixed",
 				"top": "0px",
 				"bottom": "0px",
@@ -36,7 +34,7 @@ class Page extends Component {
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(){
 	return {
 	}
 }

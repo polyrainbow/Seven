@@ -176,9 +176,8 @@ var getGridPoints = (state) => {
 			newDate = newDate.add(1, 'day');
 		}
 	}
-	console.log(gridPoints)
-	return gridPoints;
 
+	return gridPoints;
 }
 
 
