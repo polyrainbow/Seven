@@ -428,18 +428,24 @@ var init = (parentElement) => {
     parentElement.appendChild( renderer.domElement );
 
     var fontLoader = new THREE.FontLoader();
-    fontLoader.load( 'assets/helvetiker_regular.typeface.json', (loadedFont) => {
-        font = loadedFont;
-    });
+    fontLoader.load(
+        import.meta.env.BASE_URL + '/assets/helvetiker_regular.typeface.json',
+        (loadedFont) => {
+            font = loadedFont;
+        },
+    );
 
     var textureLoader = new THREE.TextureLoader();
-    textureLoader.load('assets/HubbleUltraDeepField_1024.jpg', (texture) => {
-        universeTexture = texture;
-        universe_plane_material = new THREE.MeshBasicMaterial({map: universeTexture});
-        universe_plane_geometry = new THREE.PlaneGeometry(
-            UNIVERSE_SIZE, UNIVERSE_SIZE, UNIVERSE_SIZE
-        );
-    });
+    textureLoader.load(
+        import.meta.env.BASE_URL + '/assets/HubbleUltraDeepField_1024.jpg',
+            (texture) => {
+            universeTexture = texture;
+            universe_plane_material = new THREE.MeshBasicMaterial({map: universeTexture});
+            universe_plane_geometry = new THREE.PlaneGeometry(
+                UNIVERSE_SIZE, UNIVERSE_SIZE, UNIVERSE_SIZE
+            );
+        },
+    );
 
     animate();
 

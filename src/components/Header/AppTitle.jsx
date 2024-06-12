@@ -14,7 +14,7 @@ export default class AppTitle extends Component {
 			}}>
 				<div>
 					<img
-						src="assets/seven_logo.svg" style={{
+						src={import.meta.env.BASE_URL + "/assets/seven_logo.svg"} style={{
 							"height": "30px",
 							"marginRight": "10px"
 						}}
