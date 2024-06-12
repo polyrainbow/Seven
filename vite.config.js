@@ -7,5 +7,5 @@ export default defineConfig({
   build: {
     target: "esnext",
   },
-  base: "SEven",
+  base: "/SEven",
 })
